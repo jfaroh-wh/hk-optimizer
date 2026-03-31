@@ -6147,7 +6147,7 @@ function showSection(name, btn) {
   var overlay = document.getElementById('section-overlay');
   
   // Hide all overlays
-  ['page-team','page-weekly','page-history'].forEach(function(id){
+  ['page-team','page-weekly','page-history','page-users'].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.style.display='none';
   });
@@ -6761,19 +6761,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('login-screen').style.display!=='none') doLogin();
 });
 
-// Add sign out to sidebar footer
-document.addEventListener('DOMContentLoaded',()=>{
-  const footer=document.querySelector('.sb-footer');
-  if(footer){
-    const btn=document.createElement('button');
-    btn.className='sb-item';btn.style.marginTop='4px';
-    btn.innerHTML='<span>🚪</span> Cerrar sesión';
-    btn.onclick=async()=>{await sbSignOut();toast('Sesión cerrada');};
-    footer.appendChild(btn);
-  }
-  // Show login screen initially (auth listener will hide it if already logged in)
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('app-screen').style.display='none';
-});
+
 </script>
 <div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; animation: 2s ease-in-out 0s infinite normal none running claude-pulse; box-shadow: rgba(217, 119, 87, 0.5) 0px 0px 10px inset, rgba(217, 119, 87, 0.3) 0px 0px 20px inset, rgba(217, 119, 87, 0.1) 0px 0px 30px inset;"></div></body></html>
