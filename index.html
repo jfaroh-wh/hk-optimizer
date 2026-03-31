@@ -5280,9 +5280,10 @@ tbody tr:hover .row-acts { opacity: 1; }
 
 
 <div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; animation: 2s ease-in-out 0s infinite normal none running claude-pulse; box-shadow: rgba(217, 119, 87, 0.5) 0px 0px 10px inset, rgba(217, 119, 87, 0.3) 0px 0px 20px inset, rgba(217, 119, 87, 0.1) 0px 0px 30px inset;"></div><script>
-
 // ══════════════════════════════════════════════
 // SUPABASE CONFIG — wh-panama-hk
+</script>
+<script>
 // ══════════════════════════════════════════════
 const SUPABASE_URL  = 'https://bjyortmlnsjpjluoxyxr.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_VFoxdhvk9pG7WIKrBz1bTQ_voOoFr9m';
@@ -5437,11 +5438,12 @@ window.addEventListener('load', ()=>{
     }
   };
 });
-
-
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // ENGINE
+</script>
+<script>
 // ══════════════════════════════════════════════
 const TT={CO:'CO',COCI:'CO/CI',EXP:'EXP',OC:'OC',CHQ:'CHQ',URG:'URG',MANUAL:'MANUAL'};
 const TYPE_META={
@@ -5642,9 +5644,12 @@ function genAlerts(r,date){
   if(s.urg>0)al.push({lv:'warn',msg:`${s.urg} urgencia(s) activa(s) — verificar que están correctamente asignadas.`});
   return al;
 }
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // UI STATE
+</script>
+<script>
 // ══════════════════════════════════════════════
 let reservations=[];
 let currentDate=null;
@@ -5979,9 +5984,12 @@ function confirmAddTask(){
   toast(`Tarea manual agregada: ${unit} · ${selectedType}`);
   if(currentResult)run(); // re-run schedule with new task
 }
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // PROPERTIES
+</script>
+<script>
 // ══════════════════════════════════════════════
 const PROPS_KEY='wh_props_v3';
 let properties=[];
@@ -6158,9 +6166,12 @@ async function saveProp(){
     await loadProps();
   } catch(e){toast('Error: '+e.message);}
 }
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // PAGE NAV
+</script>
+<script>
 // ══════════════════════════════════════════════
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -6169,14 +6180,20 @@ function showPage(name,btn){
   btn.classList.add('active');
   if(name==='properties')renderProps();
 }
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // UTILS
+</script>
+<script>
 // ══════════════════════════════════════════════
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(()=>el.style.opacity='0',2800)}
-
+</script>
+<script>
 // ══════════════════════════════════════════════
 // DEMO DATA
+</script>
+<script>
 // ══════════════════════════════════════════════
 function getDemoData(){
   const d='2026-03-31',p='2026-03-29',f='2026-04-04';
@@ -6208,8 +6225,12 @@ function getDemoData(){
 }
 
 const PROPERTIES_DEFAULT=[{"id":"casa_mallet_1","name":"Casa Mallet 1","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_2","name":"Casa Mallet 2","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_3","name":"Casa Mallet 3","zone":"A0","br":1,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_4","name":"Casa Mallet 4","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_5","name":"Casa Mallet 5","zone":"A0","br":3,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_6","name":"Casa Mallet 6","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"cc1a","name":"CC1A","zone":"A1","br":2,"building":"CC1A","active":true,"reactivation":null,"notes":""},{"id":"cc1b","name":"CC1B","zone":"A1","br":2,"building":"CC1B","active":true,"reactivation":null,"notes":""},{"id":"cc2a","name":"CC2A","zone":"A1","br":2,"building":"CC2A","active":true,"reactivation":null,"notes":""},{"id":"cc2b","name":"CC2B","zone":"A1","br":2,"building":"CC2B","active":true,"reactivation":null,"notes":""},{"id":"cc3a","name":"CC3A","zone":"A1","br":2,"building":"CC3A","active":true,"reactivation":null,"notes":""},{"id":"cc3b","name":"CC3B","zone":"A1","br":2,"building":"CC3B","active":true,"reactivation":null,"notes":""},{"id":"cc4a","name":"CC4A","zone":"A1","br":2,"building":"CC4A","active":true,"reactivation":null,"notes":""},{"id":"cc4b","name":"CC4B","zone":"A1","br":1,"building":"CC4B","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_1a","name":"Casa Lefevre 1A","zone":"A1","br":2,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_1b","name":"Casa Lefevre 1B","zone":"A1","br":2,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2a","name":"Casa Lefevre 2A","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2b","name":"Casa Lefevre 2B","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2c","name":"Casa Lefevre 2C","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_3b","name":"Casa Lefevre 3B","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_3c","name":"Casa Lefevre 3C","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"portal_de_caldas_02","name":"Portal De Caldas 02","zone":"A1","br":1,"building":"Portal De Caldas","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1b","name":"Casa La Costa 1B","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1c","name":"Casa La Costa 1C","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1d","name":"Casa La Costa 1D","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2a","name":"Casa La Costa 2A","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2c","name":"Casa La Costa 2C","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2d","name":"Casa La Costa 2D","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3a","name":"Casa La Costa 3A","zone":"A2","br":3,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3b","name":"Casa La Costa 3B","zone":"A2","br":3,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3c","name":"Casa La Costa 3C","zone":"A2","br":2,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3d","name":"Casa La Costa 3D","zone":"A2","br":2,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1a","name":"Casa Love 1A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1b","name":"Casa Love 1B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1c","name":"Casa Love 1C","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1d","name":"Casa Love 1D","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2a","name":"Casa Love 2A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2b","name":"Casa Love 2B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2c","name":"Casa Love 2C","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2d","name":"Casa Love 2D","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_3a","name":"Casa Love 3A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_3b","name":"Casa Love 3B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1c","name":"La Cuadra 1C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1d","name":"La Cuadra 1D","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1f","name":"La Cuadra 1F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1h","name":"La Cuadra 1H","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1j","name":"La Cuadra 1J","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2c","name":"La Cuadra 2C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2f","name":"La Cuadra 2F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2g","name":"La Cuadra 2G","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2i","name":"La Cuadra 2i","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3a","name":"La Cuadra 3A","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3c","name":"La Cuadra 3C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3g","name":"La Cuadra 3G","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3i","name":"La Cuadra 3I","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3k","name":"La Cuadra 3K","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4d","name":"La Cuadra 4D","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4f","name":"La Cuadra 4F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4j","name":"La Cuadra 4J","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_01","name":"La Manzana 01","zone":"A2","br":2,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_05","name":"La Manzana 05","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_06","name":"La Manzana 06","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_07","name":"La Manzana 07","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_09","name":"La Manzana 09","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_11","name":"La Manzana 11","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_15","name":"La Manzana 15","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_16","name":"La Manzana 16","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_17","name":"La Manzana 17","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_20","name":"La Manzana 20","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_21","name":"La Manzana 21","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_24","name":"La Manzana 24","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_1a","name":"Lesplanade 1A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_1b","name":"Lesplanade 1B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2a","name":"Lesplanade 2A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2b","name":"Lesplanade 2B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2c","name":"Lesplanade 2C","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3a","name":"Lesplanade 3A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3b","name":"Lesplanade 3B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3d","name":"Lesplanade 3D","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_4a","name":"Lesplanade 4A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_4b","name":"Lesplanade 4B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"donovan_1a","name":"Donovan 1A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_1b","name":"Donovan 1B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_1c","name":"Donovan 1C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2a","name":"Donovan 2A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2b","name":"Donovan 2B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2c","name":"Donovan 2C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3a","name":"Donovan 3A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3b","name":"Donovan 3B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3c","name":"Donovan 3C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_4a","name":"Donovan 4A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_4b","name":"Donovan 4B","zone":"A3","br":3,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_01","name":"La Moderna 01","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_02","name":"La Moderna 02","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_03","name":"La Moderna 03","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_04","name":"La Moderna 04","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_05","name":"La Moderna 05","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_06","name":"La Moderna 06","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_07","name":"La Moderna 07","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_08","name":"La Moderna 08","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_09","name":"La Moderna 09","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_10","name":"La Moderna 10","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_11","name":"La Moderna 11","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_12","name":"La Moderna 12","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"living_73_08c","name":"Living 73 08C","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_08d","name":"Living 73 08D","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_08e","name":"Living 73 08E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_10a","name":"Living 73 10A","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_10d","name":"Living 73 10D","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11b","name":"Living 73 11B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11f","name":"Living 73 11F","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11i","name":"Living 73 11I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_12b","name":"Living 73 12B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_13e","name":"Living 73 13E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_13g","name":"Living 73 13G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_14c","name":"Living 73 14C","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_14i","name":"Living 73 14I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_15b","name":"Living 73 15B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_15e","name":"Living 73 15E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_16g","name":"Living 73 16G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_16k","name":"Living 73 16K","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17h","name":"Living 73 17H","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17i","name":"Living 73 17I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17l","name":"Living 73 17L","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_18h","name":"Living 73 18H","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19f","name":"Living 73 19F","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19i","name":"Living 73 19I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19k","name":"Living 73 19K","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_20g","name":"Living 73 20G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"quartier_del_mar_19a","name":"Quartier del Mar 19A","zone":"B","br":2,"building":"Quartier del Mar","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05b","name":"Mini Design 05B","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05c","name":"Mini Design 05C","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05e","name":"Mini Design 05E","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_07b","name":"Mini Design 07B","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_11f","name":"Mini Design 11F","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_14d","name":"Mini Design 14D","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_14j","name":"Mini Design 14J","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_15e","name":"Mini Design 15E","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"salomon_1b","name":"Salomon 1B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_1c","name":"Salomon 1C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_1d","name":"Salomon 1D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2a","name":"Salomon 2A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2b","name":"Salomon 2B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2c","name":"Salomon 2C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2d","name":"Salomon 2D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3a","name":"Salomon 3A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3b","name":"Salomon 3B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3c","name":"Salomon 3C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3d","name":"Salomon 3D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4a","name":"Salomon 4A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4b","name":"Salomon 4B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4c","name":"Salomon 4C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4d","name":"Salomon 4D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5a","name":"Salomon 5A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5b","name":"Salomon 5B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5c","name":"Salomon 5C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5d","name":"Salomon 5D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6a","name":"Salomon 6A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6b","name":"Salomon 6B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6c","name":"Salomon 6C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6d","name":"Salomon 6D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"the_gray_10c","name":"The Gray 10C","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_11g","name":"The Gray 11G","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_17c","name":"The Gray 17C","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_19d","name":"The Gray 19D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_20d","name":"The Gray 20D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_22e","name":"The Gray 22E","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_24d","name":"The Gray 24D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_9j","name":"The Gray 9J","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_sands_2403","name":"The Sands 2403","zone":"D","br":1,"building":"The Sands","active":true,"reactivation":null,"notes":""},{"id":"the_sands_3216","name":"The Sands 3216","zone":"D","br":1,"building":"The Sands","active":true,"reactivation":null,"notes":""},{"id":"yoo_12i","name":"YOO 12i","zone":"D","br":2,"building":"YOO","active":true,"reactivation":null,"notes":""},{"id":"yoo_40k","name":"YOO 40K","zone":"D","br":1,"building":"YOO","active":true,"reactivation":null,"notes":""},{"id":"centriqo_b_504","name":"Centriqo B 504","zone":"F","br":1,"building":"Centriqo B","active":true,"reactivation":null,"notes":""},{"id":"parterre_t1__201_","name":"Parterre T1 (201)","zone":"F","br":1,"building":"Parterre T1 (201)","active":true,"reactivation":null,"notes":""},{"id":"ghost_panama_11","name":"Ghost Panama 11","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_5","name":"Ghost Panama 5","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_6","name":"Ghost Panama 6","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_8","name":"Ghost Panama 8","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"}];
+</script>
+<script>
 // ══════════════════════════════════════════════
 // INIT
+</script>
+<script>
 // ══════════════════════════════════════════════
 loadProps();
 setTimeout(()=>{
@@ -6309,11 +6330,12 @@ document.addEventListener('DOMContentLoaded', function(){
   var n=document.getElementById('nav-schedule');
   if(n) n.classList.add('active');
 });
-
-
-
+</script>
+<script>
 // ═══════════════════════════════════════════════════════
 // TEAM MODULE
+</script>
+<script>
 // ═══════════════════════════════════════════════════════
 var TM_hks = [
   {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],color:'#d97706',defaultOff:'',notes:'MALLET exclusiva'},
@@ -6515,9 +6537,12 @@ function initTeamModule(){
   tmLoadAvailability();
   tmRender();
 }
-
+</script>
+<script>
 // ═══════════════════════════════════════════════════════
 // WEEKLY MODULE
+</script>
+<script>
 // ═══════════════════════════════════════════════════════
 var WK_weekStart = null;
 var WK_today = new Date().toISOString().split('T')[0];
@@ -6658,10 +6683,8 @@ function initWeeklyModule(){
   WK_today=new Date().toISOString().split('T')[0];
   wkRender();
 }
-
-
-
-
+</script>
+<script>
 // ═══ USERS MODULE ═══
 async function loadUsers() {
   var list = document.getElementById('users-list');
@@ -6772,8 +6795,5 @@ async function doLogin(){
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('login-screen').style.display!=='none') doLogin();
 });
-
-
-
 </script>
 </body></html>
