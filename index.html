@@ -1,68 +1,4 @@
 <html lang="es"><head>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Fix broken icon sequences in button text
-  var fixes = [
-    ['â–¶', '\u25b6'],   // ▶ play
-    ['â¶', '\u25b6'],    // ▶ play alt
-    ['ï¼', '+'],          // + plus
-    ['â†"', '\u2193'],   // ↓ down arrow
-    ['âœ"', '\u2713'],   // ✓ check
-    ['âœ—', '\u2717'],   // ✗ cross
-    ['â¹', '\u2039'],    // ‹ left arrow
-    ['âº', '\u203a'],    // › right arrow
-    ['ð', '\ud83d'],    // folder emoji start - just remove
-    ['ðª', ''],           // door emoji - remove
-    ['ð', ''],            // csv icon - remove
-    ['ð¢', ''],           // building - remove  
-    ['ð¥', ''],           // people - remove
-    ['ð', ''],            // chart - remove
-    ['ð', ''],            // history - remove
-    ['ð¤', ''],           // user - remove
-    ['ð', ''],            // calendar - remove
-    ['â€¢', '\u2022'],   // bullet •
-    ['â€"', '\u2014'],   // em dash —
-    ['â€"', '\u2013'],   // en dash –
-    ['â€˜', '\u2018'],   // left quote '
-    ['â€™', '\u2019'],   // right quote '
-    ['Â·', '\u00b7'],    // middle dot ·
-  ];
-  
-  function fixNode(node) {
-    if (node.nodeType === 3) { // text node
-      var text = node.nodeValue;
-      var changed = false;
-      for (var i = 0; i < fixes.length; i++) {
-        if (text.indexOf(fixes[i][0]) >= 0) {
-          text = text.split(fixes[i][0]).join(fixes[i][1]);
-          changed = true;
-        }
-      }
-      if (changed) node.nodeValue = text;
-    } else if (node.nodeType === 1 && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
-      for (var j = 0; j < node.childNodes.length; j++) {
-        fixNode(node.childNodes[j]);
-      }
-    }
-  }
-  
-  // Fix sidebar, buttons, headers
-  var targets = document.querySelectorAll('button, .sb-item, h1, h2, h3, label, .kpi-val, .ctrl-bar, nav');
-  targets.forEach(function(el) { fixNode(el); });
-  
-  // Also fix specific known broken buttons after a delay (for dynamically generated content)
-  setTimeout(function() {
-    document.querySelectorAll('button, .sb-item, span').forEach(function(el) {
-      fixNode(el);
-    });
-  }, 500);
-  
-  // Run again after modules load
-  setTimeout(function() {
-    fixNode(document.body);
-  }, 2000);
-});
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>HK Optimizer · Wynwood House</title>
@@ -691,7 +627,7 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="sb-avatar">JF</div>
       <div><div class="sb-uname" id="sb-user-name">Jorge Faroh</div><div class="sb-urole" id="sb-user-role">admin</div></div>
     </div>
-  <button class="sb-item" style="margin-top: 4px;"><span>ðª</span> Cerrar sesión</button></div>
+  <button class="sb-item" style="margin-top: 4px;">Cerrar sesión</button></div>
 </nav>
 
 <!-- âââ MAIN âââ -->
@@ -706,9 +642,9 @@ tbody tr:hover .row-acts { opacity: 1; }
         <div class="ph-sub" id="sched-sub">Schedule · 2026-03-31 · 23 tareas totales</div>
       </div>
       <div class="ph-actions">
-        <label class="btn"><span>ð</span> Cargar CSV<input type="file" id="csv-input" accept=".csv" style="display:none"></label>
+        <label class="btn">Cargar CSV<input type="file" id="csv-input" accept=".csv" style="display:none"></label>
         <input type="date" id="date-picker" class="inp">
-        <button class="btn pri" id="run-btn"><span>â¶</span> Generar</button>
+        <button class="btn pri" id="run-btn">&#9654; Generar</button>
       </div>
     </div>
     <div class="kpi-strip" id="kpi-strip">
@@ -740,7 +676,7 @@ tbody tr:hover .row-acts { opacity: 1; }
       <option value="190">Grande</option>
     </select>
     <div class="tb-sep"></div>
-    <button class="btn pri" onclick="openAddTaskModal()"><span>ï¼</span> Agregar tarea</button>
+    <button class="btn pri" onclick="openAddTaskModal()">Agregar tarea</button>
   </div>
 
   <!-- Schedule body -->
