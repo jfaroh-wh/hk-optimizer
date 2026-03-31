@@ -3,164 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>HK Optimizer · Wynwood House</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-// ══════════════════════════════════════════════
-// SUPABASE CONFIG — wh-panama-hk
-// ══════════════════════════════════════════════
-const SUPABASE_URL  = 'https://bjyortmlnsjpjluoxyxr.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_VFoxdhvk9pG7WIKrBz1bTQ_voOoFr9m';
-const TENANT_ID     = 'panama';
-let _sb = null;
-function getSB(){ if(!_sb) _sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON); return _sb; }
 
-// ── AUTH ──────────────────────────────────────
-async function sbSignIn(email,password){
-  const{data,error}=await getSB().auth.signInWithPassword({email,password});
-  if(error)throw error; return data;
-}
-async function sbSignOut(){ await getSB().auth.signOut(); }
-async function sbGetUser(){
-  const{data:{user}}=await getSB().auth.getUser();
-  if(!user) return null;
-  const{data}=await getSB().from('profiles').select('*').eq('id',user.id).single();
-  return data;
-}
-
-// ── SAVE SCHEDULE ─────────────────────────────
-async function sbSaveSchedule(date, result, csvFilename, csvRows){
-  const user = await sbGetUser();
-  const{summary,byHK,unassigned}=result;
-  const allTasks=[];
-  for(const[hkId,sched]of Object.entries(byHK))
-    for(const t of sched.tasks) allTasks.push({...t,hkId});
-  for(const t of unassigned) allTasks.push({...t,hkId:null});
-
-  const{data:ex}=await getSB().from('schedules').select('version')
-    .eq('tenant_id',TENANT_ID).eq('date',date)
-    .order('version',{ascending:false}).limit(1);
-  const version=(ex&&ex.length>0)?ex[0].version+1:1;
-
-  const{data,error}=await getSB().from('schedules').insert({
-    tenant_id:TENANT_ID, date, version,
-    generated_by: user?.id||null,
-    total_tasks:summary.total, hks_used:summary.hksUsed,
-    tasks_co:summary.co, tasks_coci:summary.coci,
-    tasks_exp:summary.exp, tasks_manual:summary.manualCount||0,
-    coci_at_risk:summary.cociAtRisk||0, unassigned:summary.unassigned,
-    schedule_data:allTasks, csv_filename:csvFilename||null, csv_rows:csvRows||null,
-  }).select().single();
-  if(error) throw error;
-  return data;
-}
-
-// ── SAVE AUDIT ────────────────────────────────
-async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,reason}){
-  const user=await sbGetUser();
-  const{error}=await getSB().from('audit_log').insert({
-    tenant_id:TENANT_ID, schedule_date:scheduleDate,
-    user_id:user?.id||null, user_name:user?.full_name||'Coordinador',
-    action, unit_name:unitName||null,
-    before_data:beforeData||null, after_data:afterData||null,
-    reason:reason||'',
-  });
-  if(error) console.error('Audit log error:', error);
-}
-
-// ── SAVE MANUAL TASK ──────────────────────────
-async function sbSaveManualTask(task){
-  const user=await sbGetUser();
-  const{error}=await getSB().from('manual_tasks').insert({
-    tenant_id:TENANT_ID, date:task.date,
-    unit_name:task.unitName, zone:task.zone||'',
-    br:parseInt(task.br)||1, task_type:task.type,
-    duration_mins:task.cleanMins||30,
-    preferred_hk:task.assignedHK||null,
-    requested_by:task.requestedBy||'coordinador',
-    priority:task.priority||'normal',
-    notes:task.notes||'', created_by:user?.id||null,
-  });
-  if(error) console.error('Manual task save error:', error);
-}
-
-// ── LOAD HISTORY ──────────────────────────────
-async function sbLoadHistory(limit=30){
-  const{data,error}=await getSB().from('schedules')
-    .select('id,date,version,total_tasks,hks_used,tasks_coci,coci_at_risk,generated_at,csv_filename')
-    .eq('tenant_id',TENANT_ID)
-    .order('date',{ascending:false}).order('version',{ascending:false})
-    .limit(limit);
-  if(error) return [];
-  // Keep only latest version per date
-  const seen=new Set(); 
-  return data.filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;});
-}
-
-// ── SAVE PROPERTIES ───────────────────────────
-async function sbSaveProperties(props){
-  const payload=props.map(p=>({
-    tenant_id:TENANT_ID, name:p.name, building:p.building||'',
-    zone:p.zone||'', br:parseInt(p.br)||1,
-    active:p.active!==false,
-    reactivation_date:p.reactivation||null,
-    notes:p.notes||'',
-  }));
-  const{error}=await getSB().from('properties')
-    .upsert(payload,{onConflict:'tenant_id,name'});
-  if(error) console.error('Properties save error:', error);
-}
-
-// ── AUTH STATE LISTENER ───────────────────────
-let currentUser = null;
-(async()=>{
-  try{
-    const {data:{session}}=await getSB().auth.getSession();
-    if(session){
-      const {data:profile}=await getSB().from('profiles').select('*').eq('id',session.user.id).single();
-      currentUser=profile;
-      const uname=document.getElementById('sb-user-name');
-      const urole=document.getElementById('sb-user-role');
-      if(uname)uname.textContent=profile?.full_name||session.user.email;
-      if(urole)urole.textContent=profile?.role||'admin';
-      document.getElementById('login-screen').style.display='none';
-      document.getElementById('app-screen').style.display='flex';
-      setTimeout(()=>{if(typeof run==='function')run();if(typeof loadProps==='function')loadProps();},300);
-    }
-  }catch(e){console.log('Session check:',e.message);}
-})();
-
-// ── HOOK: auto-save schedule after run ────────
-const _origRun = window.run;
-window.run = async function(){
-  _origRun && _origRun();
-  if(currentResult && currentDate){
-    try{
-      await sbSaveSchedule(currentDate, currentResult, null, reservations.length);
-      console.log('Schedule guardado en Supabase');
-    } catch(e){ console.error('Error guardando schedule:', e); }
-  }
-};
-
-// ── HOOK: auto-save audit on reassign ─────────
-const _origConfirmChange = window.confirmChange;
-// Will be patched after main script loads
-
-window.addEventListener('load', ()=>{
-  // Patch confirmChange to also log to Supabase
-  const origCC = confirmChange;
-  window.confirmChange = async function(task){
-    const before={assignedHK:task.assignedHK, startTime:task.startTime, endTime:task.endTime};
-    origCC(task);
-    const after={assignedHK:task.assignedHK, startTime:task.startTime, endTime:task.endTime};
-    if(currentDate){
-      await sbLogChange({
-        scheduleDate:currentDate, action:'reassign',
-        unitName:task.unitName, beforeData:before, afterData:after,
-        reason:document.getElementById('ep-reason')?.value||'',
-      });
-    }
-  };
-});
-</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet">
 <style>
 :root {
@@ -5235,7 +5078,368 @@ tbody tr:hover .row-acts { opacity: 1; }
 
 <div id="toast"></div></div>
 
-<script>
+
+
+<!-- TEAM PAGE -->
+<div class="page-section" id="page-team" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden;background:#f5f6f8;z-index:10">
+
+  <!-- Header -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;flex-shrink:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Equipo de Housekeeping</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:2px">Disponibilidad semanal · Wynwood House Panama</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="btn" onclick="tmPrevWeek()">‹</button>
+        <div id="tm-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;text-align:center;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap"></div>
+        <button class="btn" onclick="tmNextWeek()">›</button>
+        <button class="btn sm" onclick="tmGoToday()">Hoy</button>
+        <button class="btn pri" onclick="tmOpenAddHK()">+ Agregar HK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div style="flex:1;overflow:auto;padding:20px 28px">
+    <div id="tm-alert" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:#92400e"></div>
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
+      <div id="tm-grid-header" style="display:grid;border-bottom:2px solid #e5e7eb;background:#f9fafb"></div>
+      <div id="tm-grid-rows"></div>
+      <div id="tm-cap-row" style="display:grid;background:#f9fafb;border-top:2px solid #e5e7eb"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM CELL MODAL -->
+<div id="tm-cell-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center" onclick="tmCloseCellModal(event)">
+  <div style="background:#fff;border-radius:12px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
+    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
+      <div><div id="tm-modal-title" style="font-size:15px;font-weight:700"></div><div id="tm-modal-sub" style="font-size:11.5px;color:#6b7280;margin-top:2px"></div></div>
+      <button onclick="tmCloseCellModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">×</button>
+    </div>
+    <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:8px">Estado del día</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div id="tm-opt-work" onclick="tmSelStatus('work')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
+            <div style="font-size:18px;margin-bottom:4px">✅</div><div style="font-size:11px;font-weight:600">Trabaja</div>
+          </div>
+          <div id="tm-opt-off" onclick="tmSelStatus('off')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
+            <div style="font-size:18px;margin-bottom:4px">🏖️</div><div style="font-size:11px;font-weight:600">Libre</div>
+          </div>
+          <div id="tm-opt-abs" onclick="tmSelStatus('abs')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
+            <div style="font-size:18px;margin-bottom:4px">🤒</div><div style="font-size:11px;font-weight:600">Ausente</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nota (opcional)</div>
+        <input id="tm-cell-note" type="text" class="inp" style="width:100%" placeholder="ej: cita médica, cobertura zona D...">
+      </div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="tmCloseCellModal()">Cancelar</button>
+      <button class="btn pri" onclick="tmSaveCellStatus()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- WEEKLY PAGE -->
+<div class="page-section" id="page-weekly" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden;background:#f5f6f8;z-index:10">
+
+  <!-- Header -->
+  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;flex-shrink:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Vista semanal</div>
+        <div id="wk-sub" style="font-size:12px;color:#6b7280;margin-top:2px">Demanda proyectada · Capacidad del equipo</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" onclick="wkPrev()">‹</button>
+        <div id="wk-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;text-align:center;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap"></div>
+        <button class="btn" onclick="wkNext()">›</button>
+        <button class="btn sm" onclick="wkToday()">Esta semana</button>
+      </div>
+    </div>
+    <!-- KPIs -->
+    <div style="display:flex;gap:0;border-top:1px solid #e5e7eb;margin:0 -28px;overflow:hidden">
+      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Tareas esta semana</div>
+        <div id="wk-kv-total" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
+        <div id="wk-kv-total-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">confirmadas</div>
+      </div>
+      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Día más cargado</div>
+        <div id="wk-kv-peak" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#d97706">—</div>
+        <div id="wk-kv-peak-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">—</div>
+      </div>
+      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">CO/CI esta semana</div>
+        <div id="wk-kv-coci" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px">back-to-back</div>
+      </div>
+      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Días con déficit</div>
+        <div id="wk-kv-deficit" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700">—</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px">necesitan eventual</div>
+      </div>
+      <div style="flex:1;padding:12px 20px">
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Próxima semana</div>
+        <div id="wk-kv-next" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px">tareas proyectadas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7-day cards -->
+  <div style="flex:1;overflow:auto;padding:20px 28px">
+    <div id="wk-grid" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px"></div>
+  </div>
+</div>
+
+<!-- HISTORY PAGE -->
+<div class="page-section" id="page-history" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;padding:24px 28px;background:#f5f6f8;z-index:10">
+  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin-bottom:16px">Historial de schedules</div>
+  <div id="history-list"><div style="color:#9ca3af">Cargando...</div></div>
+</div>
+
+
+
+
+
+
+<!-- USERS PAGE -->
+<div class="page-section" id="page-users" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;background:#f5f6f8;z-index:10;padding:24px 28px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Panel de usuarios</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:2px">Gestión de acceso · Wynwood House Panama</div>
+    </div>
+    <button class="btn pri" onclick="usersInviteOpen()">+ Invitar usuario</button>
+  </div>
+
+  <!-- Role legend -->
+  <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+    <div style="padding:6px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11.5px;color:#2563eb;font-weight:500">
+      <strong>Admin</strong> — acceso total, gestiona usuarios
+    </div>
+    <div style="padding:6px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:11.5px;color:#16a34a;font-weight:500">
+      <strong>Coordinator</strong> — edita schedules y equipo
+    </div>
+    <div style="padding:6px 12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;font-size:11.5px;color:#6b7280;font-weight:500">
+      <strong>Viewer</strong> — solo lectura
+    </div>
+  </div>
+
+  <div id="users-list" style="display:flex;flex-direction:column;gap:8px">
+    <div style="color:#9ca3af;font-size:13px">Cargando usuarios...</div>
+  </div>
+</div>
+
+<!-- INVITE USER MODAL -->
+<div id="invite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:600;align-items:center;justify-content:center" onclick="usersInviteClose(event)">
+  <div style="background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
+    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700">Invitar usuario</div>
+      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">×</button>
+    </div>
+    <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Email</div>
+        <input id="invite-email" type="email" class="inp" style="width:100%" placeholder="usuario@wynwoodhouse.com">
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nombre completo</div>
+        <input id="invite-name" type="text" class="inp" style="width:100%" placeholder="Nombre Apellido">
+      </div>
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Rol</div>
+        <select id="invite-role" class="inp" style="width:100%">
+          <option value="coordinator">Coordinator — edita schedules</option>
+          <option value="viewer">Viewer — solo lectura</option>
+          <option value="admin">Admin — acceso total</option>
+        </select>
+      </div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;font-size:12px;color:#92400e">
+        ⚠️ El usuario deberá crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizará automáticamente.
+      </div>
+      <div id="invite-result" style="font-size:12px;min-height:16px"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn" onclick="usersInviteClose()">Cancelar</button>
+      <button class="btn pri" onclick="usersCreate()">Crear usuario</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; animation: 2s ease-in-out 0s infinite normal none running claude-pulse; box-shadow: rgba(217, 119, 87, 0.5) 0px 0px 10px inset, rgba(217, 119, 87, 0.3) 0px 0px 20px inset, rgba(217, 119, 87, 0.1) 0px 0px 30px inset;"></div><script>
+
+// ══════════════════════════════════════════════
+// SUPABASE CONFIG — wh-panama-hk
+// ══════════════════════════════════════════════
+const SUPABASE_URL  = 'https://bjyortmlnsjpjluoxyxr.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_VFoxdhvk9pG7WIKrBz1bTQ_voOoFr9m';
+const TENANT_ID     = 'panama';
+let _sb = null;
+function getSB(){ if(!_sb) _sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON); return _sb; }
+
+// ── AUTH ──────────────────────────────────────
+async function sbSignIn(email,password){
+  const{data,error}=await getSB().auth.signInWithPassword({email,password});
+  if(error)throw error; return data;
+}
+async function sbSignOut(){ await getSB().auth.signOut(); }
+async function sbGetUser(){
+  const{data:{user}}=await getSB().auth.getUser();
+  if(!user) return null;
+  const{data}=await getSB().from('profiles').select('*').eq('id',user.id).single();
+  return data;
+}
+
+// ── SAVE SCHEDULE ─────────────────────────────
+async function sbSaveSchedule(date, result, csvFilename, csvRows){
+  const user = await sbGetUser();
+  const{summary,byHK,unassigned}=result;
+  const allTasks=[];
+  for(const[hkId,sched]of Object.entries(byHK))
+    for(const t of sched.tasks) allTasks.push({...t,hkId});
+  for(const t of unassigned) allTasks.push({...t,hkId:null});
+
+  const{data:ex}=await getSB().from('schedules').select('version')
+    .eq('tenant_id',TENANT_ID).eq('date',date)
+    .order('version',{ascending:false}).limit(1);
+  const version=(ex&&ex.length>0)?ex[0].version+1:1;
+
+  const{data,error}=await getSB().from('schedules').insert({
+    tenant_id:TENANT_ID, date, version,
+    generated_by: user?.id||null,
+    total_tasks:summary.total, hks_used:summary.hksUsed,
+    tasks_co:summary.co, tasks_coci:summary.coci,
+    tasks_exp:summary.exp, tasks_manual:summary.manualCount||0,
+    coci_at_risk:summary.cociAtRisk||0, unassigned:summary.unassigned,
+    schedule_data:allTasks, csv_filename:csvFilename||null, csv_rows:csvRows||null,
+  }).select().single();
+  if(error) throw error;
+  return data;
+}
+
+// ── SAVE AUDIT ────────────────────────────────
+async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,reason}){
+  const user=await sbGetUser();
+  const{error}=await getSB().from('audit_log').insert({
+    tenant_id:TENANT_ID, schedule_date:scheduleDate,
+    user_id:user?.id||null, user_name:user?.full_name||'Coordinador',
+    action, unit_name:unitName||null,
+    before_data:beforeData||null, after_data:afterData||null,
+    reason:reason||'',
+  });
+  if(error) console.error('Audit log error:', error);
+}
+
+// ── SAVE MANUAL TASK ──────────────────────────
+async function sbSaveManualTask(task){
+  const user=await sbGetUser();
+  const{error}=await getSB().from('manual_tasks').insert({
+    tenant_id:TENANT_ID, date:task.date,
+    unit_name:task.unitName, zone:task.zone||'',
+    br:parseInt(task.br)||1, task_type:task.type,
+    duration_mins:task.cleanMins||30,
+    preferred_hk:task.assignedHK||null,
+    requested_by:task.requestedBy||'coordinador',
+    priority:task.priority||'normal',
+    notes:task.notes||'', created_by:user?.id||null,
+  });
+  if(error) console.error('Manual task save error:', error);
+}
+
+// ── LOAD HISTORY ──────────────────────────────
+async function sbLoadHistory(limit=30){
+  const{data,error}=await getSB().from('schedules')
+    .select('id,date,version,total_tasks,hks_used,tasks_coci,coci_at_risk,generated_at,csv_filename')
+    .eq('tenant_id',TENANT_ID)
+    .order('date',{ascending:false}).order('version',{ascending:false})
+    .limit(limit);
+  if(error) return [];
+  // Keep only latest version per date
+  const seen=new Set(); 
+  return data.filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;});
+}
+
+// ── SAVE PROPERTIES ───────────────────────────
+async function sbSaveProperties(props){
+  const payload=props.map(p=>({
+    tenant_id:TENANT_ID, name:p.name, building:p.building||'',
+    zone:p.zone||'', br:parseInt(p.br)||1,
+    active:p.active!==false,
+    reactivation_date:p.reactivation||null,
+    notes:p.notes||'',
+  }));
+  const{error}=await getSB().from('properties')
+    .upsert(payload,{onConflict:'tenant_id,name'});
+  if(error) console.error('Properties save error:', error);
+}
+
+// ── AUTH STATE LISTENER ───────────────────────
+let currentUser = null;
+(async()=>{
+  try{
+    const {data:{session}}=await getSB().auth.getSession();
+    if(session){
+      const {data:profile}=await getSB().from('profiles').select('*').eq('id',session.user.id).single();
+      currentUser=profile;
+      const uname=document.getElementById('sb-user-name');
+      const urole=document.getElementById('sb-user-role');
+      if(uname)uname.textContent=profile?.full_name||session.user.email;
+      if(urole)urole.textContent=profile?.role||'admin';
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('app-screen').style.display='flex';
+      setTimeout(()=>{if(typeof run==='function')run();if(typeof loadProps==='function')loadProps();},300);
+    }
+  }catch(e){console.log('Session check:',e.message);}
+})();
+
+// ── HOOK: auto-save schedule after run ────────
+const _origRun = window.run;
+window.run = async function(){
+  _origRun && _origRun();
+  if(currentResult && currentDate){
+    try{
+      await sbSaveSchedule(currentDate, currentResult, null, reservations.length);
+      console.log('Schedule guardado en Supabase');
+    } catch(e){ console.error('Error guardando schedule:', e); }
+  }
+};
+
+// ── HOOK: auto-save audit on reassign ─────────
+const _origConfirmChange = window.confirmChange;
+// Will be patched after main script loads
+
+window.addEventListener('load', ()=>{
+  // Patch confirmChange to also log to Supabase
+  const origCC = confirmChange;
+  window.confirmChange = async function(task){
+    const before={assignedHK:task.assignedHK, startTime:task.startTime, endTime:task.endTime};
+    origCC(task);
+    const after={assignedHK:task.assignedHK, startTime:task.startTime, endTime:task.endTime};
+    if(currentDate){
+      await sbLogChange({
+        scheduleDate:currentDate, action:'reassign',
+        unitName:task.unitName, beforeData:before, afterData:after,
+        reason:document.getElementById('ep-reason')?.value||'',
+      });
+    }
+  };
+});
+
+
+
 // ══════════════════════════════════════════════
 // ENGINE
 // ══════════════════════════════════════════════
@@ -6013,133 +6217,9 @@ setTimeout(()=>{
   document.getElementById('date-picker').value=currentDate;
   run();
 },150);
-</script>
 
-<!-- TEAM PAGE -->
-<div class="page-section" id="page-team" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden;background:#f5f6f8;z-index:10">
 
-  <!-- Header -->
-  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;flex-shrink:0">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
-      <div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Equipo de Housekeeping</div>
-        <div style="font-size:12px;color:#6b7280;margin-top:2px">Disponibilidad semanal · Wynwood House Panama</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <button class="btn" onclick="tmPrevWeek()">‹</button>
-        <div id="tm-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;text-align:center;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap"></div>
-        <button class="btn" onclick="tmNextWeek()">›</button>
-        <button class="btn sm" onclick="tmGoToday()">Hoy</button>
-        <button class="btn pri" onclick="tmOpenAddHK()">+ Agregar HK</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Grid -->
-  <div style="flex:1;overflow:auto;padding:20px 28px">
-    <div id="tm-alert" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:#92400e"></div>
-    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
-      <div id="tm-grid-header" style="display:grid;border-bottom:2px solid #e5e7eb;background:#f9fafb"></div>
-      <div id="tm-grid-rows"></div>
-      <div id="tm-cap-row" style="display:grid;background:#f9fafb;border-top:2px solid #e5e7eb"></div>
-    </div>
-  </div>
-</div>
-
-<!-- TEAM CELL MODAL -->
-<div id="tm-cell-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center" onclick="tmCloseCellModal(event)">
-  <div style="background:#fff;border-radius:12px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
-    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
-      <div><div id="tm-modal-title" style="font-size:15px;font-weight:700"></div><div id="tm-modal-sub" style="font-size:11.5px;color:#6b7280;margin-top:2px"></div></div>
-      <button onclick="tmCloseCellModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">×</button>
-    </div>
-    <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:8px">Estado del día</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-          <div id="tm-opt-work" onclick="tmSelStatus('work')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">✅</div><div style="font-size:11px;font-weight:600">Trabaja</div>
-          </div>
-          <div id="tm-opt-off" onclick="tmSelStatus('off')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">🏖️</div><div style="font-size:11px;font-weight:600">Libre</div>
-          </div>
-          <div id="tm-opt-abs" onclick="tmSelStatus('abs')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">🤒</div><div style="font-size:11px;font-weight:600">Ausente</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nota (opcional)</div>
-        <input id="tm-cell-note" type="text" class="inp" style="width:100%" placeholder="ej: cita médica, cobertura zona D...">
-      </div>
-    </div>
-    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn" onclick="tmCloseCellModal()">Cancelar</button>
-      <button class="btn pri" onclick="tmSaveCellStatus()">Guardar</button>
-    </div>
-  </div>
-</div>
-
-<!-- WEEKLY PAGE -->
-<div class="page-section" id="page-weekly" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden;background:#f5f6f8;z-index:10">
-
-  <!-- Header -->
-  <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;flex-shrink:0">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Vista semanal</div>
-        <div id="wk-sub" style="font-size:12px;color:#6b7280;margin-top:2px">Demanda proyectada · Capacidad del equipo</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn" onclick="wkPrev()">‹</button>
-        <div id="wk-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;text-align:center;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap"></div>
-        <button class="btn" onclick="wkNext()">›</button>
-        <button class="btn sm" onclick="wkToday()">Esta semana</button>
-      </div>
-    </div>
-    <!-- KPIs -->
-    <div style="display:flex;gap:0;border-top:1px solid #e5e7eb;margin:0 -28px;overflow:hidden">
-      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Tareas esta semana</div>
-        <div id="wk-kv-total" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
-        <div id="wk-kv-total-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">confirmadas</div>
-      </div>
-      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Día más cargado</div>
-        <div id="wk-kv-peak" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#d97706">—</div>
-        <div id="wk-kv-peak-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">—</div>
-      </div>
-      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">CO/CI esta semana</div>
-        <div id="wk-kv-coci" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px">back-to-back</div>
-      </div>
-      <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Días con déficit</div>
-        <div id="wk-kv-deficit" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700">—</div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px">necesitan eventual</div>
-      </div>
-      <div style="flex:1;padding:12px 20px">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Próxima semana</div>
-        <div id="wk-kv-next" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">—</div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px">tareas proyectadas</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7-day cards -->
-  <div style="flex:1;overflow:auto;padding:20px 28px">
-    <div id="wk-grid" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px"></div>
-  </div>
-</div>
-
-<!-- HISTORY PAGE -->
-<div class="page-section" id="page-history" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;padding:24px 28px;background:#f5f6f8;z-index:10">
-  <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin-bottom:16px">Historial de schedules</div>
-  <div id="history-list"><div style="color:#9ca3af">Cargando...</div></div>
-</div>
-
-<script>
 // Navigation
 function showSection(name, btn) {
   // Hide main content area OR show it
@@ -6229,10 +6309,9 @@ document.addEventListener('DOMContentLoaded', function(){
   var n=document.getElementById('nav-schedule');
   if(n) n.classList.add('active');
 });
-</script>
 
 
-<script>
+
 // ═══════════════════════════════════════════════════════
 // TEAM MODULE
 // ═══════════════════════════════════════════════════════
@@ -6580,73 +6659,9 @@ function initWeeklyModule(){
   wkRender();
 }
 
-</script>
 
-<!-- USERS PAGE -->
-<div class="page-section" id="page-users" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;background:#f5f6f8;z-index:10;padding:24px 28px">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-    <div>
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Panel de usuarios</div>
-      <div style="font-size:12px;color:#6b7280;margin-top:2px">Gestión de acceso · Wynwood House Panama</div>
-    </div>
-    <button class="btn pri" onclick="usersInviteOpen()">+ Invitar usuario</button>
-  </div>
 
-  <!-- Role legend -->
-  <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
-    <div style="padding:6px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:11.5px;color:#2563eb;font-weight:500">
-      <strong>Admin</strong> — acceso total, gestiona usuarios
-    </div>
-    <div style="padding:6px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;font-size:11.5px;color:#16a34a;font-weight:500">
-      <strong>Coordinator</strong> — edita schedules y equipo
-    </div>
-    <div style="padding:6px 12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;font-size:11.5px;color:#6b7280;font-weight:500">
-      <strong>Viewer</strong> — solo lectura
-    </div>
-  </div>
 
-  <div id="users-list" style="display:flex;flex-direction:column;gap:8px">
-    <div style="color:#9ca3af;font-size:13px">Cargando usuarios...</div>
-  </div>
-</div>
-
-<!-- INVITE USER MODAL -->
-<div id="invite-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:600;align-items:center;justify-content:center" onclick="usersInviteClose(event)">
-  <div style="background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
-    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700">Invitar usuario</div>
-      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">×</button>
-    </div>
-    <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Email</div>
-        <input id="invite-email" type="email" class="inp" style="width:100%" placeholder="usuario@wynwoodhouse.com">
-      </div>
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nombre completo</div>
-        <input id="invite-name" type="text" class="inp" style="width:100%" placeholder="Nombre Apellido">
-      </div>
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Rol</div>
-        <select id="invite-role" class="inp" style="width:100%">
-          <option value="coordinator">Coordinator — edita schedules</option>
-          <option value="viewer">Viewer — solo lectura</option>
-          <option value="admin">Admin — acceso total</option>
-        </select>
-      </div>
-      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;font-size:12px;color:#92400e">
-        ⚠️ El usuario deberá crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizará automáticamente.
-      </div>
-      <div id="invite-result" style="font-size:12px;min-height:16px"></div>
-    </div>
-    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn" onclick="usersInviteClose()">Cancelar</button>
-      <button class="btn pri" onclick="usersCreate()">Crear usuario</button>
-    </div>
-  </div>
-</div>
-
-<script>
 // ═══ USERS MODULE ═══
 async function loadUsers() {
   var list = document.getElementById('users-list');
@@ -6727,12 +6742,9 @@ async function usersCreate() {
     res.style.color='#dc2626';res.textContent='Error: '+e.message;
   }
 }
-</script>
 
 
 
-
-<script>
 async function doLogin(){
   const email=document.getElementById('login-email').value.trim();
   const pass=document.getElementById('login-pass').value;
@@ -6762,5 +6774,6 @@ document.addEventListener('keydown',e=>{
 });
 
 
+
 </script>
-<div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; animation: 2s ease-in-out 0s infinite normal none running claude-pulse; box-shadow: rgba(217, 119, 87, 0.5) 0px 0px 10px inset, rgba(217, 119, 87, 0.3) 0px 0px 20px inset, rgba(217, 119, 87, 0.1) 0px 0px 30px inset;"></div></body></html>
+</body></html>
