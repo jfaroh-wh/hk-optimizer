@@ -5464,7 +5464,7 @@ const BASE_TRAVEL={A0:18,A1:18,A2:18,A3:18,B:20,C:18,D:5,E:35,F:30};
 const ZONE_COMPAT={A0:['A0','A1','A2','A3'],A1:['A0','A1','A2','A3'],A2:['A0','A1','A2','A3'],A3:['A0','A1','A2','A3'],B:['B','D'],C:['C','D'],D:['B','C','D'],E:['E'],F:['F']};
 const DEDICATED={A0:'HK01'};
 
-function h2t(h){const hh=Math.floor(h),mm=Math.round((h-hh)*60);return`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`}
+function h2t(h){const hh=Math.floor(h),mm=Math.round((h-hh)*60);returnString(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0')}
 function t2h(s){const[h,m]=s.split(':').map(Number);return h+m/60}
 function normBR(r){const s=String(r||'').toLowerCase().replace(/\s/g,'');if(s.includes('studio')||s==='0')return'studio';if(s.includes('3'))return'3br';if(s.includes('2'))return'2br';return'1br'}
 function cleanTime(t,br){return(CT[t]??CT.CO)[normBR(br)]??60}
@@ -5496,7 +5496,7 @@ function parseCSV(text){
   const col=aa=>{for(const a of aa){const i=hdr.findIndex(h=>h.includes(a));if(i>=0)return i}return-1};
   const I={nm:col(['nickname','listing_name','property_name','listing']),co:col(['check-out','checkout','check_out']),ci:col(['check-in','checkin','check_in']),st:col(['status']),br:col(['number_of_bedrooms','bedrooms','br'])};
   const VALID=new Set(['confirmed','reserved','awaiting_payment','inquiry']);
-  function nd(s){if(!s)return'';s=s.replace(/"/g,'').trim();if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){const[a,b,c]=s.split('/');return Number(a)<=12?`${c}-${a.padStart(2,'0')}-${b.padStart(2,'0')}`:`${c}-${b.padStart(2,'0')}-${a.padStart(2,'0')}`}return''}
+  function nd(s){if(!s)return'';s=s.replace(/"/g,'').trim();if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.slice(0,10);if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){const[a,b,c]=s.split('/');return Number(a)<=12?c + '-' + a.padStart(2,'0') + '-' + b.padStart(2,'0'):c + '-' + b.padStart(2,'0') + '-' + a.padStart(2,'0')}return''}
   const res=[];
   for(let i=1;i<lines.length;i++){
     const l=lines[i].trim();if(!l)continue;
@@ -5504,7 +5504,7 @@ function parseCSV(text){
     const st=(c[I.st]??'').toLowerCase().replace(/\s/g,'_');if(!VALID.has(st))continue;
     const co=nd(c[I.co]??''),ci=nd(c[I.ci]??'');if(!co&&!ci)continue;
     const nm=c[I.nm]??'';const zone=inferZone(nm);if(zone==='GHOST')continue;
-    res.push({id:`r${i}`,listingId:nm,name:nm,coDate:co,ciDate:ci,status:st,br:c[I.br]??'1',zone});
+    res.push({id:'r' + i,listingId:nm,name:nm,coDate:co,ciDate:ci,status:st,br:c[I.br]??'1',zone});
   }
   return res;
 }
@@ -5525,7 +5525,7 @@ function buildTasks(reservations,date,manualTasks=[]){
     const type=hasCO&&hasCI?TT.COCI:hasCO?TT.CO:TT.EXP;
     const r=e.rr[0];const pm=propMaster[uid]??{};
     const br=pm.br??r.br??'1';const zone=pm.zone??r.zone??'';
-    tasks.push({id:`${date}_${uid}`,unitId:uid,unitName:pm.name??r.name??uid,
+    tasks.push({id:date + '_' + uid,unitId:uid,unitName:pm.name??r.name??uid,
       zone,addrKey:inferBuilding(pm.name??r.name??uid).toLowerCase(),
       br:normBR(br),type,cleanMins:cleanTime(type,br),
       assignedHK:null,hkName:null,startTime:null,endTime:null,
@@ -5604,7 +5604,7 @@ function runSchedule_engine(tasks,hkPool){
   // Assign manual tasks last, respecting requested HK and time
   for(const t of srt(manuals)){
     const s=bestHK(t,t.assignedHK||null);
-    if(s){assign(t,s);assgn.push(t)}else warns.push({task:t.id,msg:`Manual task ${t.unitName} no asignable`});
+    if(s){assign(t,s);assgn.push(t)}else warns.push({task:t.id,msg:'Manual task ' + t.unitName + ' no asignable'});
   }
 
   // Rebalance
@@ -5636,12 +5636,12 @@ function genAlerts(r,date){
   const dow=new Date(date+'T12:00:00').getDay();
   const DW={0:'Domingo — día pico en Casco. Verificar cobertura A2.',1:'Lunes — pico secundario. Pueden llegar reservas last-minute.',3:'Miércoles — HK01 libra. Verificar MALLET con pool.',5:'Viernes — pico zonas externas. Verificar B y D.'};
   if(DW[dow])al.push({lv:'info',msg:DW[dow]});
-  if(s.unassigned>0)al.push({lv:'crit',msg:`${s.unassigned} tarea(s) sin asignar — riesgo check-in a tiempo`});
+  if(s.unassigned>0)al.push({lv:'crit',msg:s.unassigned + ' tarea(s) sin asignar — riesgo check-in a tiempo'});
   const riskTotal=(s.cociAtRisk||0)+(s.expAtRisk||0);
-  if(riskTotal>0)al.push({lv:'crit',msg:`${riskTotal} CO/CI o Express termina después de 15:00 — revisar urgente`});
-  if(s.hksUsed>=s.hksAvail)al.push({lv:'warn',msg:`Capacidad completa: ${s.hksUsed}/${s.hksAvail} HKs. Considerar eventual.`});
-  if(s.manualCount>0)al.push({lv:'info',msg:`${s.manualCount} tarea(s) manual(es) en el schedule (ocupadas, chequeos, urgencias).`});
-  if(s.urg>0)al.push({lv:'warn',msg:`${s.urg} urgencia(s) activa(s) — verificar que están correctamente asignadas.`});
+  if(riskTotal>0)al.push({lv:'crit',msg:riskTotal + ' CO/CI o Express termina después de 15:00 — revisar urgente'});
+  if(s.hksUsed>=s.hksAvail)al.push({lv:'warn',msg:'Capacidad completa: ' + s.hksUsed + '/' + s.hksAvail + ' HKs. Considerar eventual.'});
+  if(s.manualCount>0)al.push({lv:'info',msg:s.manualCount + ' tarea(s) manual(es) en el schedule (ocupadas, chequeos, urgencias).'});
+  if(s.urg>0)al.push({lv:'warn',msg:s.urg + ' urgencia(s) activa(s) — verificar que están correctamente asignadas.'});
   return al;
 }
 </script>
@@ -5685,9 +5685,9 @@ function renderTimeline(){
   const TW=HOUR_W*TL_H;
   const limitL=((15-TL_S)/TL_H)*TW;
 
-  let ruler=`<div class="ruler">`;
-  for(let h=TL_S;h<TL_E;h++)ruler+=`<div class="rhour${h===15?' h15':''}" style="width:${HOUR_W}px">${String(h).padStart(2,'0')}:00</div>`;
-  ruler+=`</div>`;
+  let ruler='<div class="ruler">';
+  for(let h=TL_S;h<TL_E;h++)ruler+='<div class="rhour' + h===15?' h15':'' + '" style="width:' + HOUR_W + 'px">' + String(h).padStart(2,'0') + ':00</div>';
+  ruler+='</div>';
 
   let rows='';
   for(const hk of HK_POOL){
@@ -5698,19 +5698,11 @@ function renderTimeline(){
     const totalMin=sched?sched.tasks.reduce((s,t)=>s+t.cleanMins,0):0;
     const hasRisk=sched&&sched.tasks.some(t=>(t.type==='CO/CI'||t.type==='EXP')&&t.endTime>15.0);
 
-    rows+=`<div class="hk-row${hasRisk?' has-risk':''}" style="min-height:68px" data-hk="${hk.id}"
-      ondragover="onDO(event,this)" ondrop="onDrp(event,'${hk.id}')"
-      ondragleave="this.classList.remove('drag-over')">`;
-    rows+=`<div class="hk-label" style="${hasRisk?'border-left:3px solid #dc2626;padding-left:11px':''}">
-      <div class="hk-name">${hk.name}${hasRisk?' <span style="color:#dc2626;font-size:10px;font-weight:700">⚠</span>':''}</div>
-      <div class="hk-code${isDed?' ded':''}">${hk.id}${isDed?' · DEDICADA':''}</div>
-      <div class="hk-meta">${isIdle?'Sin tareas hoy':zones+(totalMin?` · ${totalMin}min`:'')}</div>
-    </div>`;
-    rows+=`<div class="hk-track" style="width:${TW}px;height:68px">
-      <div class="track-grid">${Array.from({length:TL_H},(_,i)=>`<div class="track-col" style="width:${HOUR_W}px"></div>`).join('')}</div>
-      <div class="limit-line" style="left:${limitL}px"></div>`;
+    rows+='<div class="hk-row' + hasRisk?' has-risk':'' + '" style="min-height:68px" data-hk="' + hk.id + '"\n      ondragover="onDO(event,this)" ondrop="onDrp(event,\'' + hk.id + '\')"\n      ondragleave="this.classList.remove(\'drag-over\')">';
+    rows+='<div class="hk-label" style="' + hasRisk?'border-left:3px solid #dc2626;padding-left:11px':'' + '">\n      <div class="hk-name">' + hk.name + hasRisk?' <span style="color:#dc2626;font-size:10px;font-weight:700">⚠</span>':'' + '</div>\n      <div class="hk-code' + isDed?' ded':'' + '">' + hk.id + isDed?' · DEDICADA':'' + '</div>\n      <div class="hk-meta">' + isIdle?'Sin tareas hoy':zones+(totalMin · ${totalMin}min':\'\')}</div>\n    </div>';
+    rows+='<div class="hk-track" style="width:' + TW + 'px;height:68px">\n      <div class="track-grid">' + Array.from({length:TL_H},(_,i)=<div class="track-col" style="width:${HOUR_W}px"></div>').join(\'\')}</div>\n      <div class="limit-line" style="left:' + limitL + 'px"></div>';
 
-    if(isIdle){rows+=`<div class="idle-msg">Disponible para asignación</div>`}
+    if(isIdle){rows+='<div class="idle-msg">Disponible para asignación</div>'}
     else{
       for(const t of sched.tasks){
         const left=((t.startTime-TL_S)/TL_H)*TW;
@@ -5719,34 +5711,25 @@ function renderTimeline(){
         const tm=TYPE_META[t.type]??TYPE_META.CO;
         const cssC=tm.cssClass;
         const atRisk=(t.type==='CO/CI'||t.type==='EXP')&&t.endTime>15.0;
-        const classes=`task-block ${cssC}${atRisk?' at-risk':''}${narrow?' narrow':''}${tiny?' tiny':''}${t.isManual?' is-manual':''}`;
+        const classes='task-block ' + cssC + atRisk?' at-risk':'' + narrow?' narrow':'' + tiny?' tiny':'' + t.isManual?' is-manual':'';
 
         // Travel gap
         if(t.travelBefore>0&&t.order>1){
           const tS=t.startTime-t.travelBefore/60;
           const tL=((tS-TL_S)/TL_H)*TW;
           const tW=(t.travelBefore/60/TL_H)*TW;
-          if(tW>=14)rows+=`<div class="travel-blk" style="left:${Math.max(0,tL)}px;width:${tW-1}px">${t.travelBefore>=10?t.travelBefore+'m':''}</div>`;
+          if(tW>=14)rows+='<div class="travel-blk" style="left:' + Math.max(0,tL) + 'px;width:' + tW-1 + 'px">' + t.travelBefore>=10?t.travelBefore+'m':'' + '</div>';
         }
 
-        rows+=`<div class="${classes}" style="left:${left}px;width:${Math.max(width-2,22)}px"
-          draggable="true" data-task-id="${t.id}"
-          ondragstart="onDS(event,'${t.id}')" onclick="openPanel('${t.id}')">
-          <div class="t-name">${tm.icon} ${t.unitName}</div>
-          <div class="t-time">${h2t(t.startTime)}–${h2t(t.endTime)}${atRisk?' ⚠':''}</div>
-          <div class="t-meta">${t.type} · ${t.br.toUpperCase()}${t.zone?' · '+t.zone:''}</div>
-        </div>`;
+        rows+='<div class="' + classes + '" style="left:' + left + 'px;width:' + Math.max(width-2,22) + 'px"\n          draggable="true" data-task-id="' + t.id + '"\n          ondragstart="onDS(event,\'' + t.id + '\')" onclick="openPanel(\'' + t.id + '\')">\n          <div class="t-name">' + tm.icon + ' ' + t.unitName + '</div>\n          <div class="t-time">' + h2t(t.startTime) + '–' + h2t(t.endTime) + atRisk?' ⚠':'' + '</div>\n          <div class="t-meta">' + t.type + ' · ' + t.br.toUpperCase() + t.zone?' · '+t.zone:'' + '</div>\n        </div>';
       }
     }
-    rows+=`</div></div>`;
+    rows+='</div></div>';
   }
 
   let ua='';
   if(unassigned.length){
-    ua=`<div class="unassigned-row" style="margin:8px 0 0">
-      <div class="unasgn-lbl">Sin asignar</div>
-      ${unassigned.map(t=>{const tm=TYPE_META[t.type]??TYPE_META.CO;return`<div class="unasgn-task" onclick="openPanel('${t.id}')">${tm.icon} ${t.unitName} · ${t.type}</div>`}).join('')}
-    </div>`;
+    ua='<div class="unassigned-row" style="margin:8px 0 0">\n      <div class="unasgn-lbl">Sin asignar</div>\n      ' + unassigned.map(t=>{const tm=TYPE_META[t.type]??TYPE_META.CO;retur<div class="unasgn-task" onclick="openPanel('${t.id}')">${tm.icon} ${t.unitName} · ${t.type}</div>'}).join(\'\')}\n    </div>';
   }
 
   document.getElementById('tl-inner').innerHTML=ruler+rows+ua;
@@ -5757,33 +5740,26 @@ function renderKPIs(){
   const{summary:s}=currentResult;
   const riskN=(s.cociAtRisk||0)+(s.expAtRisk||0);
   document.getElementById('kpi-total').textContent=s.total;
-  document.getElementById('kpi-types').textContent=`${s.co} CO · ${s.coci} CO/CI · ${s.exp} EXP`;
+  document.getElementById('kpi-types').textContent=s.co + ' CO · ' + s.coci + ' CO/CI · ' + s.exp + ' EXP';
   const rEl=document.getElementById('kpi-risk');rEl.textContent=riskN;rEl.className='kpi-value '+(riskN>0?'crit':'ok');
   const uEl=document.getElementById('kpi-unasgn');uEl.textContent=s.unassigned;uEl.className='kpi-value '+(s.unassigned>0?'crit':'ok');
   document.getElementById('kpi-hks').textContent=s.hksUsed;
-  document.getElementById('kpi-hks-sub').textContent=`de ${s.hksAvail} disponibles`;
+  document.getElementById('kpi-hks-sub').textContent='de ' + s.hksAvail + ' disponibles';
   const mEl=document.getElementById('kpi-manual');mEl.textContent=s.manualCount||0;mEl.className='kpi-value '+(s.manualCount>0?'warn':'ok');
-  document.getElementById('sched-sub').textContent=`Schedule · ${currentDate} · ${s.total} tareas totales`;
+  document.getElementById('sched-sub').textContent='Schedule · ' + currentDate + ' · ' + s.total + ' tareas totales';
 }
 
 function renderAlerts(){
   const al=genAlerts(currentResult,currentDate||'');
   const list=document.getElementById('ap-list');
-  if(!al.length){list.innerHTML=`<div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas críticas hoy.</div>`;return}
-  list.innerHTML=al.map(a=>`<div class="ap-item">
-    <div class="ap-dot ${a.lv}"></div>
-    <div class="ap-msg">${a.msg}</div>
-  </div>`).join('');
+  if(!al.length){list.innerHTML='<div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas críticas hoy.</div>';return}
+  list.innerHTML=al.map(a=>'<div class="ap-item">\n    <div class="ap-dot ' + a.lv + '"></div>\n    <div class="ap-msg">' + a.msg + '</div>\n  </div>').join('');
 }
 
 function renderAuditLog(){
   if(!auditLog.length)return;
   const blk=document.getElementById('ap-audit');blk.style.display='block';
-  document.getElementById('audit-list').innerHTML=auditLog.slice(0,6).map(e=>`
-    <div class="audit-row">
-      <span class="audit-who">${e.who}</span> — ${e.what}
-      <div class="audit-ts">${e.ts}${e.reason&&e.reason!=='—'?` · "${e.reason}"`:''}</div>
-    </div>`).join('');
+  document.getElementById('audit-list').innerHTML=auditLog.slice(0,6).map(e=>'\n    <div class="audit-row">\n      <span class="audit-who">' + e.who + '</span> — ' + e.what + '\n      <div class="audit-ts">' + e.ts + e.reason&&e.reason!=='—' · "${e.reason}"':\'\'}</div>\n    </div>').join('');
 }
 
 // ── CSV & RUN ─────────────────────────────────
@@ -5797,7 +5773,7 @@ document.getElementById('csv-input').addEventListener('change',e=>{
     for(const r of reservations)if(r.coDate>=today)(dc[r.coDate]=(dc[r.coDate]??0)+1);
     const best=Object.entries(dc).sort((a,b)=>a[0].localeCompare(b[0])).find(([,n])=>n>=3)?.[0]??today;
     currentDate=best;document.getElementById('date-picker').value=best;
-    toast(`✓ ${reservations.length} reservas cargadas · fecha: ${best}`);
+    toast('✓ ' + reservations.length + ' reservas cargadas · fecha: ' + best);
   };reader.readAsText(file);
 });
 
@@ -5819,7 +5795,7 @@ function run(){
 }
 
 // ── DRAG & DROP ───────────────────────────────
-window.onDS=(e,id)=>{dragTaskId=id;e.dataTransfer.effectAllowed='move';document.querySelector(`[data-task-id="${id}"]`)?.classList.add('dragging')};
+window.onDS=(e,id)=>{dragTaskId=id;e.dataTransfer.effectAllowed='move';document.querySelector('[data-task-id="' + id + '"]')?.classList.add('dragging')};
 window.onDO=(e,row)=>{e.preventDefault();row.classList.add('drag-over')};
 window.onDrp=(e,hkId)=>{
   e.preventDefault();document.querySelectorAll('.hk-row').forEach(r=>r.classList.remove('drag-over'));
@@ -5833,19 +5809,16 @@ window.openPanel=(taskId,preHK=null)=>{
   const t=findTask(taskId);if(!t)return;
   selectedTask=t;pendingHKId=preHK??t.assignedHK;
   const tm=TYPE_META[t.type]??TYPE_META.CO;
-  document.getElementById('ep-title').textContent=`${tm.icon} ${t.unitName}`;
-  document.getElementById('ep-sub').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'}`;
-  document.getElementById('ep-unit').textContent=t.unitName+(t.notes?` — ${t.notes}`:'');
-  document.getElementById('ep-meta').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'} · ${t.cleanMins} min${t.isManual?' · MANUAL':''}`;
-  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)} → ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
+  document.getElementById('ep-title').textContent=tm.icon + ' ' + t.unitName;
+  document.getElementById('ep-sub').textContent=t.type + ' · ' + t.br.toUpperCase() + ' · Zona ' + t.zone||'?';
+  document.getElementById('ep-unit').textContent=t.unitName+(t.notes?' — ' + t.notes:'');
+  document.getElementById('ep-meta').textContent=t.type + ' · ' + t.br.toUpperCase() + ' · Zona ' + t.zone||'?' + ' · ' + t.cleanMins + ' min' + t.isManual?' · MANUAL':'';
+  document.getElementById('ep-time').textContent=t.startTime!=null?h2t(t.startTime) + ' → ' + h2t(t.endTime) + '  (' + t.cleanMins + 'min)':'Sin asignar';
   document.getElementById('ep-reason').value='';
   const{byHK}=currentResult;
   document.getElementById('ep-hkopts').innerHTML=HK_POOL.map(hk=>{
     const sc=byHK[hk.id];const n=sc?sc.tasks.length:0,m=sc?sc.tasks.reduce((s,x)=>s+x.cleanMins,0):0;
-    return`<div class="hk-opt ${hk.id===pendingHKId?'sel':''}" onclick="selHK('${hk.id}',this)">
-      <span class="hk-opt-nm">${hk.id} · ${hk.name}</span>
-      <span class="hk-opt-ld">${n} tareas · ${m}min</span>
-    </div>`;
+    return'<div class="hk-opt ' + hk.id===pendingHKId?'sel':'' + '" onclick="selHK(\'' + hk.id + '\',this)">\n      <span class="hk-opt-nm">' + hk.id + ' · ' + hk.name + '</span>\n      <span class="hk-opt-ld">' + n + ' tareas · ' + m + 'min</span>\n    </div>';
   }).join('');
   document.getElementById('ep').classList.add('open');
   document.getElementById('ep-confirm').onclick=()=>confirmChange(t);
@@ -5869,9 +5842,9 @@ function confirmChange(task){
   byHK[newId].tasks.push(task);byHK[newId].tasks.sort((a,b)=>a.startTime-b.startTime);
   byHK[newId].tasks.forEach((t,i)=>t.order=i+1);byHK[newId].zones=[...new Set(byHK[newId].tasks.map(t=>t.zone))];
   const oldHK=task.assignedHK||'—';
-  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK} → ${newId}`,reason:reason||'—'});
+  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:task.unitName + ': ' + oldHK + ' → ' + newId,reason:reason||'—'});
   closePanel();renderTimeline();renderKPIs();renderAlerts();renderAuditLog();
-  toast(`${task.unitName} reasignada a ${hk?.name??newId}`);
+  toast(task.unitName + ' reasignada a ' + hk?.name??newId);
 }
 
 function findTask(id){
@@ -5884,11 +5857,11 @@ function findTask(id){
 function openAddTaskModal(){
   // Populate unit datalist
   const dl=document.getElementById('unit-list');
-  dl.innerHTML=properties.filter(p=>p.active).map(p=>`<option value="${p.name}">`).join('');
+  dl.innerHTML=properties.filter(p=>p.active).map(p=>'<option value="' + p.name + '">').join('');
   // Populate HK selector
   const hkSel=document.getElementById('at-hk');
-  hkSel.innerHTML=`<option value="">Sistema asigna automáticamente</option>`+
-    HK_POOL.map(h=>`<option value="${h.id}">${h.id} · ${h.name}</option>`).join('');
+  hkSel.innerHTML='<option value="">Sistema asigna automáticamente</option>'+
+    HK_POOL.map(h=>'<option value="' + h.id + '">' + h.id + ' · ' + h.name + '</option>').join('');
   selectedType=null;
   document.querySelectorAll('.type-opt').forEach(o=>o.classList.remove('sel'));
   document.getElementById('at-unit').value='';
@@ -5945,14 +5918,7 @@ function updateImpact(){
   const newLoad=hkLoad+mins;
   const utilizationAfter=Math.round(newLoad/(7.5*60)*100);
 
-  document.getElementById('impact-content').innerHTML=`
-    <div class="impact-row"><span class="impact-lbl">Tipo de tarea</span><span class="impact-val">${m.icon} ${m.desc} · ${mins} min</span></div>
-    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)} → ${h2t(endTime)}</span></div>
-    <div class="impact-row"><span class="impact-lbl">HK sugerida</span><span class="impact-val">${targetHK?`${targetHK.id} · ${targetHK.name}`:'Sin HK disponible'}</span></div>
-    <div class="impact-row"><span class="impact-lbl">Carga HK después</span><span class="impact-val ${utilizationAfter>90?'warn':''}">${newLoad} min (${utilizationAfter}%)</span></div>
-    ${overLimit?`<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">⚠ Advertencia</span><span class="impact-val crit">Termina después del límite (${h2t(m.maxEnd)})</span></div>`:''}
-    ${s.hksUsed>=s.hksAvail?`<div class="impact-row"><span class="impact-lbl" style="color:#d97706">⚠ Capacidad</span><span class="impact-val warn">Todas las HKs ya tienen tareas</span></div>`:''}
-  `;
+  document.getElementById('impact-content').innerHTML='\n    <div class="impact-row"><span class="impact-lbl">Tipo de tarea</span><span class="impact-val">' + m.icon + ' ' + m.desc + ' · ' + mins + ' min</span></div>\n    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ' + overLimit?'warn':'' + '">' + h2t(requestedH) + ' → ' + h2t(endTime) + '</span></div>\n    <div class="impact-row"><span class="impact-lbl">HK sugerida</span><span class="impact-val">' + targetHK${targetHK.id} · ${targetHK.name}':\'Sin HK disponible\'}</span></div>\n    <div class="impact-row"><span class="impact-lbl">Carga HK después</span><span class="impact-val ' + utilizationAfter>90?'warn':'' + '">' + newLoad + ' min (' + utilizationAfter + '%)</span></div>\n    ' + overLimit<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">⚠ Advertencia</span><span class="impact-val crit">Termina después del límite (${h2t(m.maxEnd)})</span></div>':\'\'}\n    ' + s.hksUsed>=s.hksAvail<div class="impact-row"><span class="impact-lbl" style="color:#d97706">⚠ Capacidad</span><span class="impact-val warn">Todas las HKs ya tienen tareas</span></div>':\'\'}\n  ';
 }
 
 function confirmAddTask(){
@@ -5968,7 +5934,7 @@ function confirmAddTask(){
   const br=pm.br??'1';
 
   const task={
-    id:`manual_${Date.now()}`,unitId:unit,unitName:unit,
+    id:'manual_' + Date.now(),unitId:unit,unitName:unit,
     zone:pm.zone??zone,addrKey:inferBuilding(unit).toLowerCase(),
     br:normBR(br),type:selectedType,cleanMins:mins,
     assignedHK:hkId||null,hkName:null,startTime:null,endTime:null,
@@ -5981,7 +5947,7 @@ function confirmAddTask(){
   };
   manualTasks.push(task);
   document.getElementById('add-task-ov').classList.remove('open');
-  toast(`Tarea manual agregada: ${unit} · ${selectedType}`);
+  toast('Tarea manual agregada: ' + unit + ' · ' + selectedType);
   if(currentResult)run(); // re-run schedule with new task
 }
 </script>
@@ -6051,26 +6017,7 @@ function renderProps(){
     const isSel=selIds.has(p.id);
     const today=new Date().toISOString().split('T')[0];
     const rSoon=p.reactivation&&p.reactivation>=today;
-    return`<tr class="${p.active?'':'row-inactive'}" data-id="${p.id}">
-      <td><input type="checkbox" ${isSel?'checked':''} onchange="togSel('${p.id}',this)" onclick="event.stopPropagation()"></td>
-      <td>
-        <div class="unit-nm ${p.active?'':'crossed'}">${esc(p.name)}</div>
-        <div class="unit-bld">${esc(p.building)}</div>
-        ${rSoon?`<div class="react-tag">Reactiva: ${p.reactivation}</div>`:''}
-      </td>
-      <td></td>
-      <td><span class="zbadge z-${p.zone}">${p.zone}</span></td>
-      <td><span class="brpill">${p.br} BR</span></td>
-      <td>
-        <div class="tog-wrap" onclick="qTog('${p.id}')">
-          <div class="tog-track ${p.active?'on':'off'}"><div class="tog-thumb"></div></div>
-          <span class="tog-lbl ${p.active?'on':'off'}">${p.active?'Activa':'Inactiva'}</span>
-        </div>
-      </td>
-      <td style="font-size:12px;color:var(--text3)">${p.reactivation||'—'}</td>
-      <td><div class="notes-cell" title="${esc(p.notes||'')}" onclick="openEditProp('${p.id}')">${p.notes?esc(p.notes):'<span style="opacity:.3">—</span>'}</div></td>
-      <td><div class="row-acts"><button class="btn sm" onclick="openEditProp('${p.id}')">Editar</button></div></td>
-    </tr>`;
+    return'<tr class="' + p.active?'':'row-inactive' + '" data-id="' + p.id + '">\n      <td><input type="checkbox" ' + isSel?'checked':'' + ' onchange="togSel(\'' + p.id + '\',this)" onclick="event.stopPropagation()"></td>\n      <td>\n        <div class="unit-nm ' + p.active?'':'crossed' + '">' + esc(p.name) + '</div>\n        <div class="unit-bld">' + esc(p.building) + '</div>\n        ' + rSoon<div class="react-tag">Reactiva: ${p.reactivation}</div>':\'\'}\n      </td>\n      <td></td>\n      <td><span class="zbadge z-' + p.zone + '">' + p.zone + '</span></td>\n      <td><span class="brpill">' + p.br + ' BR</span></td>\n      <td>\n        <div class="tog-wrap" onclick="qTog(\'' + p.id + '\')">\n          <div class="tog-track ' + p.active?'on':'off' + '"><div class="tog-thumb"></div></div>\n          <span class="tog-lbl ' + p.active?'on':'off' + '">' + p.active?'Activa':'Inactiva' + '</span>\n        </div>\n      </td>\n      <td style="font-size:12px;color:var(--text3)">' + p.reactivation||'—' + '</td>\n      <td><div class="notes-cell" title="' + esc(p.notes||'') + '" onclick="openEditProp(\'' + p.id + '\')">' + p.notes?esc(p.notes):'<span style="opacity:.3">—</span>' + '</div></td>\n      <td><div class="row-acts"><button class="btn sm" onclick="openEditProp(\'' + p.id + '\')">Editar</button></div></td>\n    </tr>';
   }).join('');
   updateBB();
 }
@@ -6097,7 +6044,7 @@ document.getElementById('sf-all').classList.add('pri');
 function togSel(id,cb){if(cb.checked)selIds.add(id);else selIds.delete(id);updateBB()}
 function togSelAll(cb){const f=getPF();if(cb.checked)f.forEach(p=>selIds.add(p.id));else selIds.clear();renderProps()}
 function clearSel(){selIds.clear();renderProps()}
-function updateBB(){const bar=document.getElementById('bulk-bar');const n=selIds.size;if(n>0){bar.classList.add('show');document.getElementById('bulk-count').textContent=`${n} unidad${n>1?'es':''} seleccionada${n>1?'s':''}`}else bar.classList.remove('show')}
+function updateBB(){const bar=document.getElementById('bulk-bar');const n=selIds.size;if(n>0){bar.classList.add('show');document.getElementById('bulk-count').textContent=n + ' unidad' + n>1?'es':'' + ' seleccionada' + n>1?'s':''}else bar.classList.remove('show')}
 async function qTog(id){
   const p=properties.find(x=>x.id===id);if(!p)return;
   if(p.active){openEditProp(id);setTimeout(()=>{document.getElementById('pm-inactive').checked=true;toggleIB()},50)}
@@ -6109,13 +6056,13 @@ async function qTog(id){
     }catch(e){toast('Error: '+e.message);}
   }
 }
-function bulkAct(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&!p.active){p.active=true;p.reactivation=null;n++}}save();clearSel();renderProps();toast(`${n} unidades activadas`)}
-function bulkDeact(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&p.active){p.active=false;n++}}save();clearSel();renderProps();toast(`${n} unidades desactivadas`)}
+function bulkAct(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&!p.active){p.active=true;p.reactivation=null;n++}}save();clearSel();renderProps();toast(n + ' unidades activadas')}
+function bulkDeact(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&p.active){p.active=false;n++}}save();clearSel();renderProps();toast(n + ' unidades desactivadas')}
 function exportProps(){
   const hdr=['ID','Nombre','Edificio','Zona','BR','Activa','Reactivación','Notas'];
-  const rows=properties.map(p=>[p.id,p.name,p.building,p.zone,p.br,p.active,p.reactivation||'',p.notes||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const rows=properties.map(p=>[p.id,p.name,p.building,p.zone,p.br,p.active,p.reactivation||'',p.notes||''].map(v=>'"' + String(v).replace(/"/g,'""') + '"').join(','));
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([[hdr.join(','),...rows].join('\n')],{type:'text/csv'}));
-  a.download=`wh_props_${new Date().toISOString().split('T')[0]}.csv`;a.click();toast('CSV exportado');
+  a.download='wh_props_' + new Date().toISOString().split('T')[0] + '.csv';a.click();toast('CSV exportado');
 }
 
 function openAddPropModal(){
@@ -6130,7 +6077,7 @@ function openAddPropModal(){
 function openEditProp(id){
   const p=properties.find(x=>x.id===id);if(!p)return;
   editingPropId=id;
-  document.getElementById('pm-title').textContent=p.name;document.getElementById('pm-sub').textContent=`${p.zone} · ${p.building}`;
+  document.getElementById('pm-title').textContent=p.name;document.getElementById('pm-sub').textContent=p.zone + ' · ' + p.building;
   document.getElementById('pm-id').value=p.id;document.getElementById('pm-name').value=p.name;
   document.getElementById('pm-building').value=p.building;document.getElementById('pm-zone').value=p.zone;
   document.getElementById('pm-br').value=String(p.br);document.getElementById('pm-notes').value=p.notes||'';
@@ -6176,7 +6123,7 @@ async function saveProp(){
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
-  document.getElementById(`page-${name}`).classList.add('active');
+  document.getElementById('page-' + name).classList.add('active');
   btn.classList.add('active');
   if(name==='properties')renderProps();
 }
