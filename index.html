@@ -6866,4 +6866,36 @@ async function usersCreate() {
   }catch(e){res.style.color="#dc2626";res.textContent="Error: "+e.message;}
 }
 </script>
-</body></html>
+<script>
+(function() {
+  function fixText(t) {
+    if (!t) return t;
+    t = t.split("\u00e2\u0080\u0094").join("\u2014");
+    t = t.split("\u00e2\u0080\u0093").join("\u2013");
+    t = t.split("\u00e2\u0080\u00a2").join("\u2022");
+    t = t.split("\u00e2\u0080\u00a6").join("\u2026");
+    t = t.split("\u00e2\u009c\u0093").join("\u2713");
+    t = t.split("\u00e2\u009c\u0097").join("\u2717");
+    t = t.split("\u00e2\u0080\u0099").join("\u2019");
+    return t;
+  }
+  function fixNode(n) {
+    if (n.nodeType===3) { var f=fixText(n.nodeValue); if(f!==n.nodeValue) n.nodeValue=f; }
+    else if (n.nodeType===1 && n.tagName!=="SCRIPT" && n.tagName!=="STYLE") {
+      for(var i=0;i<n.childNodes.length;i++) fixNode(n.childNodes[i]); }
+  }
+  var obs = new MutationObserver(function(ms) {
+    ms.forEach(function(m) {
+      if(m.type==="characterData") { var f=fixText(m.target.nodeValue); if(f!==m.target.nodeValue) m.target.nodeValue=f; }
+      else if(m.addedNodes.length) m.addedNodes.forEach(function(n){if(n.nodeType===1)fixNode(n);});
+    });
+  });
+  document.addEventListener("DOMContentLoaded",function(){
+    fixNode(document.body);
+    setTimeout(function(){fixNode(document.body);},500);
+    setTimeout(function(){fixNode(document.body);},2000);
+    obs.observe(document.body,{childList:true,subtree:true,characterData:true});
+  });
+})();
+</script>
+</body>
