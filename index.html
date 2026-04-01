@@ -13,7 +13,7 @@ const TENANT_ID     = 'panama';
 let _sb = null;
 function getSB(){ if(!_sb) _sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON); return _sb; }
 
-//  AUTH 
+//  AUTH 
 async function sbSignIn(email,password){
   const{data,error}=await getSB().auth.signInWithPassword({email,password});
   if(error)throw error; return data;
@@ -26,7 +26,7 @@ async function sbGetUser(){
   return data;
 }
 
-//  SAVE SCHEDULE 
+//  SAVE SCHEDULE 
 async function sbSaveSchedule(date, result, csvFilename, csvRows){
   const user = await sbGetUser();
   const{summary,byHK,unassigned}=result;
@@ -53,7 +53,7 @@ async function sbSaveSchedule(date, result, csvFilename, csvRows){
   return data;
 }
 
-//  SAVE AUDIT 
+//  SAVE AUDIT 
 async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,reason}){
   const user=await sbGetUser();
   const{error}=await getSB().from('audit_log').insert({
@@ -66,7 +66,7 @@ async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,re
   if(error) console.error('Audit log error:', error);
 }
 
-//  SAVE MANUAL TASK 
+//  SAVE MANUAL TASK 
 async function sbSaveManualTask(task){
   const user=await sbGetUser();
   const{error}=await getSB().from('manual_tasks').insert({
@@ -82,7 +82,7 @@ async function sbSaveManualTask(task){
   if(error) console.error('Manual task save error:', error);
 }
 
-//  LOAD HISTORY 
+//  LOAD HISTORY 
 async function sbLoadHistory(limit=30){
   const{data,error}=await getSB().from('schedules')
     .select('id,date,version,total_tasks,hks_used,tasks_coci,coci_at_risk,generated_at,csv_filename')
@@ -95,7 +95,7 @@ async function sbLoadHistory(limit=30){
   return data.filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;});
 }
 
-//  SAVE PROPERTIES 
+//  SAVE PROPERTIES 
 async function sbSaveProperties(props){
   const payload=props.map(p=>({
     tenant_id:TENANT_ID, name:p.name, building:p.building||'',
@@ -109,7 +109,7 @@ async function sbSaveProperties(props){
   if(error) console.error('Properties save error:', error);
 }
 
-//  AUTH STATE LISTENER 
+//  AUTH STATE LISTENER 
 let currentUser = null;
 (async()=>{
   try{
@@ -128,7 +128,7 @@ let currentUser = null;
   }catch(e){console.log('Session check:',e.message);}
 })();
 
-//  HOOK: auto-save schedule after run 
+//  HOOK: auto-save schedule after run 
 const _origRun = window.run;
 window.run = async function(){
   _origRun && _origRun();
@@ -140,7 +140,7 @@ window.run = async function(){
   }
 };
 
-//  HOOK: auto-save audit on reassign 
+//  HOOK: auto-save audit on reassign 
 const _origConfirmChange = window.confirmChange;
 // Will be patched after main script loads
 
@@ -190,7 +190,7 @@ window.addEventListener('load', ()=>{
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--fn); font-size: 13px; min-height: 100vh; display: flex; }
 
-/*  SIDEBAR  */
+/*  SIDEBAR  */
 .sidebar {
   width: var(--sidebar-w); min-height: 100vh; background: var(--surface);
   border-right: 1px solid var(--border); display: flex; flex-direction: column;
@@ -226,10 +226,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .sb-uname { font-size: 12px; font-weight: 600; }
 .sb-urole { font-size: 10px; color: var(--text3); }
 
-/*  MAIN  */
+/*  MAIN  */
 .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
-/*  PAGE HEADER  */
+/*  PAGE HEADER  */
 .page-header {
   background: var(--surface); border-bottom: 1px solid var(--border);
   padding: 16px 28px 0; flex-shrink: 0;
@@ -255,7 +255,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .kpi-value.crit { color: #dc2626; }
 .kpi-value.blue { color: var(--accent); }
 
-/*  PAGE TABS  */
+/*  PAGE TABS  */
 .page-tabs { display: flex; gap: 0; padding: 0; }
 .ptab {
   padding: 10px 18px; border-bottom: 2px solid transparent; font-size: 13px;
@@ -265,7 +265,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .ptab:hover { color: var(--text); }
 .ptab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-/*  BUTTONS  */
+/*  BUTTONS  */
 .btn {
   padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border2);
   background: var(--surface); color: var(--text); font-family: var(--fn);
@@ -281,7 +281,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .btn.ghost { border-color: transparent; background: transparent; }
 .btn.ghost:hover { background: var(--bg); }
 
-/*  TOOLBAR  */
+/*  TOOLBAR  */
 .toolbar { display: flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap; flex-shrink: 0; }
 .tb-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
 .inp { padding: 6px 10px; border: 1px solid var(--border2); border-radius: 7px; background: var(--surface); color: var(--text); font-family: var(--fn); font-size: 12px; }
@@ -291,15 +291,15 @@ select.inp { cursor: pointer; }
 .srch-wrap { position: relative; }
 .srch-wrap .si { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 13px; pointer-events: none; }
 
-/*  CONTENT AREA  */
+/*  CONTENT AREA  */
 .content { flex: 1; overflow: auto; padding: 20px 28px 40px; }
 .content.no-pad { padding: 0; }
 
-/*  PAGE VISIBILITY  */
+/*  PAGE VISIBILITY  */
 .page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
 .page.active { display: flex; }
 
-/*  TASK TYPE LEGEND  */
+/*  TASK TYPE LEGEND  */
 .type-legend { display: flex; gap: 6px; flex-wrap: wrap; }
 .tlg {
   display: inline-flex; align-items: center; gap: 5px;
@@ -313,10 +313,10 @@ select.inp { cursor: pointer; }
 .tlg.urg  { background: var(--urg-bg);  color: var(--urg);  border-color: var(--urg-bd); }
 .tlg-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-/*  SCHEDULE PAGE  */
+/*  SCHEDULE PAGE  */
 .sched-wrap { display: flex; flex: 1; overflow: hidden; }
 
-/*  TIMELINE  */
+/*  TIMELINE  */
 .tl-area { flex: 1; overflow: auto; background: var(--bg); }
 .tl-inner { min-width: 900px; }
 
@@ -423,7 +423,7 @@ select.inp { cursor: pointer; }
 .unasgn-task { padding: 3px 9px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; color: #991b1b; cursor: pointer; font-weight: 500; }
 .unasgn-task:hover { background: #fecaca; }
 
-/*  ALERTS PANEL (right of timeline)  */
+/*  ALERTS PANEL (right of timeline)  */
 .alerts-panel { width: 260px; flex-shrink: 0; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
 .ap-hd { padding: 14px 16px 10px; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .ap-list { flex: 1; overflow-y: auto; }
@@ -441,7 +441,7 @@ select.inp { cursor: pointer; }
 .audit-who { color: var(--accent); font-weight: 500; }
 .audit-ts  { color: var(--text3); font-size: 10px; }
 
-/*  ADD TASK MODAL  */
+/*  ADD TASK MODAL  */
 .modal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .18s; }
 .modal-ov.open { opacity: 1; pointer-events: all; }
 .modal { background: var(--surface); border-radius: 12px; width: 520px; max-width: 95vw; max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.18); display: flex; flex-direction: column; }
@@ -486,7 +486,7 @@ select.inp { cursor: pointer; }
 
 .modal-ft { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
 
-/*  TASK EDIT PANEL  */
+/*  TASK EDIT PANEL  */
 .ep {
   position: fixed; right: 0; top: 0; bottom: 0; width: 320px;
   background: var(--surface); border-left: 1px solid var(--border);
@@ -514,7 +514,7 @@ select.inp { cursor: pointer; }
 .reason-inp::placeholder { color: var(--text3); }
 .ep-ft { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
-/*  PROPERTIES PAGE  */
+/*  PROPERTIES PAGE  */
 .tbl-wrap { overflow: auto; flex: 1; }
 table { width: 100%; border-collapse: collapse; min-width: 800px; }
 thead th { padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text2); border-bottom: 2px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; background: var(--surface); position: sticky; top: 0; z-index: 2; }
@@ -557,14 +557,14 @@ tbody tr:hover .row-acts { opacity: 1; }
 .bulk-bar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; padding: 10px 16px; display: none; gap: 10px; align-items: center; z-index: 150; box-shadow: 0 4px 24px rgba(0,0,0,.15); }
 .bulk-bar.show { display: flex; }
 
-/*  MODAL (properties)  */
+/*  MODAL (properties)  */
 .pmodal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 400; opacity: 0; pointer-events: none; transition: opacity .18s; }
 .pmodal-ov.open { opacity: 1; pointer-events: all; }
 .inact-block { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px; display: none; flex-direction: column; gap: 9px; }
 .inact-block.show { display: flex; }
 .inact-note { font-size: 11.5px; color: #92400e; line-height: 1.5; }
 
-/*  MISC  */
+/*  MISC  */
 #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111827; color: #fff; border-radius: 8px; padding: 10px 18px; font-size: 12.5px; z-index: 999; opacity: 0; transition: opacity .3s; max-width: 380px; text-align: center; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
 
 /* scrollbar */
@@ -572,15 +572,15 @@ tbody tr:hover .row-acts { opacity: 1; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
 
-/*  ZOOM CONTROLS  */
+/*  ZOOM CONTROLS  */
 .tl-zoom { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
 .zoom-btn { background: var(--surface); border: 1px solid var(--border2); border-radius: 5px; width: 26px; height: 26px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text2); transition: background .1s; }
 .zoom-btn:hover { background: var(--accent-lt); color: var(--accent); }
 .zoom-lbl { font-size: 11px; color: var(--text3); font-weight: 500; min-width: 32px; text-align: center; }
-/*  HK clickable label  */
+/*  HK clickable label  */
 .hk-label { cursor: pointer; }
 .hk-label:hover .hk-name { color: var(--accent); text-decoration: underline; }
-/*  HK Day Detail Modal  */
+/*  HK Day Detail Modal  */
 .hkd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 800; display: none; align-items: center; justify-content: center; }
 .hkd-overlay.open { display: flex; }
 .hkd-modal { background: var(--surface); border-radius: 12px; width: 520px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.2); overflow: hidden; }
@@ -663,7 +663,7 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="sb-avatar">JF</div>
       <div><div class="sb-uname" id="sb-user-name">Jorge Faroh</div><div class="sb-urole" id="sb-user-role">admin</div></div>
     </div>
-  <button class="sb-item" style="margin-top: 4px;"><span>xa</span> Cerrar sesin</button></div>
+  <button class="sb-item" style="margin-top: 4px;"><span>xa</span> Cerrar sesión</button></div>
 </nav>
 
 <!-- """ MAIN """ -->
@@ -684,9 +684,9 @@ tbody tr:hover .row-acts { opacity: 1; }
       </div>
     </div>
     <div class="kpi-strip" id="kpi-strip">
-      <div class="kpi-card"><div class="kpi-label">Tareas del da</div><div class="kpi-value blue" id="kpi-total">23</div><div class="kpi-sub" id="kpi-types">2 CO  10 CO/CI  11 EXP</div></div>
+      <div class="kpi-card"><div class="kpi-label">Tareas del día</div><div class="kpi-value blue" id="kpi-total">23</div><div class="kpi-sub" id="kpi-types">2 CO  10 CO/CI  11 EXP</div></div>
       <div class="kpi-card"><div class="kpi-label">CO/CI en riesgo</div><div class="kpi-value ok" id="kpi-risk">0</div><div class="kpi-sub" id="kpi-risk-sub">deben terminar antes 15:00</div></div>
-      <div class="kpi-card"><div class="kpi-label">Sin asignar</div><div class="kpi-value ok" id="kpi-unasgn">0</div><div class="kpi-sub">requieren accin</div></div>
+      <div class="kpi-card"><div class="kpi-label">Sin asignar</div><div class="kpi-value ok" id="kpi-unasgn">0</div><div class="kpi-sub">requieren acción</div></div>
       <div class="kpi-card"><div class="kpi-label">HKs necesarias</div><div class="kpi-value blue" id="kpi-hks">6</div><div class="kpi-sub" id="kpi-hks-sub">de 17 disponibles</div></div>
       <div class="kpi-card"><div class="kpi-label">Tareas manuales</div><div class="kpi-value ok" id="kpi-manual">0</div><div class="kpi-sub">ocupadas + chequeos + urgencias</div></div>
     </div>
@@ -707,7 +707,7 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div>
     <div class="tb-sep"></div>
     <div style="display:flex;align-items:center;gap:4px">
-      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom"></button>
+      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom"></button>
       <span id="zoom-lbl" style="font-size:11px;color:var(--text3);font-weight:500;min-width:34px;text-align:center">100%</span>
       <button class="zoom-btn" onclick="tlZoom(+1)" title="Ms zoom">+</button>
     </div>
@@ -726,20 +726,20 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Casa Mallet 1" ondragstart="onDS(event,'2026-03-31_Casa Mallet 1')" onclick="openPanel('2026-03-31_Casa Mallet 1')">
-          <div class="t-name">x Casa Mallet 1</div>
-          <div class="t-time">11:0012:30</div>
+          <div class="t-name">x Casa Mallet 1</div>
+          <div class="t-time">11:0012:30</div>
           <div class="t-meta">CO/CI  2BR  A0</div>
         </div><div class="task-block exp narrow tiny" style="left:490px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Mallet 3" ondragstart="onDS(event,'2026-03-31_Casa Mallet 3')" onclick="openPanel('2026-03-31_Casa Mallet 3')">
           <div class="t-name"> Casa Mallet 3</div>
-          <div class="t-time">12:3012:50</div>
+          <div class="t-time">12:3012:50</div>
           <div class="t-meta">EXP  1BR  A0</div>
         </div><div class="travel-blk" style="left:536.6666666666667px;width:17.666666666666668px"></div><div class="task-block coci" style="left:555.3333333333334px;width:208px" draggable="true" data-task-id="2026-03-31_Lesplanade 2A" ondragstart="onDS(event,'2026-03-31_Lesplanade 2A')" onclick="openPanel('2026-03-31_Lesplanade 2A')">
-          <div class="t-name">x Lesplanade 2A</div>
-          <div class="t-time">12:5814:28</div>
+          <div class="t-name">x Lesplanade 2A</div>
+          <div class="t-time">12:5814:28</div>
           <div class="t-meta">CO/CI  2BR  A2</div>
         </div><div class="task-block exp narrow tiny" style="left:765.3333333333334px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Lesplanade 4A" ondragstart="onDS(event,'2026-03-31_Lesplanade 4A')" onclick="openPanel('2026-03-31_Lesplanade 4A')">
           <div class="t-name"> Lesplanade 4A</div>
-          <div class="t-time">14:2814:48</div>
+          <div class="t-time">14:2814:48</div>
           <div class="t-meta">EXP  2BR  A2</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK02" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK02')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Ana Garca</div>
@@ -748,20 +748,20 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_Lesplanade 4B" ondragstart="onDS(event,'2026-03-31_Lesplanade 4B')" onclick="openPanel('2026-03-31_Lesplanade 4B')">
-          <div class="t-name">x Lesplanade 4B</div>
-          <div class="t-time">11:0012:00</div>
+          <div class="t-name">x Lesplanade 4B</div>
+          <div class="t-time">11:0012:00</div>
           <div class="t-meta">CO/CI  1BR  A2</div>
         </div><div class="task-block exp narrow tiny" style="left:420px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Lesplanade 1A" ondragstart="onDS(event,'2026-03-31_Lesplanade 1A')" onclick="openPanel('2026-03-31_Lesplanade 1A')">
           <div class="t-name"> Lesplanade 1A</div>
-          <div class="t-time">12:0012:20</div>
+          <div class="t-time">12:0012:20</div>
           <div class="t-meta">EXP  2BR  A2</div>
         </div><div class="travel-blk" style="left:466.66666666666674px;width:17.666666666666668px"></div><div class="task-block coci" style="left:485.33333333333337px;width:138px" draggable="true" data-task-id="2026-03-31_Casa La Costa 1B" ondragstart="onDS(event,'2026-03-31_Casa La Costa 1B')" onclick="openPanel('2026-03-31_Casa La Costa 1B')">
-          <div class="t-name">x Casa La Costa 1B</div>
-          <div class="t-time">12:2813:28</div>
+          <div class="t-name">x Casa La Costa 1B</div>
+          <div class="t-time">12:2813:28</div>
           <div class="t-meta">CO/CI  1BR  A2</div>
         </div><div class="task-block co" style="left:625.3333333333334px;width:208px" draggable="true" data-task-id="2026-03-31_Casa La Costa 3D" ondragstart="onDS(event,'2026-03-31_Casa La Costa 3D')" onclick="openPanel('2026-03-31_Casa La Costa 3D')">
           <div class="t-name">x Casa La Costa 3D</div>
-          <div class="t-time">13:2814:58</div>
+          <div class="t-time">13:2814:58</div>
           <div class="t-meta">CO  2BR  A2</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK03" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK03')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Mara Lpez</div>
@@ -771,19 +771,19 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block exp narrow tiny" style="left:42.0000000000001px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa La Costa 2A" ondragstart="onDS(event,'2026-03-31_Casa La Costa 2A')" onclick="openPanel('2026-03-31_Casa La Costa 2A')">
           <div class="t-name"> Casa La Costa 2A</div>
-          <div class="t-time">09:1809:38</div>
+          <div class="t-time">09:1809:38</div>
           <div class="t-meta">EXP  1BR  A2</div>
         </div><div class="travel-blk" style="left:261.33333333333337px;width:17.666666666666668px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Casa Love 2B" ondragstart="onDS(event,'2026-03-31_Casa Love 2B')" onclick="openPanel('2026-03-31_Casa Love 2B')">
-          <div class="t-name">x Casa Love 2B</div>
-          <div class="t-time">11:0012:30</div>
+          <div class="t-name">x Casa Love 2B</div>
+          <div class="t-time">11:0012:30</div>
           <div class="t-meta">CO/CI  2BR  A2</div>
         </div><div class="travel-blk" style="left:490px;width:17.666666666666668px"></div><div class="task-block coci" style="left:508.66666666666663px;width:138px" draggable="true" data-task-id="2026-03-31_La Manzana 05" ondragstart="onDS(event,'2026-03-31_La Manzana 05')" onclick="openPanel('2026-03-31_La Manzana 05')">
-          <div class="t-name">x La Manzana 05</div>
-          <div class="t-time">12:3813:38</div>
+          <div class="t-name">x La Manzana 05</div>
+          <div class="t-time">12:3813:38</div>
           <div class="t-meta">CO/CI  1BR  A2</div>
         </div><div class="travel-blk" style="left:648.6666666666666px;width:17.666666666666668px"></div><div class="task-block coci" style="left:667.3333333333333px;width:138px" draggable="true" data-task-id="2026-03-31_Casa Lefevre 2A" ondragstart="onDS(event,'2026-03-31_Casa Lefevre 2A')" onclick="openPanel('2026-03-31_Casa Lefevre 2A')">
-          <div class="t-name">x Casa Lefevre 2A</div>
-          <div class="t-time">13:4614:46</div>
+          <div class="t-name">x Casa Lefevre 2A</div>
+          <div class="t-time">13:4614:46</div>
           <div class="t-meta">CO/CI  1BR  A1</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK04" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK04')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Carmen Rodrguez</div>
@@ -792,28 +792,28 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_La Moderna 01" ondragstart="onDS(event,'2026-03-31_La Moderna 01')" onclick="openPanel('2026-03-31_La Moderna 01')">
-          <div class="t-name">x La Moderna 01</div>
-          <div class="t-time">11:0012:00</div>
+          <div class="t-name">x La Moderna 01</div>
+          <div class="t-time">11:0012:00</div>
           <div class="t-meta">CO/CI  1BR  A3</div>
         </div><div class="travel-blk" style="left:420px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:438.66666666666663px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Love 3B" ondragstart="onDS(event,'2026-03-31_Casa Love 3B')" onclick="openPanel('2026-03-31_Casa Love 3B')">
           <div class="t-name"> Casa Love 3B</div>
-          <div class="t-time">12:0812:28</div>
+          <div class="t-time">12:0812:28</div>
           <div class="t-meta">EXP  2BR  A2</div>
         </div><div class="travel-blk" style="left:485.33333333333337px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:503.99999999999994px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_La Manzana 15" ondragstart="onDS(event,'2026-03-31_La Manzana 15')" onclick="openPanel('2026-03-31_La Manzana 15')">
           <div class="t-name"> La Manzana 15</div>
-          <div class="t-time">12:3612:56</div>
+          <div class="t-time">12:3612:56</div>
           <div class="t-meta">EXP  1BR  A2</div>
         </div><div class="travel-blk" style="left:550.6666666666667px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:569.3333333333333px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Lefevre 3B" ondragstart="onDS(event,'2026-03-31_Casa Lefevre 3B')" onclick="openPanel('2026-03-31_Casa Lefevre 3B')">
           <div class="t-name"> Casa Lefevre 3B</div>
-          <div class="t-time">13:0413:24</div>
+          <div class="t-time">13:0413:24</div>
           <div class="t-meta">EXP  1BR  A1</div>
         </div><div class="travel-blk" style="left:616px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:634.6666666666666px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_La Moderna 04" ondragstart="onDS(event,'2026-03-31_La Moderna 04')" onclick="openPanel('2026-03-31_La Moderna 04')">
           <div class="t-name"> La Moderna 04</div>
-          <div class="t-time">13:3213:52</div>
+          <div class="t-time">13:3213:52</div>
           <div class="t-meta">EXP  2BR  A3</div>
         </div><div class="travel-blk" style="left:681.3333333333334px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:700px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_CC4A" ondragstart="onDS(event,'2026-03-31_CC4A')" onclick="openPanel('2026-03-31_CC4A')">
           <div class="t-name"> CC4A</div>
-          <div class="t-time">14:0014:20</div>
+          <div class="t-time">14:0014:20</div>
           <div class="t-meta">EXP  2BR  A1</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK05" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK05')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Luisa Martnez</div>
@@ -822,20 +822,20 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Salomon 4B" ondragstart="onDS(event,'2026-03-31_Salomon 4B')" onclick="openPanel('2026-03-31_Salomon 4B')">
-          <div class="t-name">x Salomon 4B</div>
-          <div class="t-time">11:0012:30</div>
+          <div class="t-name">x Salomon 4B</div>
+          <div class="t-time">11:0012:30</div>
           <div class="t-meta">CO/CI  2BR  D</div>
         </div><div class="task-block coci" style="left:501.66666666666674px;width:138px" draggable="true" data-task-id="2026-03-31_Living 73 19F" ondragstart="onDS(event,'2026-03-31_Living 73 19F')" onclick="openPanel('2026-03-31_Living 73 19F')">
-          <div class="t-name">x Living 73 19F</div>
-          <div class="t-time">12:3513:35</div>
+          <div class="t-name">x Living 73 19F</div>
+          <div class="t-time">12:3513:35</div>
           <div class="t-meta">CO/CI  1BR  B</div>
         </div><div class="task-block exp narrow tiny" style="left:641.6666666666667px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Living 73 20A" ondragstart="onDS(event,'2026-03-31_Living 73 20A')" onclick="openPanel('2026-03-31_Living 73 20A')">
           <div class="t-name"> Living 73 20A</div>
-          <div class="t-time">13:3513:55</div>
+          <div class="t-time">13:3513:55</div>
           <div class="t-meta">EXP  2BR  B</div>
         </div><div class="task-block exp narrow tiny" style="left:700.0000000000002px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Salomon 6A" ondragstart="onDS(event,'2026-03-31_Salomon 6A')" onclick="openPanel('2026-03-31_Salomon 6A')">
           <div class="t-name"> Salomon 6A</div>
-          <div class="t-time">14:0014:20</div>
+          <div class="t-time">14:0014:20</div>
           <div class="t-meta">EXP  2BR  D</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK06" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK06')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Rosa Hernndez</div>
@@ -845,7 +845,7 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block co" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_Mini Design 14D" ondragstart="onDS(event,'2026-03-31_Mini Design 14D')" onclick="openPanel('2026-03-31_Mini Design 14D')">
           <div class="t-name">x Mini Design 14D</div>
-          <div class="t-time">11:0012:00</div>
+          <div class="t-time">11:0012:00</div>
           <div class="t-meta">CO  1BR  C</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK07" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK07')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Elena Gonzlez</div>
@@ -853,71 +853,71 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK08" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK08')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK08" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK08')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Patricia Flores</div>
       <div class="hk-code">HK08</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK09" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK09')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK09" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK09')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Teresa Snchez</div>
       <div class="hk-code">HK09</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK10" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK10')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK10" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK10')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Gloria Ramrez</div>
       <div class="hk-code">HK10</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK11" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK11')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK11" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK11')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Isabel Torres</div>
       <div class="hk-code">HK11</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK12" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK12')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK12" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK12')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Norma Castro</div>
       <div class="hk-code">HK12</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK13" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK13')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK13" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK13')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Sandra Vargas</div>
       <div class="hk-code">HK13</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK14" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK14')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK14" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK14')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Diana Moreno</div>
       <div class="hk-code">HK14</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK15" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK15')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK15" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK15')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Luz Jimnez</div>
       <div class="hk-code">HK15</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK16" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK16')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK16" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK16')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Marta Ros</div>
       <div class="hk-code">HK16</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK17" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK17')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK17" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK17')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Consuelo Mendoza</div>
       <div class="hk-code">HK17</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignacin</div></div></div></div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div></div>
     </div>
     <!-- Alerts panel -->
     <div class="alerts-panel" id="alerts-panel">
-      <div class="ap-hd">Alertas del da</div>
+      <div class="ap-hd">Alertas del día</div>
       <div class="ap-list" id="ap-list"><div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas crticas hoy.</div></div>
       <div class="ap-audit" id="ap-audit" style="display:none">
         <div class="ap-audit-hd">Cambios manuales</div>
@@ -943,7 +943,7 @@ tbody tr:hover .row-acts { opacity: 1; }
     <div class="kpi-strip" id="prop-kpi-strip">
       <div class="kpi-card"><div class="kpi-label">Propiedades activas</div><div class="kpi-value blue" id="pk-active">216</div><div class="kpi-sub">en operacin</div></div>
       <div class="kpi-card"><div class="kpi-label">Inactivas</div><div class="kpi-value ok" id="pk-inactive">0</div><div class="kpi-sub">fuera de schedule</div></div>
-      <div class="kpi-card"><div class="kpi-label">Casco Antiguo</div><div class="kpi-value" id="pk-casco">109</div><div class="kpi-sub">zonas A0A3</div></div>
+      <div class="kpi-card"><div class="kpi-label">Casco Antiguo</div><div class="kpi-value" id="pk-casco">109</div><div class="kpi-sub">zonas A0A3</div></div>
       <div class="kpi-card"><div class="kpi-label">Zonas externas</div><div class="kpi-value" id="pk-ext">107</div><div class="kpi-sub">B  C  D  E  F</div></div>
       <div class="kpi-card"><div class="kpi-label">Con notas operativas</div><div class="kpi-value" id="pk-notes">0</div><div class="kpi-sub">requieren atencin especial</div></div>
     </div>
@@ -953,7 +953,7 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
   <div class="toolbar">
     <div class="srch-wrap">
-      <span class="si">x</span>
+      <span class="si">x</span>
       <input type="text" class="inp srch" id="p-search" placeholder="Buscar unidad, edificio, zona..." oninput="renderProps()" style="width:220px">
     </div>
     <select class="inp" id="p-zone" onchange="renderProps()">
@@ -5116,7 +5116,7 @@ tbody tr:hover .row-acts { opacity: 1; }
         <div class="modal-title">Agregar tarea manual</div>
         <div class="modal-sub">Ocupadas, chequeos, urgencias y tareas last-minute no capturadas en Guesty</div>
       </div>
-      <button class="modal-x" onclick="closeAddTask()"></button>
+      <button class="modal-x" onclick="closeAddTask()"></button>
     </div>
     <div class="modal-bd">
       <!-- Step 1: Type -->
@@ -5124,10 +5124,10 @@ tbody tr:hover .row-acts { opacity: 1; }
         <label>Tipo de tarea</label>
         <div class="type-grid" id="type-grid">
           <div class="type-opt" data-type="CO" data-mins="60" onclick="selType(this)">
-            <div class="to-name">CO</div><div class="to-min">Checkout  60120 min</div>
+            <div class="to-name">CO</div><div class="to-min">Checkout  60120 min</div>
           </div>
           <div class="type-opt" data-type="CO/CI" data-mins="60" onclick="selType(this)">
-            <div class="to-name">CO/CI</div><div class="to-min">Back-to-back  60120 min</div>
+            <div class="to-name">CO/CI</div><div class="to-min">Back-to-back  60120 min</div>
           </div>
           <div class="type-opt" data-type="EXP" data-mins="20" onclick="selType(this)">
             <div class="to-name">Express</div><div class="to-min">Check-in prep  20 min</div>
@@ -5194,7 +5194,7 @@ tbody tr:hover .row-acts { opacity: 1; }
 
       <!-- Impact preview -->
       <div class="impact-box" id="impact-box">
-        <div class="impact-hd">x` Impacto en el schedule</div>
+        <div class="impact-hd">x` Impacto en el schedule</div>
         <div id="impact-content" style="color:var(--text3);font-size:12px">Seleccion tipo y unidad para ver el impacto.</div>
       </div>
     </div>
@@ -5209,7 +5209,7 @@ tbody tr:hover .row-acts { opacity: 1; }
 <div class="ep" id="ep">
   <div class="ep-hd">
     <div><div class="ep-title" id="ep-title">Tarea</div><div class="ep-sub" id="ep-sub"></div></div>
-    <button class="ep-x" onclick="closePanel()"></button>
+    <button class="ep-x" onclick="closePanel()"></button>
   </div>
   <div class="ep-body">
     <div class="ep-field"><div class="el">Unidad</div><div class="ev" id="ep-unit"></div></div>
@@ -5229,7 +5229,7 @@ tbody tr:hover .row-acts { opacity: 1; }
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-hd">
       <div><div class="modal-title" id="pm-title">Propiedad</div><div class="modal-sub" id="pm-sub"></div></div>
-      <button class="modal-x" onclick="closePModal()"></button>
+      <button class="modal-x" onclick="closePModal()"></button>
     </div>
     <div class="modal-bd">
       <input type="hidden" id="pm-id">
@@ -5278,12 +5278,12 @@ tbody tr:hover .row-acts { opacity: 1; }
 // """"""""""""""""""""""""""""""""""""""""""""""
 const TT={CO:'CO',COCI:'CO/CI',EXP:'EXP',OC:'OC',CHQ:'CHQ',URG:'URG',MANUAL:'MANUAL'};
 const TYPE_META={
-  CO: {label:'CO',   cssClass:'co',  icon:'x', minTime:60,  maxEnd:16.5, minStart:11, desc:'Checkout'},
-  'CO/CI':{label:'CO/CI',cssClass:'coci',icon:'x',minTime:60, maxEnd:15,  minStart:11, desc:'Back-to-back'},
-  EXP:{label:'EXP',  cssClass:'exp', icon:'', minTime:20,  maxEnd:15,   minStart:9,  desc:'Express'},
-  OC: {label:'OC',   cssClass:'ocu', icon:'x:}', minTime:45,  maxEnd:18,   minStart:9,  desc:'Ocupada'},
-  CHQ:{label:'CHQ',  cssClass:'chq', icon:'x', minTime:10,  maxEnd:18,   minStart:9,  desc:'Chequeo'},
-  URG:{label:'URG',  cssClass:'urg', icon:'xa', minTime:30,  maxEnd:18,   minStart:9,  desc:'Urgencia'},
+  CO: {label:'CO',   cssClass:'co',  icon:'CO', minTime:60,  maxEnd:16.5, minStart:11, desc:'Checkout'},
+  'CO/CI':{label:'CO/CI',cssClass:'coci',icon:'CI',minTime:60, maxEnd:15,  minStart:11, desc:'Back-to-back'},
+  EXP:{label:'EXP',  cssClass:'exp', icon:'EX', minTime:20,  maxEnd:15,   minStart:9,  desc:'Express'},
+  OC: {label:'OC',   cssClass:'ocu', icon:'OC', minTime:45,  maxEnd:18,   minStart:9,  desc:'Ocupada'},
+  CHQ:{label:'CHQ',  cssClass:'chq', icon:'CI', minTime:10,  maxEnd:18,   minStart:9,  desc:'Chequeo'},
+  URG:{label:'URG',  cssClass:'urg', icon:'CI', minTime:30,  maxEnd:18,   minStart:9,  desc:'Urgencia'},
 };
 const CT={'CO':{studio:60,'1br':60,'2br':90,'3br':120}};
 CT['CO/CI']=CT.CO; CT.EXP={studio:20,'1br':20,'2br':20,'3br':20};
@@ -5512,7 +5512,7 @@ const HK_POOL=[
 {id:'HK17',name:'Yanizel Morris',available:true}
 ];
 
-//  TIMELINE RENDER 
+//  TIMELINE RENDER 
 const TL_S=9,TL_E=17,TL_H=8;
 
 function setScale(v){HOUR_W=parseInt(v);if(currentResult)renderTimeline()}
@@ -5548,7 +5548,7 @@ function renderTimeline(){
       <div class="track-grid">${Array.from({length:TL_H},(_,i)=>`<div class="track-col" style="width:${HOUR_W}px"></div>`).join('')}</div>
       <div class="limit-line" style="left:${limitL}px"></div>`;
 
-    if(isIdle){rows+=`<div class="idle-msg">Disponible para asignacin</div>`}
+    if(isIdle){rows+=`<div class="idle-msg">Disponible para asignación</div>`}
     else{
       for(const t of sched.tasks){
         const left=((t.startTime-TL_S)/TL_H)*TW;
@@ -5571,7 +5571,7 @@ function renderTimeline(){
           draggable="true" data-task-id="${t.id}"
           ondragstart="onDS(event,'${t.id}')" onclick="openPanel('${t.id}')">
           <div class="t-name">${tm.icon} ${t.unitName}</div>
-          <div class="t-time">${h2t(t.startTime)}${h2t(t.endTime)}${atRisk?' a':''}</div>
+          <div class="t-time">${h2t(t.startTime)}${h2t(t.endTime)}${atRisk?' a':''}</div>
           <div class="t-meta">${t.type}  ${t.br.toUpperCase()}${t.zone?'  '+t.zone:''}</div>
         </div>`;
       }
@@ -5624,7 +5624,7 @@ function renderAuditLog(){
     </div>`).join('');
 }
 
-//  CSV & RUN 
+//  CSV & RUN 
 document.getElementById('csv-input').addEventListener('change',e=>{
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
@@ -5655,7 +5655,7 @@ function run(){
   renderTimeline();renderKPIs();renderAlerts();
 }
 
-//  DRAG & DROP 
+//  DRAG & DROP 
 window.onDS=(e,id)=>{dragTaskId=id;e.dataTransfer.effectAllowed='move';document.querySelector(`[data-task-id="${id}"]`)?.classList.add('dragging')};
 window.onDO=(e,row)=>{e.preventDefault();row.classList.add('drag-over')};
 window.onDrp=(e,hkId)=>{
@@ -5665,7 +5665,7 @@ window.onDrp=(e,hkId)=>{
   openPanel(dragTaskId,hkId);dragTaskId=null;
 };
 
-//  EDIT PANEL 
+//  EDIT PANEL 
 window.openPanel=(taskId,preHK=null)=>{
   const t=findTask(taskId);if(!t)return;
   selectedTask=t;pendingHKId=preHK??t.assignedHK;
@@ -5674,7 +5674,7 @@ window.openPanel=(taskId,preHK=null)=>{
   document.getElementById('ep-sub').textContent=`${t.type}  ${t.br.toUpperCase()}  Zona ${t.zone||'?'}`;
   document.getElementById('ep-unit').textContent=t.unitName+(t.notes?` - ${t.notes}`:'');
   document.getElementById('ep-meta').textContent=`${t.type}  ${t.br.toUpperCase()}  Zona ${t.zone||'?'}  ${t.cleanMins} min${t.isManual?'  MANUAL':''}`;
-  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)}   ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
+  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)}   ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
   document.getElementById('ep-reason').value='';
   const{byHK}=currentResult;
   document.getElementById('ep-hkopts').innerHTML=HK_POOL.map(hk=>{
@@ -5706,7 +5706,7 @@ function confirmChange(task){
   byHK[newId].tasks.push(task);byHK[newId].tasks.sort((a,b)=>a.startTime-b.startTime);
   byHK[newId].tasks.forEach((t,i)=>t.order=i+1);byHK[newId].zones=[...new Set(byHK[newId].tasks.map(t=>t.zone))];
   const oldHK=task.assignedHK||'-';
-  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK}   ${newId}`,reason:reason||'-'});
+  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK}   ${newId}`,reason:reason||'-'});
   closePanel();renderTimeline();renderKPIs();renderAlerts();renderAuditLog();
   toast(`${task.unitName} reasignada a ${hk?.name??newId}`);
 }
@@ -5717,7 +5717,7 @@ function findTask(id){
   return currentResult?.unassigned?.find(t=>t.id===id);
 }
 
-//  ADD TASK MODAL 
+//  ADD TASK MODAL 
 function openAddTaskModal(){
   // Populate unit datalist
   const dl=document.getElementById('unit-list');
@@ -5784,7 +5784,7 @@ function updateImpact(){
 
   document.getElementById('impact-content').innerHTML=`
     <div class="impact-row"><span class="impact-lbl">Tipo de tarea</span><span class="impact-val">${m.icon} ${m.desc}  ${mins} min</span></div>
-    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)}   ${h2t(endTime)}</span></div>
+    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)}   ${h2t(endTime)}</span></div>
     <div class="impact-row"><span class="impact-lbl">HK sugerida</span><span class="impact-val">${targetHK?`${targetHK.id}  ${targetHK.name}`:'Sin HK disponible'}</span></div>
     <div class="impact-row"><span class="impact-lbl">Carga HK despus</span><span class="impact-val ${utilizationAfter>90?'warn':''}">${newLoad} min (${utilizationAfter}%)</span></div>
     ${overLimit?`<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">a Advertencia</span><span class="impact-val crit">Termina despus del lmite (${h2t(m.maxEnd)})</span></div>`:''}
@@ -6858,7 +6858,7 @@ function initWeeklyModule(){
   <div style="background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
     <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700">Invitar usuario</div>
-      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af"></button>
+      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af"></button>
     </div>
     <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
       <div>
@@ -6878,7 +6878,7 @@ function initWeeklyModule(){
         </select>
       </div>
       <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;font-size:12px;color:#92400e">
-        a️ El usuario deber crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizar automticamente.
+        a El usuario deber crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizar automticamente.
       </div>
       <div id="invite-result" style="font-size:12px;min-height:16px"></div>
     </div>
