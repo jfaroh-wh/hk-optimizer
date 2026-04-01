@@ -5619,7 +5619,7 @@ document.getElementById('csv-input').addEventListener('change',e=>{
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=ev=>{
-    reservations=parseCSV(ev.target.result);
+    reservations=parseCSV(ev.target.result);try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}try{localStorage.setItem('wh_csv_data',ev.target.result);localStorage.setItem('wh_csv_date',currentDate||'');}catch(e){}
     const today=new Date().toISOString().split('T')[0];
     const dc={};
     for(const r of reservations)if(r.coDate>=today)(dc[r.coDate]=(dc[r.coDate]??0)+1);
@@ -5630,12 +5630,11 @@ document.getElementById('csv-input').addEventListener('change',e=>{
 });
 
 document.getElementById('date-picker').addEventListener('change',e=>{
-  currentDate=e.target.value;if(reservations.length&&currentDate)run();
+  currentDate=e.target.value;try{localStorage.setItem('wh_csv_date',currentDate);}catch(e){}if(reservations.length&&currentDate)run();
 });
 
 document.getElementById('run-btn').addEventListener('click',()=>{
-  if(!reservations.length){reservations=getDemoData();currentDate='2026-03-31';document.getElementById('date-picker').value=currentDate}
-  if(!currentDate){currentDate=new Date().toISOString().split('T')[0];document.getElementById('date-picker').value=currentDate}
+  if(!reservations.length){var _sv=null;try{_sv=localStorage.getItem('wh_csv_data');}catch(e){}if(_sv){reservations=parseCSV(_sv);var _sd='';try{_sd=localStorage.getItem('wh_csv_date')||'';}catch(e){}currentDate=_sd||currentDate||'2026-03-31';document.getElementById('date-picker').value=currentDate;toast('CSV restaurado: '+reservations.length+' reservas');}else{reservations=getDemoData();currentDate='2026-03-31';document.getElementById('date-picker').va  if(!currentDate){currentDate=new Date().toISOString().split('T')[0];document.getElementById('date-picker').value=currentDate}
   run();
 });
 
