@@ -706,24 +706,18 @@ tbody tr:hover .row-acts { opacity: 1; }
       <span class="tlg urg"><span class="tlg-dot"></span>Urgencia</span>
     </div>
     <div class="tb-sep"></div>
-    <select class="inp" id="scale-sel" onchange="setScale(this.value)" style="font-size:11px;padding:5px 8px">
-      <option value="100">Normal</option>
-      <option value="140" selected="">Ampliado</option>
-      <option value="190">Grande</option>
-    </select>
+    <div style="display:flex;align-items:center;gap:4px">
+      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom">−</button>
+      <span id="zoom-lbl" style="font-size:11px;color:var(--text3);font-weight:500;min-width:34px;text-align:center">100%</span>
+      <button class="zoom-btn" onclick="tlZoom(+1)" title="Más zoom">+</button>
+    </div>
     <div class="tb-sep"></div>
     <button class="btn pri" onclick="openAddTaskModal()">+ Agregar tarea</button>
   </div>
 
   <!-- Schedule body -->
   <div class="sched-wrap">
-    <div class="tl-zoom">
-  <button class="zoom-btn" onclick="tlZoom(-1)" title="Reducir">−</button>
-  <span class="zoom-lbl" id="zoom-lbl">100%</span>
-  <button class="zoom-btn" onclick="tlZoom(+1)" title="Ampliar">+</button>
-  <span style="font-size:10px;color:var(--text3);margin-left:6px">← scroll horizontal →</span>
-</div>
-<div class="tl-area" id="tl-area">
+    <div class="tl-area" id="tl-area">
       <div class="tl-inner" id="tl-inner"><div class="ruler"><div class="rhour" style="width:140px">09:00</div><div class="rhour" style="width:140px">10:00</div><div class="rhour" style="width:140px">11:00</div><div class="rhour" style="width:140px">12:00</div><div class="rhour" style="width:140px">13:00</div><div class="rhour" style="width:140px">14:00</div><div class="rhour h15" style="width:140px">15:00</div><div class="rhour" style="width:140px">16:00</div></div><div class="hk-row" style="min-height:68px" data-hk="HK01" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK01')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Marlenis Duarte</div>
       <div class="hk-code ded">HK01 · DEDICADA</div>
