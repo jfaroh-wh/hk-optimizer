@@ -5636,7 +5636,7 @@ document.getElementById('date-picker').addEventListener('change',e=>{
 });
 
 document.getElementById('run-btn').addEventListener('click',()=>{
-  if(!reservations.length){var _sv=null;try{_sv=localStorage.getItem('wh_csv_data');}catch(e){}if(_sv){reservations=parseCSV(_sv);var _sd='';try{_sd=localStorage.getItem('wh_csv_date')||'';}catch(e){}currentDate=_sd||currentDate||'2026-03-31';document.getElementById('date-picker').value=currentDate;toast('CSV restaurado: '+reservations.length+' reservas');}else{reservations=getDemoData();currentDate='2026-03-31';document.getElementById('date-picker').va  if(!currentDate){currentDate=new Date().toISOString().split('T')[0];document.getElementById('date-picker').value=currentDate}
+  if(!reservations.length){var _sv=null;try{_sv=localStorage.getItem('wh_csv_data');}catch(e){}if(_sv){reservations=parseCSV(_sv);var _sd='';try{_sd=localStorage.getItem('wh_csv_date')||'';}catch(e){}currentDate=_sd||currentDate||'2026-03-31';document.getElementById('date-picker').value=currentDate;toast('CSV restaurado: '+reservations.length+' reservas');}else{reservations=getDemoData();currentDate='2026-03-31';document.getElementById('date-picker').value=currentDate;toast('Usando datos de demo - carga tu CSV');}}
   run();
 });
 
