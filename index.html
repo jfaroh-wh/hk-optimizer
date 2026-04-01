@@ -6326,35 +6326,37 @@ document.addEventListener('DOMContentLoaded', function(){
 // âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // TEAM MODULE
 var TM_hks = [
-  {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],defaultOff:'',notes:'MALLET exclusiva'},
-  {id:'HK02',name:'Ana Garcia',type:'fija',zones:['A2','D'],defaultOff:'',notes:''},
-  {id:'HK03',name:'Maria Lopez',type:'fija',zones:['A2','C'],defaultOff:'',notes:''},
-  {id:'HK04',name:'Carmen Rodriguez',type:'fija',zones:['A1','A2'],defaultOff:'',notes:''},
-  {id:'HK05',name:'Luisa Martinez',type:'fija',zones:['A2','A3'],defaultOff:'',notes:''},
-  {id:'HK06',name:'Rosa Hernandez',type:'fija',zones:['A2'],defaultOff:'',notes:''},
-  {id:'HK07',name:'Elena Gonzalez',type:'fija',zones:['A1','A2'],defaultOff:'',notes:''},
-  {id:'HK08',name:'Patricia Flores',type:'fija',zones:['A2','A3'],defaultOff:'',notes:''},
-  {id:'HK09',name:'Teresa Sanchez',type:'fija',zones:['A2','A1','A3'],defaultOff:'',notes:''},
-  {id:'HK10',name:'Gloria Ramirez',type:'fija',zones:['A1','A2','A3'],defaultOff:'',notes:''},
-  {id:'HK11',name:'Isabel Torres',type:'fija',zones:['F'],defaultOff:'',notes:'Zona F'},
-  {id:'HK12',name:'Norma Castro',type:'fija',zones:['B','D'],defaultOff:'',notes:''},
-  {id:'HK13',name:'Sandra Vargas',type:'fija',zones:['B','D'],defaultOff:'',notes:''},
-  {id:'HK14',name:'Diana Moreno',type:'fija',zones:['D','C'],defaultOff:'',notes:''},
-  {id:'HK15',name:'Luz Jimenez',type:'fija',zones:['E'],defaultOff:'',notes:'Zona E'},
-  {id:'HK16',name:'Marta Rios',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
-  {id:'HK17',name:'Consuelo Mendoza',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
-  {id:'HK18',name:'Eventual 01',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
-  {id:'HK19',name:'Eventual 02',type:'eventual',zones:['A3','B'],defaultOff:'',notes:''},
-  {id:'HK20',name:'Eventual 03',type:'eventual',zones:['C','D'],defaultOff:'',notes:''},
-  {id:'HK21',name:'Eventual 04',type:'eventual',zones:['A1','A2'],defaultOff:'',notes:''},
-  {id:'HK22',name:'Eventual 05',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
-  {id:'HK23',name:'Eventual 06',type:'eventual',zones:['B','D'],defaultOff:'',notes:''},
-  {id:'HK24',name:'Eventual 07',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
-  {id:'HK25',name:'Eventual 08',type:'eventual',zones:['A1'],defaultOff:'',notes:''},
-  {id:'HK26',name:'Eventual 09',type:'eventual',zones:['E','F'],defaultOff:'',notes:''},
-  {id:'HK27',name:'Eventual 10',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
-  {id:'HK28',name:'Eventual 11',type:'eventual',zones:['C','D'],defaultOff:'',notes:''},
-  {id:'HK29',name:'Eventual 12',type:'eventual',zones:['A3'],defaultOff:'',notes:''}
+  {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],defaultOff:'3',notes:'Fija Casa Mallet. Libra mier.'},
+  {id:'HK02',name:'Meivis N. Calvo H.',type:'fija',zones:['A2','A1'],defaultOff:'3',notes:''},
+  {id:'HK03',name:'Geraldine O. Perez H.',type:'fija',zones:['A2','A3'],defaultOff:'4',notes:''},
+  {id:'HK04',name:'Dayanara Cardenas',type:'fija',zones:['A2','A3'],defaultOff:'3',notes:''},
+  {id:'HK05',name:'Marizin Garabato',type:'fija',zones:['A1','A2'],defaultOff:'4',notes:''},
+  {id:'HK06',name:'Yarilka Perez',type:'fija',zones:['A2','B'],defaultOff:'3',notes:''},
+  {id:'HK07',name:'Nerys Lopez',type:'fija',zones:['A3','A2'],defaultOff:'4',notes:''},
+  {id:'HK08',name:'Yaismir Taylor',type:'fija',zones:['D','B'],defaultOff:'3',notes:''},
+  {id:'HK09',name:'Yadineth Arthur',type:'fija',zones:['A2','A3'],defaultOff:'4',notes:''},
+  {id:'HK10',name:'Llisbeth Allen',type:'fija',zones:['C','A2'],defaultOff:'3',notes:''},
+  {id:'HK11',name:'Katherine Ortega',type:'fija',zones:['A1','A2'],defaultOff:'4',notes:''},
+  {id:'HK12',name:'Nilka Soliz',type:'fija',zones:['A2','D'],defaultOff:'3',notes:''},
+  {id:'HK13',name:'Julisbeth Perez',type:'fija',zones:['A3','A2'],defaultOff:'4',notes:''},
+  {id:'HK14',name:'Ileana Perez',type:'fija',zones:['A2','A1'],defaultOff:'3',notes:''},
+  {id:'HK15',name:'Anyel Jaime',type:'fija',zones:['A2','A3'],defaultOff:'4',notes:''},
+  {id:'HK16',name:'Carolina Pineda',type:'fija',zones:['A1','A2'],defaultOff:'3',notes:''},
+  {id:'HK17',name:'Yanizel Morris',type:'fija',zones:['A2','B'],defaultOff:'4',notes:''},
+  {id:'HK18',name:'Tinizaidy Montano',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:'Solo domingos'},
+  {id:'HK19',name:'Maria Victoria Gutierrez',type:'eventual',zones:['A2','A1'],defaultOff:'',notes:''},
+  {id:'HK20',name:'Maleynis Solis',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK21',name:'Yamileth Perez',type:'eventual',zones:['A2'],defaultOff:'',notes:'No puede venir por el momento'},
+  {id:'HK22',name:'Diana Acosta',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK23',name:'Leidys Marin',type:'eventual',zones:['A2'],defaultOff:'',notes:'Solo domingos'},
+  {id:'HK24',name:'Yanyra Puyol',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:'Solo puede una vez a la semana'},
+  {id:'HK25',name:'Karina Rosales',type:'eventual',zones:['A2'],defaultOff:'',notes:'Solo domingos'},
+  {id:'HK26',name:'Edna Dominguez',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK27',name:'Yulissa Concepcion',type:'eventual',zones:['A2','A1'],defaultOff:'',notes:''},
+  {id:'HK28',name:'Astri Martinez',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
+  {id:'HK29',name:'Shavon Contraeras',type:'eventual',zones:['A2'],defaultOff:'',notes:'Solo domingos'},
+  {id:'HK30',name:'Anayari Paredes',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK31',name:'Nayelis Diaz',type:'eventual',zones:['A2'],defaultOff:'',notes:''}
 ];
 var TM_availability = {};
 var TM_weekStart = null;
@@ -7731,4 +7733,6 @@ if(_csvInp && !_csvInp._sbHooked) {
   });
 }
 </script>
-</html>
+</html><div id="hkd-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:center;justify-content:center" onclick="if(event.target===this)hkdClose()"><div style="background:#fff;border-radius:12px;width:520px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden"><div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:flex-start;justify-content:space-between"><div><div id="hkd-title" style="font-size:15px;font-weight:700"></div><div id="hkd-sub" style="font-size:11px;color:#6b7280;margin-top:3px"></div></div><button onclick="hkdClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button></div><div style="padding:16px 20px;overflow-y:auto;flex:1"><div id="hkd-kpis" style="display:flex;gap:12px;margin-bottom:16px"></div><div id="hkd-task-list" style="display:flex;flex-direction:column;gap:8px"></div></div></div></div>
+<style>.hkd-kpi{flex:1;background:#f9fafb;border-radius:8px;padding:10px 14px}.hkd-kpi-val{font-size:22px;font-weight:700;color:#111827}.hkd-kpi-lbl{font-size:10px;color:#6b7280;margin-top:2px;text-transform:uppercase;letter-spacing:.05em}.hkd-task{border-radius:8px;padding:10px 14px;border-left:3px solid;display:flex;align-items:center;gap:12px;cursor:pointer}.hkd-task.co{background:#eff6ff;border-color:#3b82f6}.hkd-task.coci{background:#fffbeb;border-color:#f59e0b}.hkd-task.exp{background:#f5f3ff;border-color:#8b5cf6}.hkd-kpi,.hkd-task-name,.hkd-task-meta,.hkd-task-time,.hkd-task-icon{display:block}.hkd-task-icon{font-size:18px;flex-shrink:0}.hkd-task-info{flex:1}.hkd-task-name{font-size:12px;font-weight:600;color:#111827}.hkd-task-meta{font-size:10px;color:#6b7280;margin-top:2px}.hkd-task-time{font-size:11px;font-weight:600;color:#374151;flex-shrink:0;text-align:right}</style>
+
