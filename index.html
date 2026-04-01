@@ -7664,5 +7664,71 @@ setTimeout(function(){
   }
 }, 1500);
 
+
+// Hook: al hacer click en Generar, si no hay reservas en memoria,
+// cargar desde Supabase antes de correr el scheduler
+var _origRun = window.run;
+window.run = async function() {
+  // Verificar si ya hay reservas (del CSV cargado en esta sesion)
+  // Las reservas estan en scope local del script principal
+  // Usamos un flag para saber si ya fueron cargadas de Supabase
+  if(!window._sbResLoaded) {
+    try {
+      var sbRes = await sbLoadReservations();
+      if(sbRes && sbRes.length > 0) {
+        window._sbResLoaded = true;
+        window._sbResCache = sbRes;
+        if(typeof toast === 'function') toast('Reservas cargadas de Supabase: ' + sbRes.length);
+        // Guardar en localStorage para que el script principal las encuentre
+        // Convertir al formato CSV para que parseCSV las procese
+        // Mejor: llamar directamente al scheduler con estos datos
+        // Necesitamos acceder a buildTasks que esta en scope local
+        // Lo hacemos via el evento change del input con un File blob
+        var csvLines = ['"CHECK-IN DATE","CHECK-OUT DATE","NUMBER OF NIGHTS","LISTING\'S NICKNAME","NUMBER OF BEDROOMS","NUMBER OF BEDS","NUMBER OF BATHROOMS","STATUS"'];
+        sbRes.forEach(function(r){
+          var nights = r.coDate && r.ciDate ? Math.round((new Date(r.ciDate)-new Date(r.coDate))/86400000) : 1;
+          var br = parseInt(r.br)||1;
+          csvLines.push('"'+r.coDate+'","'+r.ciDate+'",'+nights+',"'+r.name+'",'+br+','+br+',1,"confirmed"');
+        });
+        var csvText = csvLines.join('\n');
+        localStorage.setItem('wh_csv_data', csvText);
+        localStorage.setItem('wh_csv_date', new Date().toISOString().split('T')[0]);
+        // Ahora disparar el evento change del input para que el script principal procese el CSV
+        var inp = document.getElementById('csv-input');
+        if(inp) {
+          var blob = new Blob([csvText], {type:'text/csv'});
+          var file = new File([blob], 'supabase_reservations.csv', {type:'text/csv'});
+          var dt = new DataTransfer();
+          dt.items.add(file);
+          inp.files = dt.files;
+          var evt = new Event('change');
+          inp.dispatchEvent(evt);
+          // Esperar a que el parseCSV termine
+          await new Promise(function(res){ setTimeout(res, 500); });
+        }
+      }
+    } catch(e) {
+      console.error('Supabase load error:', e);
+    }
+  }
+  // Llamar al run original
+  if(typeof _origRun === 'function') _origRun.apply(this, arguments);
+};
+
+// Al cargar un CSV nuevo, ademas de guardarlo local, subirlo a Supabase
+var _csvInp = document.getElementById('csv-input');
+if(_csvInp && !_csvInp._sbHooked) {
+  _csvInp._sbHooked = true;
+  _csvInp.addEventListener('change', function() {
+    window._sbResLoaded = false; // Resetear flag - hay CSV nuevo
+    window._sbResCache = null;
+    // El upload a Supabase se hace despues de 1 segundo
+    // para que parseCSV del handler original haya corrido
+    setTimeout(function() {
+      var csv = localStorage.getItem('wh_csv_data');
+      if(csv) sbUploadCurrentCSV();
+    }, 1000);
+  });
+}
 </script>
 </html>
