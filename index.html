@@ -5406,6 +5406,8 @@ function runSchedule_engine(tasks,hkPool){
     let best=null,bs=-Infinity;
     for(const s of Object.values(st)){
       if(!canFit(s,t))continue;
+      var dedZone=Object.keys(DEDICATED).find(function(z){return DEDICATED[z]===s.hk.id;});
+      if(dedZone&&t.zone!==dedZone)continue;
       let sc=s.cur*10;
       const last=s.tasks[s.tasks.length-1];
       if(last?.addrKey===t.addrKey)sc+=1000;else if(last?.zone===t.zone)sc+=100;
