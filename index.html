@@ -716,7 +716,8 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
 
   <!-- Schedule body -->
-  <div class="sched-wrap">
+  <div id="absence-alert" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #f59e0b;border-radius:8px;padding:10px 16px;margin:12px 28px 0;font-size:12.5px;color:#92400e"></div>
+<div class="sched-wrap">
     <div class="tl-area" id="tl-area">
       <div class="tl-inner" id="tl-inner"><div class="ruler"><div class="rhour" style="width:140px">09:00</div><div class="rhour" style="width:140px">10:00</div><div class="rhour" style="width:140px">11:00</div><div class="rhour" style="width:140px">12:00</div><div class="rhour" style="width:140px">13:00</div><div class="rhour" style="width:140px">14:00</div><div class="rhour h15" style="width:140px">15:00</div><div class="rhour" style="width:140px">16:00</div></div><div class="hk-row" style="min-height:68px" data-hk="HK01" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK01')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Marlenis Duarte</div>
@@ -7196,5 +7197,136 @@ function hkdOpen(hkId){
   document.getElementById('hkd-overlay').classList.add('open');
 }
 function hkdClose(){document.getElementById('hkd-overlay').classList.remove('open');}
+
+var getHKStatusForDate=function(dateStr){
+  var fijas=[],eventuales=[],ausentes=[];
+  var hks=(typeof TM_hks!=='undefined')?TM_hks:[];
+  hks.forEach(function(hk){
+    var st=(typeof tmGetStatus==='function')?tmGetStatus(hk.id,dateStr):{status:'work',note:''};
+    var info={id:hk.id,name:hk.name,type:hk.type,zones:hk.zones||[],status:st.status,note:st.note||''};
+    if(st.status==='work'){if(hk.type==='eventual')eventuales.push(info);else fijas.push(info);}
+    else ausentes.push(info);
+  });
+  return{fijas:fijas,eventuales:eventuales,ausentes:ausentes};
+};
+
+var checkAbsencesForDate=function(dateStr){
+  var el=document.getElementById('absence-alert');
+  if(!el)return;
+  if(typeof TM_hks==='undefined'){el.style.display='none';return;}
+  var s=getHKStatusForDate(dateStr);
+  var absent=s.ausentes.filter(function(h){return h.type!=='eventual';});
+  if(!absent.length){el.style.display='none';return;}
+  el.style.display='block';
+  el.innerHTML='<strong>HKs ausentes/libres hoy:</strong> '+
+    absent.map(function(h){return '<b>'+h.name+'</b> ('+(h.note||h.status)+')';}).join(' &middot; ')+
+    ' &mdash; <a href="#" onclick="showSection(\'team\');return false" style="color:#92400e;font-weight:700;text-decoration:underline">Ver Equipo HK</a>';
+};
+
+var activateEventualForDate=function(hkId,dateStr){
+  if(typeof TM_availability==='undefined')return;
+  TM_availability[hkId+'_'+dateStr]={status:'work',note:'Activada por coordinador'};
+  if(typeof tmSaveData==='function')tmSaveData();
+  if(typeof toast==='function')toast('Eventual activada para hoy - ya puede asignarle tareas');
+  if(selectedTask&&typeof openPanel==='function')openPanel(selectedTask.id,pendingHKId);
+};
+
+var _openPanelOrig=window.openPanel;
+window.openPanel=function(taskId,preHK){
+  var t=findTask(taskId);
+  if(!t)return;
+  selectedTask=t;
+  pendingHKId=(preHK!=null)?preHK:t.assignedHK;
+  var tm=TYPE_META[t.type]||TYPE_META.CO;
+  document.getElementById('ep-title').textContent=tm.icon+' '+t.unitName;
+  document.getElementById('ep-sub').textContent=t.type+' - '+t.br.toUpperCase()+' - Zona '+(t.zone||'?');
+  document.getElementById('ep-unit').textContent=t.unitName+(t.notes?' - '+t.notes:'');
+  document.getElementById('ep-meta').textContent=t.type+' - '+t.br.toUpperCase()+' - Zona '+(t.zone||'?')+' - '+t.cleanMins+' min'+(t.isManual?' - MANUAL':'');
+  document.getElementById('ep-time').textContent=t.startTime!=null?h2t(t.startTime)+' - '+h2t(t.endTime)+'  ('+t.cleanMins+'min)':'Sin asignar';
+  document.getElementById('ep-reason').value='';
+  var byHK=currentResult.byHK;
+  var dateStr=currentDate||'';
+  var hkStatus=(dateStr&&typeof getHKStatusForDate==='function')?getHKStatusForDate(dateStr):null;
+  var hkListEl=document.getElementById('ep-hkopts');
+  hkListEl.innerHTML='';
+  function makeHKDiv(hk,isSel,badge,badgeColor,disabled){
+    var sc=byHK[hk.id];
+    var n=sc?sc.tasks.length:0,m=sc?sc.tasks.reduce(function(s,x){return s+x.cleanMins;},0):0;
+    var div=document.createElement('div');
+    div.className='hk-opt'+(isSel?' sel':'');
+    if(isSel){div.style.borderColor='#2563eb';div.style.background='#eff6ff';}
+    if(disabled)div.style.opacity='0.6';
+    div.innerHTML='<span class="hk-opt-nm">'+hk.id+' - '+hk.name+
+      (badge?(' <span style="font-size:9px;font-weight:700;color:'+badgeColor+';background:'+(badgeColor==='#dc2626'?'#fee2e2':badgeColor==='#6d28d9'?'#f5f3ff':'#f0fdf4')+';padding:1px 5px;border-radius:3px">'+badge+'</span>'):'')+'</span>'+
+      '<span class="hk-opt-ld">'+n+' tareas - '+m+'min</span>';
+    if(!disabled)(function(id,el){div.onclick=function(){selHK(id,el);};})(hk.id,div);
+    return div;
+  }
+  if(hkStatus){
+    // Fijas disponibles
+    var hF=document.createElement('div');
+    hF.style.cssText='padding:4px 8px;font-size:9.5px;font-weight:700;color:#1e40af;background:#eff6ff;border-radius:4px;margin:2px 0 4px';
+    hF.textContent='FIJAS DISPONIBLES ('+hkStatus.fijas.length+')';
+    hkListEl.appendChild(hF);
+    hkStatus.fijas.forEach(function(hk){hkListEl.appendChild(makeHKDiv(hk,hk.id===pendingHKId,null,null,false));});
+    // Eventuales activas
+    if(hkStatus.eventuales.length){
+      var hE=document.createElement('div');
+      hE.style.cssText='padding:4px 8px;font-size:9.5px;font-weight:700;color:#6d28d9;background:#f5f3ff;border-radius:4px;margin:8px 0 4px';
+      hE.textContent='EVENTUALES ACTIVAS HOY ('+hkStatus.eventuales.length+')';
+      hkListEl.appendChild(hE);
+      hkStatus.eventuales.forEach(function(hk){hkListEl.appendChild(makeHKDiv(hk,hk.id===pendingHKId,'EVT','#6d28d9',false));});
+    }
+    // Eventuales para activar
+    var hks2=(typeof TM_hks!=='undefined')?TM_hks:[];
+    var avail2=(typeof TM_availability!=='undefined')?TM_availability:{};
+    var inactive=hks2.filter(function(hk){return hk.type==='eventual'&&!(avail2[hk.id+'_'+dateStr]&&avail2[hk.id+'_'+dateStr].status==='work');});
+    if(inactive.length){
+      var hI=document.createElement('div');
+      hI.style.cssText='padding:4px 8px;font-size:9.5px;font-weight:700;color:#92400e;background:#fffbeb;border-radius:4px;margin:8px 0 4px';
+      hI.textContent='EVENTUALES DISPONIBLES - clic para activar ('+inactive.length+')';
+      hkListEl.appendChild(hI);
+      inactive.forEach(function(hk){
+        var row=document.createElement('div');
+        row.className='hk-opt';
+        row.style.cssText='opacity:.75;display:flex;justify-content:space-between;align-items:center;gap:6px;cursor:default';
+        var info=document.createElement('div');
+        info.style.cssText='flex:1;min-width:0';
+        info.innerHTML='<span class="hk-opt-nm">'+hk.id+' - '+hk.name+'</span><span class="hk-opt-ld">Zonas: '+(hk.zones||[]).join(', ')+'</span>';
+        var btn=document.createElement('button');
+        btn.textContent='+ Activar';
+        btn.style.cssText='font-size:10px;padding:4px 10px;background:#2563eb;color:#fff;border:none;border-radius:5px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-weight:600';
+        (function(id){btn.onclick=function(e){e.stopPropagation();activateEventualForDate(id,dateStr);};})(hk.id);
+        row.appendChild(info);row.appendChild(btn);
+        hkListEl.appendChild(row);
+      });
+    }
+    // Ausentes
+    var absFijas=hkStatus.ausentes.filter(function(h){return h.type!=='eventual';});
+    if(absFijas.length){
+      var hA=document.createElement('div');
+      hA.style.cssText='padding:4px 8px;font-size:9.5px;font-weight:700;color:#dc2626;background:#fef2f2;border-radius:4px;margin:8px 0 4px';
+      hA.textContent='AUSENTES/LIBRES HOY ('+absFijas.length+')';
+      hkListEl.appendChild(hA);
+      absFijas.forEach(function(hk){hkListEl.appendChild(makeHKDiv(hk,false,hk.status==='off'?'LIBRE':'AUS','#dc2626',true));});
+    }
+  } else {
+    HK_POOL.forEach(function(hk){hkListEl.appendChild(makeHKDiv(hk,hk.id===pendingHKId,null,null,false));});
+  }
+  document.getElementById('ep').classList.add('open');
+  document.getElementById('ep-confirm').onclick=function(){confirmChange(t);};
+};
+
+// Hook: verificar ausencias al generar schedule
+var _origRunCSV=window.runCSV;
+if(typeof runCSV==='function'){
+  window.runCSV=function(){
+    _origRunCSV.apply(this,arguments);
+    setTimeout(function(){
+      var d=document.getElementById('date-input');
+      if(d&&d.value&&typeof checkAbsencesForDate==='function')checkAbsencesForDate(d.value);
+    },300);
+  };
+}
 </script>
 </html>
