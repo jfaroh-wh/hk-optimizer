@@ -6052,28 +6052,26 @@ setTimeout(()=>{
 </script>
 
 <!-- TEAM PAGE -->
-<div class="page-section" id="page-team" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden;background:#f5f6f8;z-index:10">
-
-  <!-- Header -->
+<div class="page-section" id="page-team" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:hidden">
   <div style="background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 28px;flex-shrink:0">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
       <div>
-        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Equipo de Housekeeping</div>
-        <div style="font-size:12px;color:#6b7280;margin-top:2px">Disponibilidad semanal · Wynwood House Panama</div>
+        <div style="font-size:20px;font-weight:700">Equipo de Housekeeping</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:2px">Disponibilidad semanal &middot; 08:30&ndash;16:30 &middot; Lun&ndash;Dom</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div id="tm-team-summary" style="display:flex;gap:6px;align-items:center;font-size:11px;padding:5px 12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px"></div>
         <button class="btn" onclick="tmPrevWeek()">&#8249;</button>
-        <div id="tm-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;text-align:center;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap"></div>
+        <div id="tm-week-label" style="padding:7px 14px;font-size:13px;font-weight:600;border:1px solid #e5e7eb;border-radius:8px;background:#f9fafb;min-width:160px;text-align:center"></div>
         <button class="btn" onclick="tmNextWeek()">&#8250;</button>
         <button class="btn sm" onclick="tmGoToday()">Hoy</button>
+        <button class="btn" onclick="tmOpenAutoOff()" style="font-size:11px">Auto dias libres</button>
         <button class="btn pri" onclick="tmOpenAddHK()">+ Agregar HK</button>
       </div>
     </div>
   </div>
-
-  <!-- Grid -->
   <div style="flex:1;overflow:auto;padding:20px 28px">
-    <div id="tm-alert" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:#92400e"></div>
+    <div id="tm-alert" style="display:none;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;margin-bottom:14px;font-size:12.5px;color:#92400e"></div>
     <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
       <div id="tm-grid-header" style="display:grid;border-bottom:2px solid #e5e7eb;background:#f9fafb"></div>
       <div id="tm-grid-rows"></div>
@@ -6082,36 +6080,90 @@ setTimeout(()=>{
   </div>
 </div>
 
-<!-- TEAM CELL MODAL -->
 <div id="tm-cell-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center" onclick="tmCloseCellModal(event)">
   <div style="background:#fff;border-radius:12px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
     <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between">
       <div><div id="tm-modal-title" style="font-size:15px;font-weight:700"></div><div id="tm-modal-sub" style="font-size:11.5px;color:#6b7280;margin-top:2px"></div></div>
-      <button onclick="tmCloseCellModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">×</button>
+      <button onclick="tmCloseCellModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button>
     </div>
     <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
       <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:8px">Estado del día</div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:8px">Estado del dia</div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-          <div id="tm-opt-work" onclick="tmSelStatus('work')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">â</div><div style="font-size:11px;font-weight:600">Trabaja</div>
-          </div>
-          <div id="tm-opt-off" onclick="tmSelStatus('off')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">🏖</div><div style="font-size:11px;font-weight:600">Libre</div>
-          </div>
-          <div id="tm-opt-abs" onclick="tmSelStatus('abs')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center">
-            <div style="font-size:18px;margin-bottom:4px">🤒</div><div style="font-size:11px;font-weight:600">Ausente</div>
-          </div>
+          <div id="tm-opt-work" onclick="tmSelStatus('work')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:18px;margin-bottom:4px">&#10003;</div><div style="font-size:11px;font-weight:600">Trabaja</div></div>
+          <div id="tm-opt-off" onclick="tmSelStatus('off')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:18px;margin-bottom:4px">&#127958;</div><div style="font-size:11px;font-weight:600">Libre</div></div>
+          <div id="tm-opt-abs" onclick="tmSelStatus('abs')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:18px;margin-bottom:4px">&#128164;</div><div style="font-size:11px;font-weight:600">Ausente</div></div>
         </div>
       </div>
-      <div>
-        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nota (opcional)</div>
-        <input id="tm-cell-note" type="text" class="inp" style="width:100%" placeholder="ej: cita médica, cobertura zona D...">
-      </div>
+      <div><div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:5px">Nota (opcional)</div><input id="tm-cell-note" type="text" class="inp" style="width:100%" placeholder="ej: cita medica, cobertura zona A..."></div>
     </div>
     <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
       <button class="btn" onclick="tmCloseCellModal()">Cancelar</button>
       <button class="btn pri" onclick="tmSaveCellStatus()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div id="tm-hk-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center" onclick="if(event.target===this)tmCloseHKModal()">
+  <div style="background:#fff;border-radius:12px;width:480px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18)">
+    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1">
+      <div id="tm-hk-modal-title" style="font-size:15px;font-weight:700">Editar HK</div>
+      <button onclick="tmCloseHKModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button>
+    </div>
+    <div style="padding:20px;display:flex;flex-direction:column;gap:16px">
+      <div><div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:6px">Nombre</div><input id="tm-hk-name" type="text" class="inp" style="width:100%" placeholder="Nombre completo"></div>
+      <div>
+        <div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:8px">Tipo de contrato</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div id="tm-type-fija" onclick="tmSelType('fija')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:11px;font-weight:700;color:#2563eb">FIJA</div><div style="font-size:9.5px;color:#6b7280;margin-top:2px">6 dias/sem</div></div>
+          <div id="tm-type-eventual" onclick="tmSelType('eventual')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:11px;font-weight:700;color:#7c3aed">EVENTUAL</div><div style="font-size:9.5px;color:#6b7280;margin-top:2px">Por demanda</div></div>
+          <div id="tm-type-dedicada" onclick="tmSelType('dedicada')" style="padding:10px 8px;border-radius:8px;border:2px solid #e5e7eb;cursor:pointer;text-align:center"><div style="font-size:11px;font-weight:700;color:#d97706">DEDICADA</div><div style="font-size:9.5px;color:#6b7280;margin-top:2px">Zona fija</div></div>
+        </div>
+      </div>
+      <div id="tm-hk-off-section"><div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:6px">Dia libre semanal</div>
+        <select id="tm-hk-offday" class="inp" style="width:100%">
+          <option value="">Sistema asigna automaticamente</option>
+          <option value="1">Lunes</option><option value="2">Martes</option>
+          <option value="3">Miercoles (recomendado)</option><option value="4">Jueves (recomendado)</option>
+          <option value="5">Viernes</option><option value="6">Sabado</option><option value="0">Domingo</option>
+        </select>
+      </div>
+      <div><div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:6px">Zonas asignadas</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px" id="tm-hk-zones">
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="A0"> A0 Mallet</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="A1"> A1 CC/Lefevre</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="A2"> A2 Costa/Love</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="A3"> A3 Moderna</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="B"> B San Francisco</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="C"> C Obarrio</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="D"> D Bella Vista</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="E"> E Costa del Este</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="F"> F Panama Pacifico</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" value="MALLET"> MALLET</label>
+        </div>
+      </div>
+      <div><div style="font-size:11.5px;font-weight:600;color:#6b7280;margin-bottom:6px">Notas</div><input id="tm-hk-notes" type="text" class="inp" style="width:100%" placeholder="Zona especial, restricciones, etc."></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:space-between;position:sticky;bottom:0;background:#fff">
+      <button id="tm-hk-delete-btn" class="btn" style="color:#dc2626;border-color:#fecaca" onclick="tmDeleteHK()">Eliminar</button>
+      <div style="display:flex;gap:8px"><button class="btn" onclick="tmCloseHKModal()">Cancelar</button><button class="btn pri" onclick="tmSaveHK()">Guardar</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="tm-autooff-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:500;align-items:center;justify-content:center" onclick="if(event.target===this)tmCloseAutoOff()">
+  <div style="background:#fff;border-radius:12px;width:540px;max-width:95vw;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18)">
+    <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;position:sticky;top:0;background:#fff">
+      <div><div style="font-size:15px;font-weight:700">Programacion automatica de dias libres</div><div style="font-size:11.5px;color:#6b7280;margin-top:2px">HKs fijas: 6 dias trabajo + 1 dia libre. Semana Lun-Dom.</div></div>
+      <button onclick="tmCloseAutoOff()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button>
+    </div>
+    <div style="padding:20px">
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#1e40af"><strong>Logica:</strong> Dias libres distribuidos priorizando Mie y Jue (dias valle). Maximo 4 HKs por dia. Cada HK fija descansa 1 dia/semana.</div>
+      <div id="tm-autooff-result" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+    <div style="padding:12px 20px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end;position:sticky;bottom:0;background:#fff">
+      <button class="btn" onclick="tmCloseAutoOff()">Cancelar</button>
+      <button class="btn pri" onclick="tmApplyAutoOff()">Aplicar propuesta</button>
     </div>
   </div>
 </div>
@@ -6271,33 +6323,48 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 // âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // TEAM MODULE
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 var TM_hks = [
-  {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],color:'#d97706',defaultOff:'',notes:'MALLET exclusiva'},
-  {id:'HK02',name:'Ana García',type:'fija',zones:['A2','D'],color:'#2563eb',defaultOff:'',notes:''},
-  {id:'HK03',name:'María López',type:'fija',zones:['A2','C'],color:'#7c3aed',defaultOff:'',notes:''},
-  {id:'HK04',name:'Carmen Rodríguez',type:'fija',zones:['A1','A2'],color:'#059669',defaultOff:'',notes:''},
-  {id:'HK05',name:'Luisa Martínez',type:'fija',zones:['A2','A3'],color:'#dc2626',defaultOff:'',notes:''},
-  {id:'HK06',name:'Rosa Hernández',type:'fija',zones:['A2'],color:'#0891b2',defaultOff:'',notes:''},
-  {id:'HK07',name:'Elena González',type:'fija',zones:['A1','A2'],color:'#9333ea',defaultOff:'',notes:''},
-  {id:'HK08',name:'Patricia Flores',type:'fija',zones:['A2','A3'],color:'#1d4ed8',defaultOff:'',notes:''},
-  {id:'HK09',name:'Teresa Sánchez',type:'fija',zones:['A2','A1','A3'],color:'#065f46',defaultOff:'',notes:''},
-  {id:'HK10',name:'Gloria Ramírez',type:'fija',zones:['A1','A2','A3'],color:'#7e22ce',defaultOff:'',notes:''},
-  {id:'HK11',name:'Isabel Torres',type:'fija',zones:['F'],color:'#b45309',defaultOff:'',notes:'Zona F'},
-  {id:'HK12',name:'Norma Castro',type:'fija',zones:['B','D'],color:'#0e7490',defaultOff:'',notes:''},
-  {id:'HK13',name:'Sandra Vargas',type:'fija',zones:['B','D'],color:'#15803d',defaultOff:'',notes:''},
-  {id:'HK14',name:'Diana Moreno',type:'fija',zones:['D','C'],color:'#be185d',defaultOff:'',notes:''},
-  {id:'HK15',name:'Luz Jiménez',type:'fija',zones:['E'],color:'#c2410c',defaultOff:'',notes:'Zona E'},
-  {id:'HK16',name:'Marta Ríos',type:'fija',zones:['A2','A3'],color:'#4338ca',defaultOff:'',notes:''},
-  {id:'HK17',name:'Consuelo Mendoza',type:'fija',zones:['A2','A3'],color:'#0369a1',defaultOff:'',notes:''}
+  {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],defaultOff:'',notes:'MALLET exclusiva'},
+  {id:'HK02',name:'Ana Garcia',type:'fija',zones:['A2','D'],defaultOff:'',notes:''},
+  {id:'HK03',name:'Maria Lopez',type:'fija',zones:['A2','C'],defaultOff:'',notes:''},
+  {id:'HK04',name:'Carmen Rodriguez',type:'fija',zones:['A1','A2'],defaultOff:'',notes:''},
+  {id:'HK05',name:'Luisa Martinez',type:'fija',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK06',name:'Rosa Hernandez',type:'fija',zones:['A2'],defaultOff:'',notes:''},
+  {id:'HK07',name:'Elena Gonzalez',type:'fija',zones:['A1','A2'],defaultOff:'',notes:''},
+  {id:'HK08',name:'Patricia Flores',type:'fija',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK09',name:'Teresa Sanchez',type:'fija',zones:['A2','A1','A3'],defaultOff:'',notes:''},
+  {id:'HK10',name:'Gloria Ramirez',type:'fija',zones:['A1','A2','A3'],defaultOff:'',notes:''},
+  {id:'HK11',name:'Isabel Torres',type:'fija',zones:['F'],defaultOff:'',notes:'Zona F'},
+  {id:'HK12',name:'Norma Castro',type:'fija',zones:['B','D'],defaultOff:'',notes:''},
+  {id:'HK13',name:'Sandra Vargas',type:'fija',zones:['B','D'],defaultOff:'',notes:''},
+  {id:'HK14',name:'Diana Moreno',type:'fija',zones:['D','C'],defaultOff:'',notes:''},
+  {id:'HK15',name:'Luz Jimenez',type:'fija',zones:['E'],defaultOff:'',notes:'Zona E'},
+  {id:'HK16',name:'Marta Rios',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK17',name:'Consuelo Mendoza',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK18',name:'Eventual 01',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
+  {id:'HK19',name:'Eventual 02',type:'eventual',zones:['A3','B'],defaultOff:'',notes:''},
+  {id:'HK20',name:'Eventual 03',type:'eventual',zones:['C','D'],defaultOff:'',notes:''},
+  {id:'HK21',name:'Eventual 04',type:'eventual',zones:['A1','A2'],defaultOff:'',notes:''},
+  {id:'HK22',name:'Eventual 05',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
+  {id:'HK23',name:'Eventual 06',type:'eventual',zones:['B','D'],defaultOff:'',notes:''},
+  {id:'HK24',name:'Eventual 07',type:'eventual',zones:['A2','A3'],defaultOff:'',notes:''},
+  {id:'HK25',name:'Eventual 08',type:'eventual',zones:['A1'],defaultOff:'',notes:''},
+  {id:'HK26',name:'Eventual 09',type:'eventual',zones:['E','F'],defaultOff:'',notes:''},
+  {id:'HK27',name:'Eventual 10',type:'eventual',zones:['A2'],defaultOff:'',notes:''},
+  {id:'HK28',name:'Eventual 11',type:'eventual',zones:['C','D'],defaultOff:'',notes:''},
+  {id:'HK29',name:'Eventual 12',type:'eventual',zones:['A3'],defaultOff:'',notes:''}
 ];
 var TM_availability = {};
 var TM_weekStart = null;
 var TM_editCell = null;
 var TM_pendingStatus = null;
+var TM_editHKId = null;
+var TM_pendingType = null;
+var TM_autoOffProposal = {};
 var MIN_HKS = {0:10,1:8,2:7,3:8,4:9,5:11,6:11};
-var DOW_S = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-var DOW_F = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+var DOW_S = ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+var DOW_F = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+var DOW_NAMES = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'];
 
 function tmGetMonday(d){var dt=new Date(d);dt.setHours(12,0,0,0);var day=dt.getDay();dt.setDate(dt.getDate()-(day===0?6:day-1));return dt;}
 function tmAddDays(d,n){var dt=new Date(d);dt.setDate(dt.getDate()+n);return dt;}
@@ -6311,25 +6378,27 @@ function tmGetStatus(hkId,dateStr){
   var hk=TM_hks.find(function(h){return h.id===hkId;});
   if(hk&&hk.defaultOff!==''){
     var dow=new Date(dateStr+'T12:00:00').getDay();
-    if(String(dow)===String(hk.defaultOff))return{status:'off',note:'Día libre habitual'};
+    if(String(dow)===String(hk.defaultOff))return{status:'off',note:'Dia libre'};
   }
+  if(hk&&hk.type==='eventual')return{status:'off',note:'Eventual'};
   return{status:'work',note:''};
 }
 
-function tmLoadAvailability(){
-  var saved=localStorage.getItem('wh_team_v1');
-  if(saved){try{var p=JSON.parse(saved);TM_availability=p.availability||{};}catch(e){}}
+function tmLoadData(){
+  var saved=localStorage.getItem('wh_team_v2');
+  if(saved){try{var p=JSON.parse(saved);if(p.hks&&p.hks.length)TM_hks=p.hks;TM_availability=p.availability||{};}catch(e){}}
 }
-
-function tmSaveAvailability(){
-  var saved=localStorage.getItem('wh_team_v1');
-  var data={hks:TM_hks,availability:TM_availability};
-  try{var p=JSON.parse(saved||'{}');data.hks=p.hks||TM_hks;}catch(e){}
-  localStorage.setItem('wh_team_v1',JSON.stringify(data));
-}
+function tmSaveData(){localStorage.setItem('wh_team_v2',JSON.stringify({hks:TM_hks,availability:TM_availability}));}
 
 function tmCountAvail(dateStr){
-  return TM_hks.filter(function(h){return h.status!=='inactive'&&tmGetStatus(h.id,dateStr).status==='work';}).length;
+  return TM_hks.filter(function(h){return tmGetStatus(h.id,dateStr).status==='work';}).length;
+}
+
+function tmUpdateSummary(){
+  var fijas=TM_hks.filter(function(h){return h.type==='fija'||h.type==='dedicada';}).length;
+  var eventuales=TM_hks.filter(function(h){return h.type==='eventual';}).length;
+  var el=document.getElementById('tm-team-summary');
+  if(el)el.innerHTML='<span style="font-weight:700;color:#2563eb">'+fijas+'</span><span style="color:#6b7280"> fijas</span><span style="color:#d1d5db;margin:0 4px">|</span><span style="font-weight:700;color:#7c3aed">'+eventuales+'</span><span style="color:#6b7280"> eventuales</span>';
 }
 
 function tmRender(){
@@ -6337,68 +6406,90 @@ function tmRender(){
   var days=tmWeekDays();
   var today=tmFmtDate(new Date());
   document.getElementById('tm-week-label').textContent=tmFmtDisp(days[0])+' - '+tmFmtDisp(days[6]);
+  tmUpdateSummary();
 
-  // Check alerts
   var alertDays=[];
   days.forEach(function(d){
     var ds=tmFmtDate(d);
     var avail=tmCountAvail(ds);
     var needed=MIN_HKS[d.getDay()===0?6:d.getDay()-1]||8;
-    if(avail<needed)alertDays.push(DOW_S[d.getDay()===0?6:d.getDay()-1]+' '+d.getDate()+' (+' +(needed-avail)+')');
+    if(avail<needed)alertDays.push(DOW_S[d.getDay()===0?6:d.getDay()-1]+' '+d.getDate()+' (+'+(needed-avail)+')');
   });
   var alertEl=document.getElementById('tm-alert');
-  if(alertDays.length){
-    alertEl.style.display='block';
-    alertEl.innerHTML='â ï¸ <strong>Días con déficit:</strong> '+alertDays.join(' · ')+' - considerar eventuales';
-  } else {alertEl.style.display='none';}
+  if(alertDays.length){alertEl.style.display='block';alertEl.innerHTML='<strong>Dias con deficit:</strong> '+alertDays.join(' &middot; ')+' - activar eventuales';}
+  else{alertEl.style.display='none';}
 
-  // Header
-  var hdrCells='<div style="padding:10px 12px;font-size:11px;font-weight:600;color:#6b7280;border-right:2px solid #e5e7eb">HK</div>';
+  var hdrCells='<div style="padding:10px 14px;font-size:11px;font-weight:600;color:#6b7280;border-right:2px solid #e5e7eb;display:flex;align-items:center">HK</div>';
   days.forEach(function(d){
     var ds=tmFmtDate(d);
     var avail=tmCountAvail(ds);
     var needed=MIN_HKS[d.getDay()===0?6:d.getDay()-1]||8;
     var isToday=ds===today;
     var color=avail<needed?'#dc2626':avail===needed?'#d97706':'#16a34a';
-    hdrCells+='<div style="padding:10px 8px;text-align:center;border-right:1px solid #e5e7eb'+(isToday?';background:#eff6ff':'')+'">'+
-      '<div style="font-size:10px;font-weight:600;color:'+(isToday?'#2563eb':'#6b7280');
-    hdrCells+=';text-transform:uppercase">'+DOW_S[d.getDay()===0?6:d.getDay()-1]+'</div>'+
-      '<div style="font-size:14px;font-weight:700;color:'+(isToday?'#2563eb':'#111827')+'">'+d.getDate()+'</div>'+
+    hdrCells+='<div style="padding:10px 8px;text-align:center;border-right:1px solid #e5e7eb'+(isToday?';background:#eff6ff;border-bottom:3px solid #2563eb':'')+'">'+
+      '<div style="font-size:10px;font-weight:600;color:'+(isToday?'#2563eb':'#6b7280')+';text-transform:uppercase">'+DOW_S[d.getDay()===0?6:d.getDay()-1]+'</div>'+
+      '<div style="font-size:15px;font-weight:700;color:'+(isToday?'#2563eb':'#111827')+'">'+d.getDate()+'</div>'+
       '<div style="font-size:10px;font-weight:600;color:'+color+';margin-top:2px">'+avail+'/'+needed+'</div></div>';
   });
   var hdr=document.getElementById('tm-grid-header');
-  hdr.style.gridTemplateColumns='180px repeat(7,1fr)';
+  hdr.style.gridTemplateColumns='200px repeat(7,1fr)';
   hdr.innerHTML=hdrCells;
 
-  // HK Rows
-  var rows='';
-  TM_hks.forEach(function(hk){
-    rows+='<div style="display:grid;grid-template-columns:180px repeat(7,1fr);border-bottom:1px solid #e5e7eb">';
-    rows+='<div style="padding:10px 12px;border-right:2px solid #e5e7eb;display:flex;flex-direction:column;justify-content:center">'+
-      '<div style="font-size:12.5px;font-weight:600">'+hk.name+'</div>'+
-      '<div style="font-size:10px;font-weight:600;color:'+(hk.type==='dedicada'?'#d97706':'#2563eb')+';margin-top:1px">'+hk.id+(hk.type==='dedicada'?' · DED':'')+'</div>'+
-      '<div style="font-size:10px;color:#9ca3af;margin-top:1px">'+hk.zones.join(' · ')+'</div></div>';
+  var fijas=TM_hks.filter(function(h){return h.type==='fija'||h.type==='dedicada';});
+  var eventuales=TM_hks.filter(function(h){return h.type==='eventual';});
+  var container=document.getElementById('tm-grid-rows');
+  container.innerHTML='';
+
+  function makeRow(hk,isEven){
+    var typeColor=hk.type==='dedicada'?'#d97706':hk.type==='eventual'?'#7c3aed':'#2563eb';
+    var typeLbl=hk.type==='dedicada'?'DED':hk.type==='eventual'?'EVT':'FIJA';
+    var offLbl=hk.defaultOff!==''?'Libre '+DOW_NAMES[parseInt(hk.defaultOff)]:'';
+    var row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:200px repeat(7,1fr);border-bottom:1px solid #e5e7eb'+(isEven?';background:#fafafa':'');
+    var lbl=document.createElement('div');
+    lbl.style.cssText='padding:10px 14px;border-right:2px solid #e5e7eb;display:flex;flex-direction:column;justify-content:center;cursor:pointer';
+    lbl.title='Clic para editar';
+    lbl.innerHTML='<div style="font-size:12.5px;font-weight:600">'+hk.name+'</div>'+
+      '<div style="font-size:10px;font-weight:700;color:'+typeColor+';margin-top:1px">'+hk.id+' &middot; '+typeLbl+'</div>'+
+      '<div style="font-size:9.5px;color:#9ca3af;margin-top:1px">'+hk.zones.join(' &middot; ')+(offLbl?' &middot; '+offLbl:'')+'</div>';
+    lbl.addEventListener('click',(function(id){return function(){tmOpenEditHK(id);};})(hk.id));
+    row.appendChild(lbl);
     days.forEach(function(d){
       var ds=tmFmtDate(d);
       var st=tmGetStatus(hk.id,ds);
-      var bg=st.status==='off'?'#fef2f2':st.status==='abs'?'#fffbeb':'#f0fdf4';
-      var dotColor=st.status==='off'?'#dc2626':st.status==='abs'?'#d97706':'#16a34a';
-      var lbl=st.status==='off'?'Libre':st.status==='abs'?'Ausente':'Trabaja';
-      var isToday=ds===tmFmtDate(new Date());
-      rows+='<div onclick="tmOpenCell(\''+hk.id+'\',\''+ds+'\',\''+hk.name+'\')" '+
-        'style="border-right:1px solid #e5e7eb;background:'+bg+';cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;min-height:60px'+(isToday?';outline:2px solid #2563eb;outline-offset:-2px':'')+'"'+
-        ' onmouseover="this.style.opacity=\'0.8\'" onmouseout="this.style.opacity=\'1\'">' +
-        '<div style="width:8px;height:8px;border-radius:50%;background:'+dotColor+';margin-bottom:3px"></div>'+
-        '<div style="font-size:9.5px;font-weight:600;color:'+dotColor+'">'+lbl+'</div>'+
-        (st.note?'<div style="font-size:8.5px;color:#6b7280;text-align:center;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+st.note+'</div>':'')+
-        '</div>';
+      var isWork=st.status==='work';
+      var isAbs=st.status==='abs';
+      var isEvtDefault=hk.type==='eventual'&&st.status==='off'&&!TM_availability[hk.id+'_'+ds];
+      var bg=isWork?'#f0fdf4':isAbs?'#fffbeb':'#fef2f2';
+      if(isEvtDefault)bg='#f9fafb';
+      var dot=isWork?'#16a34a':isAbs?'#d97706':'#dc2626';
+      if(isEvtDefault)dot='#d1d5db';
+      var lbl2=isWork?'Trabaja':isAbs?'Ausente':isEvtDefault?'Disponible':'Libre';
+      var isToday=ds===today;
+      var cell=document.createElement('div');
+      cell.style.cssText='border-right:1px solid #e5e7eb;background:'+bg+';cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;min-height:60px'+(isToday?';border-top:2px solid #bfdbfe':'');
+      cell.innerHTML='<div style="width:8px;height:8px;border-radius:50%;background:'+dot+';margin-bottom:3px"></div>'+
+        '<div style="font-size:9.5px;font-weight:600;color:'+dot+'">'+lbl2+'</div>'+
+        (st.note&&!isEvtDefault?'<div style="font-size:8px;color:#9ca3af;text-align:center;max-width:56px;overflow:hidden;white-space:nowrap">'+st.note+'</div>':'');
+      cell.addEventListener('click',(function(hkId,ds2,name){return function(){tmOpenCell(hkId,ds2,name);};})(hk.id,ds,hk.name));
+      row.appendChild(cell);
     });
-    rows+='</div>';
-  });
-  document.getElementById('tm-grid-rows').innerHTML=rows;
+    return row;
+  }
 
-  // Capacity row
-  var capCells='<div style="padding:8px 12px;font-size:11px;font-weight:600;color:#6b7280;border-right:2px solid #e5e7eb;display:flex;align-items:center">Disponibles</div>';
+  var secF=document.createElement('div');
+  secF.style.cssText='padding:6px 14px;background:#eff6ff;border-bottom:1px solid #bfdbfe;font-size:10.5px;font-weight:700;color:#1e40af;letter-spacing:.05em';
+  secF.textContent='HKs Fijas ('+fijas.length+') - 08:30 a 16:30 - 6 dias por semana';
+  container.appendChild(secF);
+  fijas.forEach(function(hk,i){container.appendChild(makeRow(hk,i%2===1));});
+
+  var secE=document.createElement('div');
+  secE.style.cssText='padding:6px 14px;background:#f5f3ff;border-bottom:1px solid #ddd6fe;border-top:2px solid #e5e7eb;font-size:10.5px;font-weight:700;color:#6d28d9;letter-spacing:.05em';
+  secE.textContent='HKs Eventuales ('+eventuales.length+') - Por demanda';
+  container.appendChild(secE);
+  eventuales.forEach(function(hk,i){container.appendChild(makeRow(hk,i%2===1));});
+
+  var capCells='<div style="padding:8px 14px;font-size:11px;font-weight:600;color:#6b7280;border-right:2px solid #e5e7eb;display:flex;align-items:center">Cobertura</div>';
   days.forEach(function(d){
     var ds=tmFmtDate(d);
     var avail=tmCountAvail(ds);
@@ -6407,12 +6498,12 @@ function tmRender(){
     var color=deficit>0?'#dc2626':deficit===0?'#d97706':'#16a34a';
     capCells+='<div style="border-right:1px solid #e5e7eb;text-align:center;padding:8px">'+
       '<div style="font-size:14px;font-weight:700;color:'+color+'">'+avail+'</div>'+
-      '<div style="font-size:9.5px;color:#9ca3af">de '+needed+' mín</div>'+
-      (deficit>0?'<div style="font-size:9.5px;font-weight:600;color:#dc2626">+'+deficit+' event.</div>':'')+
+      '<div style="font-size:9.5px;color:#9ca3af">de '+needed+' min</div>'+
+      (deficit>0?'<div style="font-size:9.5px;font-weight:600;color:#dc2626">+'+deficit+' evt</div>':'')+
       '</div>';
   });
   var cap=document.getElementById('tm-cap-row');
-  cap.style.gridTemplateColumns='180px repeat(7,1fr)';
+  cap.style.gridTemplateColumns='200px repeat(7,1fr)';
   cap.innerHTML=capCells;
 }
 
@@ -6427,12 +6518,11 @@ function tmOpenCell(hkId,dateStr,hkName){
   TM_pendingStatus=cur.status;
   ['work','off','abs'].forEach(function(s){
     var el=document.getElementById('tm-opt-'+s);
-    var bg=s===cur.status?(s==='work'?'#f0fdf4':s==='off'?'#fef2f2':'#fffbeb'):'#fff';
-    var border=s===cur.status?(s==='work'?'#16a34a':s==='off'?'#dc2626':'#d97706'):'#e5e7eb';
-    el.style.background=bg;el.style.borderColor=border;
+    var sel=s===cur.status;
+    el.style.background=sel?(s==='work'?'#f0fdf4':s==='off'?'#fef2f2':'#fffbeb'):'#fff';
+    el.style.borderColor=sel?(s==='work'?'#16a34a':s==='off'?'#dc2626':'#d97706'):'#e5e7eb';
   });
-  var modal=document.getElementById('tm-cell-modal');
-  modal.style.display='flex';
+  document.getElementById('tm-cell-modal').style.display='flex';
 }
 
 function tmSelStatus(s){
@@ -6450,10 +6540,8 @@ function tmSaveCellStatus(){
   var note=document.getElementById('tm-cell-note').value.trim();
   var key=TM_editCell.hkId+'_'+TM_editCell.dateStr;
   TM_availability[key]={status:TM_pendingStatus,note:note};
-  tmSaveAvailability();
-  tmCloseCellModal();
-  tmRender();
-  toast('Disponibilidad actualizada');
+  tmSaveData();tmCloseCellModal();tmRender();
+  if(typeof toast==='function')toast('Disponibilidad actualizada');
 }
 
 function tmCloseCellModal(e){
@@ -6462,18 +6550,126 @@ function tmCloseCellModal(e){
   TM_editCell=null;TM_pendingStatus=null;
 }
 
+function tmOpenEditHK(hkId){
+  var hk=TM_hks.find(function(h){return h.id===hkId;});
+  if(!hk)return;
+  TM_editHKId=hkId;
+  document.getElementById('tm-hk-modal-title').textContent='Editar '+hk.name;
+  document.getElementById('tm-hk-name').value=hk.name;
+  document.getElementById('tm-hk-offday').value=hk.defaultOff||'';
+  document.getElementById('tm-hk-notes').value=hk.notes||'';
+  tmSelType(hk.type);
+  document.querySelectorAll('#tm-hk-zones input[type=checkbox]').forEach(function(cb){cb.checked=hk.zones.indexOf(cb.value)>=0;});
+  document.getElementById('tm-hk-off-section').style.display=hk.type==='eventual'?'none':'block';
+  document.getElementById('tm-hk-delete-btn').style.display='block';
+  document.getElementById('tm-hk-modal').style.display='flex';
+}
+
+function tmOpenAddHK(){
+  TM_editHKId=null;
+  document.getElementById('tm-hk-modal-title').textContent='Agregar HK';
+  document.getElementById('tm-hk-name').value='';
+  document.getElementById('tm-hk-offday').value='';
+  document.getElementById('tm-hk-notes').value='';
+  tmSelType('fija');
+  document.querySelectorAll('#tm-hk-zones input[type=checkbox]').forEach(function(cb){cb.checked=false;});
+  document.getElementById('tm-hk-off-section').style.display='block';
+  document.getElementById('tm-hk-delete-btn').style.display='none';
+  document.getElementById('tm-hk-modal').style.display='flex';
+}
+
+function tmSelType(type){
+  TM_pendingType=type;
+  ['fija','eventual','dedicada'].forEach(function(t){
+    var el=document.getElementById('tm-type-'+t);
+    if(!el)return;
+    var colors={fija:'#2563eb',eventual:'#7c3aed',dedicada:'#d97706'};
+    el.style.background=t===type?'#eff6ff':'#fff';
+    el.style.borderColor=t===type?colors[t]:'#e5e7eb';
+  });
+  var sec=document.getElementById('tm-hk-off-section');
+  if(sec)sec.style.display=type==='eventual'?'none':'block';
+}
+
+function tmSaveHK(){
+  var name=document.getElementById('tm-hk-name').value.trim();
+  if(!name){alert('Ingresa el nombre');return;}
+  var zones=[];
+  document.querySelectorAll('#tm-hk-zones input[type=checkbox]:checked').forEach(function(cb){zones.push(cb.value);});
+  var offday=TM_pendingType==='eventual'?'':document.getElementById('tm-hk-offday').value;
+  var notes=document.getElementById('tm-hk-notes').value.trim();
+  if(TM_editHKId){
+    var hk=TM_hks.find(function(h){return h.id===TM_editHKId;});
+    if(hk){hk.name=name;hk.type=TM_pendingType;hk.zones=zones;hk.defaultOff=offday;hk.notes=notes;}
+  } else {
+    var nextNum=TM_hks.length+1;
+    var nextId='HK'+(nextNum<10?'0':'')+nextNum;
+    TM_hks.push({id:nextId,name:name,type:TM_pendingType,zones:zones,defaultOff:offday,notes:notes});
+  }
+  tmSaveData();tmCloseHKModal();tmRender();
+  if(typeof toast==='function')toast('HK guardada');
+}
+
+function tmDeleteHK(){
+  if(!TM_editHKId)return;
+  if(!confirm('Eliminar esta HK?'))return;
+  TM_hks=TM_hks.filter(function(h){return h.id!==TM_editHKId;});
+  tmSaveData();tmCloseHKModal();tmRender();
+  if(typeof toast==='function')toast('HK eliminada');
+}
+
+function tmCloseHKModal(){
+  document.getElementById('tm-hk-modal').style.display='none';
+  TM_editHKId=null;TM_pendingType=null;
+}
+
+function tmOpenAutoOff(){
+  var PRIORITY=[3,4,1,5,6,0,2];
+  var fijas=TM_hks.filter(function(h){return h.type==='fija'||h.type==='dedicada';});
+  var tempCount={0:0,1:0,2:0,3:0,4:0,5:0,6:0};
+  fijas.forEach(function(hk){if(hk.defaultOff!=='')tempCount[parseInt(hk.defaultOff)]++;});
+  TM_autoOffProposal={};
+  fijas.forEach(function(hk){
+    if(hk.defaultOff!==''){TM_autoOffProposal[hk.id]={proposed:hk.defaultOff,changed:false};return;}
+    var best=null;
+    for(var pi=0;pi<PRIORITY.length;pi++){if((tempCount[PRIORITY[pi]]||0)<4){best=PRIORITY[pi];break;}}
+    if(best===null)best=PRIORITY[0];
+    tempCount[best]++;
+    TM_autoOffProposal[hk.id]={proposed:String(best),changed:true};
+  });
+  var distrib={};
+  for(var id in TM_autoOffProposal)distrib[TM_autoOffProposal[id].proposed]=(distrib[TM_autoOffProposal[id].proposed]||0)+1;
+  var distribHtml='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;padding:10px;background:#f9fafb;border-radius:8px">';
+  PRIORITY.forEach(function(day){if(distrib[day])distribHtml+='<div style="text-align:center;padding:4px 10px;background:#fff;border:1px solid #e5e7eb;border-radius:6px"><div style="font-size:11px;font-weight:700">'+DOW_NAMES[day]+'</div><div style="font-size:10px;color:#6b7280">'+distrib[day]+' HK</div></div>';});
+  distribHtml+='</div>';
+  var html='';
+  fijas.forEach(function(hk){
+    var prop=TM_autoOffProposal[hk.id];
+    if(!prop)return;
+    var badge=prop.changed?'<span style="background:#dcfce7;color:#16a34a;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px">NUEVO</span>':'<span style="background:#f3f4f6;color:#6b7280;font-size:9.5px;padding:2px 6px;border-radius:4px">sin cambio</span>';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid #e5e7eb;border-radius:8px;background:'+(prop.changed?'#f0fdf4':'#fff')+'">'+
+      '<div><div style="font-size:12.5px;font-weight:600">'+hk.name+'</div><div style="font-size:10.5px;color:#6b7280">'+hk.id+' - '+hk.zones.join(', ')+'</div></div>'+
+      '<div style="display:flex;align-items:center;gap:8px"><div style="text-align:right"><div style="font-size:13px;font-weight:700;color:#2563eb">'+DOW_NAMES[parseInt(prop.proposed)]+'</div><div style="font-size:9.5px;color:#6b7280">dia libre</div></div>'+badge+'</div></div>';
+  });
+  document.getElementById('tm-autooff-result').innerHTML=distribHtml+html;
+  document.getElementById('tm-autooff-modal').style.display='flex';
+}
+
+function tmApplyAutoOff(){
+  for(var hkId in TM_autoOffProposal){
+    var prop=TM_autoOffProposal[hkId];
+    if(prop.changed){var hk=TM_hks.find(function(h){return h.id===hkId;});if(hk)hk.defaultOff=prop.proposed;}
+  }
+  tmSaveData();tmCloseAutoOff();tmRender();
+  if(typeof toast==='function')toast('Dias libres aplicados');
+}
+
+function tmCloseAutoOff(){document.getElementById('tm-autooff-modal').style.display='none';TM_autoOffProposal={};}
 function tmPrevWeek(){TM_weekStart=tmAddDays(TM_weekStart,-7);tmRender();}
 function tmNextWeek(){TM_weekStart=tmAddDays(TM_weekStart,7);tmRender();}
 function tmGoToday(){TM_weekStart=tmGetMonday(new Date());tmRender();}
-function tmOpenAddHK(){toast('Función de agregar HK próximamente');}
+function initTeamModule(){TM_weekStart=tmGetMonday(new Date());tmLoadData();tmRender();}
 
-function initTeamModule(){
-  TM_weekStart=tmGetMonday(new Date());
-  tmLoadAvailability();
-  tmRender();
-}
-
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 // WEEKLY MODULE
 // âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 var WK_weekStart = null;
