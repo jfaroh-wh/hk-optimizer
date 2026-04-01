@@ -6894,7 +6894,33 @@ async function usersCreate() {
     fixNode(document.body);
     setTimeout(function(){fixNode(document.body);},500);
     setTimeout(function(){fixNode(document.body);},2000);
-    obs.observe(document.body,{childList:true,subtree:true,characterData:true});
+      // Fix close buttons and calendar icons
+  document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+      // Fix modal close buttons showing Ã
+      document.querySelectorAll(".modal-x").forEach(function(b) {
+        if (b.textContent.trim() !== "\u00d7" && b.innerHTML.indexOf("times") < 0) {
+          b.innerHTML = "\u00d7";
+        }
+      });
+      // Fix sort arrows in table headers
+      document.querySelectorAll("th").forEach(function(th) {
+        th.innerHTML = th.innerHTML.replace(/[\u00c3][\u00a2][\u00c3][\u0082][\u00c3][\u0082]/g, "");
+        th.innerHTML = th.innerHTML.replace(/[\u00c3][\u00a2][^\u0020]{0,5}/g, "");
+      });
+      // Fix lone â chars in text nodes
+      document.querySelectorAll("div,span,button").forEach(function(el) {
+        if (el.children.length === 0 && el.textContent === "\u00e2") el.textContent = "";
+        if (el.children.length === 0 && el.textContent === "\u00c3") el.textContent = "\u00d7";
+      });
+    }, 1500);
+    setTimeout(function() {
+      document.querySelectorAll(".modal-x").forEach(function(b) {
+        if (b.textContent.charCodeAt(0) > 127 && b.textContent !== "\u00d7") b.innerHTML = "\u00d7";
+      });
+    }, 3000);
+  });
+  obs.observe(document.body,{childList:true,subtree:true,characterData:true});
   });
 })();
 </script>
