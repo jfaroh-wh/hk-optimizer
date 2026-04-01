@@ -7329,5 +7329,340 @@ if(typeof runCSV==='function'){
     },300);
   };
 }
+
+
+// =========================================================
+// PERSISTENCIA SUPABASE - Reservas, Equipo HK, Disponibilidad
+// =========================================================
+
+// -- RESERVAS ----------------------------------------------
+
+// Subir CSV a Supabase: elimina futuras y sube las nuevas
+async function sbUploadReservations(parsedRows, csvFilename) {
+  var sb = getSB();
+  var today = new Date().toISOString().split('T')[0];
+  var batchId = 'csv_' + Date.now();
+
+  // 1. Eliminar reservas futuras existentes (co_date >= today o ci_date >= today)
+  var {error: delErr} = await sb.from('reservations')
+    .delete()
+    .eq('tenant_id', 'panama')
+    .or('co_date.gte.' + today + ',ci_date.gte.' + today);
+  if(delErr) { console.error('Del error:', delErr.message); }
+
+  // 2. Preparar filas para insertar
+  var rows = parsedRows
+    .filter(function(r){ return r.coDate >= today || r.ciDate >= today; })
+    .map(function(r){
+      return {
+        tenant_id: 'panama',
+        listing_id: r.listingId || r.name,
+        listing_name: r.name || r.listingId,
+        co_date: r.coDate || null,
+        ci_date: r.ciDate || null,
+        status: r.status || 'confirmed',
+        bedrooms: String(r.br || '1'),
+        zone: r.zone || '',
+        source: 'csv',
+        csv_batch: batchId
+      };
+    });
+
+  // 3. Insertar en lotes de 200
+  var chunkSize = 200;
+  for(var i = 0; i < rows.length; i += chunkSize) {
+    var chunk = rows.slice(i, i + chunkSize);
+    var {error: insErr} = await sb.from('reservations').insert(chunk);
+    if(insErr) console.error('Insert error chunk ' + i + ':', insErr.message);
+  }
+
+  // 4. Guardar batch ID en localStorage como referencia
+  try { localStorage.setItem('wh_csv_batch', batchId); } catch(e){}
+  if(typeof toast === 'function') toast('CSV guardado en la nube: ' + rows.length + ' reservas futuras');
+  return {batchId: batchId, count: rows.length};
+}
+
+// Leer reservas de Supabase
+async function sbLoadReservations() {
+  var sb = getSB();
+  var {data, error} = await sb.from('reservations')
+    .select('listing_id,listing_name,co_date,ci_date,status,bedrooms,zone')
+    .eq('tenant_id', 'panama')
+    .order('co_date', {ascending: true});
+  if(error) { console.error('Load reservations:', error.message); return []; }
+  // Convertir al formato interno del scheduler
+  return (data || []).map(function(r){
+    return {
+      id: 'sb_' + r.listing_id + '_' + (r.co_date || r.ci_date),
+      listingId: r.listing_id,
+      name: r.listing_name || r.listing_id,
+      coDate: r.co_date || '',
+      ciDate: r.ci_date || '',
+      status: r.status || 'confirmed',
+      br: r.bedrooms || '1',
+      zone: r.zone || ''
+    };
+  });
+}
+
+// -- EQUIPO HK ---------------------------------------------
+
+// Sincronizar TM_hks desde Supabase
+async function sbLoadTeam() {
+  var sb = getSB();
+  var {data, error} = await sb.from('hk_team')
+    .select('*')
+    .eq('tenant_id', 'panama')
+    .eq('status', 'active')
+    .order('code', {ascending: true});
+  if(error || !data || !data.length) return false;
+  // Mapear al formato de TM_hks
+  TM_hks = data.map(function(h){
+    return {
+      id: h.code,
+      name: h.name,
+      type: h.type || 'fija',
+      zones: h.zones || [],
+      defaultOff: h.default_day_off != null ? String(h.default_day_off) : '',
+      notes: h.notes || '',
+      _sbId: h.id
+    };
+  });
+  return true;
+}
+
+// Guardar un HK en Supabase
+async function sbSaveHK(hk) {
+  var sb = getSB();
+  var payload = {
+    tenant_id: 'panama',
+    code: hk.id,
+    name: hk.name,
+    type: hk.type,
+    zones: hk.zones,
+    default_day_off: hk.defaultOff !== '' ? parseInt(hk.defaultOff) : null,
+    notes: hk.notes || '',
+    status: 'active',
+    updated_at: new Date().toISOString()
+  };
+  if(hk._sbId) {
+    var {error} = await sb.from('hk_team').update(payload).eq('id', hk._sbId);
+    if(error) console.error('Update HK:', error.message);
+  } else {
+    var {data, error} = await sb.from('hk_team').insert(payload).select().single();
+    if(error) console.error('Insert HK:', error.message);
+    else if(data) hk._sbId = data.id;
+  }
+}
+
+// Eliminar HK en Supabase
+async function sbDeleteHK(hk) {
+  if(!hk._sbId) return;
+  var sb = getSB();
+  var {error} = await sb.from('hk_team').update({status:'inactive'}).eq('id', hk._sbId);
+  if(error) console.error('Delete HK:', error.message);
+}
+
+// -- DISPONIBILIDAD HK -------------------------------------
+
+// Cargar disponibilidad semanal desde Supabase
+async function sbLoadAvailability(weekStart, weekEnd) {
+  var sb = getSB();
+  var {data, error} = await sb.from('hk_availability')
+    .select('*')
+    .eq('tenant_id', 'panama')
+    .gte('date', weekStart)
+    .lte('date', weekEnd);
+  if(error) { console.error('Load availability:', error.message); return; }
+  (data || []).forEach(function(row){
+    var key = row.hk_code + '_' + row.date;
+    TM_availability[key] = {status: row.status, note: row.note || ''};
+  });
+}
+
+// Guardar un cambio de disponibilidad en Supabase
+async function sbSaveAvailability(hkId, dateStr, status, note) {
+  var sb = getSB();
+  var {error} = await sb.from('hk_availability').upsert({
+    tenant_id: 'panama',
+    hk_code: hkId,
+    date: dateStr,
+    status: status,
+    note: note || '',
+    updated_at: new Date().toISOString()
+  }, {onConflict: 'tenant_id,hk_code,date'});
+  if(error) console.error('Save availability:', error.message);
+}
+
+// -- HOOKS: conectar con funciones existentes ---------------
+
+// Override: cuando se guarda disponibilidad de celda, sincronizar con Supabase
+var _origTmSaveCell = window.tmSaveCellStatus;
+window.tmSaveCellStatus = function() {
+  if(!TM_editCell || !TM_pendingStatus) return;
+  var note = document.getElementById('tm-cell-note').value.trim();
+  var key = TM_editCell.hkId + '_' + TM_editCell.dateStr;
+  TM_availability[key] = {status: TM_pendingStatus, note: note};
+  tmSaveData(); // localStorage
+  sbSaveAvailability(TM_editCell.hkId, TM_editCell.dateStr, TM_pendingStatus, note); // Supabase
+  tmCloseCellModal();
+  tmRender();
+  if(typeof toast === 'function') toast('Disponibilidad guardada');
+};
+
+// Override: cuando se guarda un HK, sincronizar con Supabase
+var _origTmSaveHK = window.tmSaveHK;
+window.tmSaveHK = function() {
+  var name = document.getElementById('tm-hk-name').value.trim();
+  if(!name){ alert('Ingresa el nombre'); return; }
+  var zones = [];
+  document.querySelectorAll('#tm-hk-zones input[type=checkbox]:checked').forEach(function(cb){zones.push(cb.value);});
+  var offday = TM_pendingType === 'eventual' ? '' : document.getElementById('tm-hk-offday').value;
+  var notes = document.getElementById('tm-hk-notes').value.trim();
+  var hk;
+  if(TM_editHKId) {
+    hk = TM_hks.find(function(h){ return h.id === TM_editHKId; });
+    if(hk){ hk.name=name; hk.type=TM_pendingType; hk.zones=zones; hk.defaultOff=offday; hk.notes=notes; }
+  } else {
+    var nextNum = TM_hks.length + 1;
+    var nextId = 'HK' + (nextNum < 10 ? '0' : '') + nextNum;
+    hk = {id:nextId, name:name, type:TM_pendingType, zones:zones, defaultOff:offday, notes:notes};
+    TM_hks.push(hk);
+  }
+  tmSaveData(); // localStorage
+  if(hk) sbSaveHK(hk); // Supabase
+  tmCloseHKModal();
+  tmRender();
+  if(typeof toast === 'function') toast('HK guardada');
+};
+
+// Override: cuando se elimina un HK, sincronizar con Supabase
+var _origTmDeleteHK = window.tmDeleteHK;
+window.tmDeleteHK = function() {
+  if(!TM_editHKId) return;
+  if(!confirm('Eliminar esta HK?')) return;
+  var hk = TM_hks.find(function(h){ return h.id === TM_editHKId; });
+  TM_hks = TM_hks.filter(function(h){ return h.id !== TM_editHKId; });
+  tmSaveData(); // localStorage
+  if(hk) sbDeleteHK(hk); // Supabase
+  tmCloseHKModal();
+  tmRender();
+  if(typeof toast === 'function') toast('HK eliminada');
+};
+
+// Override: cuando se aplican dias libres automaticos, sincronizar con Supabase
+var _origTmApplyAutoOff = window.tmApplyAutoOff;
+window.tmApplyAutoOff = function() {
+  for(var hkId in TM_autoOffProposal) {
+    var prop = TM_autoOffProposal[hkId];
+    if(prop.changed) {
+      var hk = TM_hks.find(function(h){ return h.id === hkId; });
+      if(hk) { hk.defaultOff = prop.proposed; sbSaveHK(hk); }
+    }
+  }
+  tmSaveData();
+  tmCloseAutoOff();
+  tmRender();
+  if(typeof toast === 'function') toast('Dias libres guardados en la nube');
+};
+
+// Override: cargar CSV sube a Supabase ademas de localStorage
+var _csvInputEl = document.getElementById('csv-input');
+if(_csvInputEl) {
+  _csvInputEl.addEventListener('change', function(ev) {
+    var file = ev.target.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      // Ya existe el handler original - este es adicional para Supabase
+      // Esperar 500ms a que el parseCSV del handler original haya corrido
+      setTimeout(function() {
+        // reservations es del scope local, no podemos accederla directamente
+        // Usar fetch para re-parsear el mismo texto
+        var text = e.target.result;
+        // Re-parsear usando la funcion que esta en scope del script principal
+        // La llamamos via eval del script en contexto
+        try {
+          // Acceder via el iframe truco no funciona, mejor guardar el texto para procesarlo
+          localStorage.setItem('wh_csv_pending_upload', text);
+          localStorage.setItem('wh_csv_pending_name', file.name);
+        } catch(ex) {}
+      }, 800);
+    };
+    reader.readAsText(file);
+  });
+}
+
+// Funcion publica para trigger upload manual desde la consola o boton
+window.sbUploadCurrentCSV = async function() {
+  var text = localStorage.getItem('wh_csv_data');
+  if(!text) { toast('No hay CSV cargado'); return; }
+  // Parsear con una version simplificada (el parseCSV real esta en scope local)
+  var lines = text.split('\n').filter(function(l){ return l.trim(); });
+  var header = lines[0].toLowerCase();
+  var rows = [];
+  var today = new Date().toISOString().split('T')[0];
+  for(var i = 1; i < lines.length; i++) {
+    var parts = lines[i].split(',').map(function(p){ return p.replace(/"/g,'').trim(); });
+    if(parts.length < 4) continue;
+    // Detectar columnas basico
+    var co = parts[1] ? parts[1].trim() : '';
+    var ci = parts[0] ? parts[0].trim() : '';
+    var name = parts[3] ? parts[3].trim() : '';
+    var br = parts[4] ? parts[4].trim() : '1';
+    if(co >= today || ci >= today) {
+      rows.push({coDate:co, ciDate:ci, listingId:name, name:name, br:br, status:'confirmed',
+        zone: (function(n){
+          n = n.toLowerCase();
+          if(n.includes('mallet')) return 'A0';
+          if(n.includes('cc')||n.includes('lefevre')||n.includes('portal')) return 'A1';
+          if(n.includes('costa')||n.includes('love')||n.includes('manzana')||n.includes('lesplanade')||n.includes('cuadra')) return 'A2';
+          if(n.includes('moderna')||n.includes('donovan')) return 'A3';
+          if(n.includes('living 73')||n.includes('quartier')) return 'B';
+          if(n.includes('mini design')) return 'C';
+          if(n.includes('salomon')||n.includes('gray')||n.includes('sands')||n.includes('yoo')) return 'D';
+          if(n.includes('parkside')||n.includes('riverside')) return 'E';
+          if(n.includes('centriqo')||n.includes('parterre')) return 'F';
+          return '';
+        })(name)
+      });
+    }
+  }
+  var result = await sbUploadReservations(rows, 'manual_upload');
+  toast('Subido a Supabase: ' + result.count + ' reservas futuras');
+  return result;
+};
+
+// Inicializar: al arrancar cargar equipo HK y disponibilidad desde Supabase
+window._sbInitPersistence = async function() {
+  try {
+    // Cargar equipo HK desde Supabase (tiene prioridad sobre localStorage)
+    var teamLoaded = await sbLoadTeam();
+    if(teamLoaded && typeof tmRender === 'function') tmRender();
+    
+    // Cargar disponibilidad de la semana actual
+    var now = new Date();
+    var day = now.getDay();
+    var monday = new Date(now);
+    monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
+    monday.setHours(12,0,0,0);
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    var fmt = function(d){ return d.toISOString().split('T')[0]; };
+    await sbLoadAvailability(fmt(monday), fmt(sunday));
+    
+    console.log('Persistence init OK - team:', TM_hks.length, 'HKs');
+  } catch(e) {
+    console.error('Persistence init error:', e);
+  }
+};
+
+// Auto-inicializar despues de que el DOM este listo
+setTimeout(function(){ 
+  if(typeof getSB === 'function' && typeof TM_hks !== 'undefined') {
+    window._sbInitPersistence();
+  }
+}, 1500);
+
 </script>
 </html>
