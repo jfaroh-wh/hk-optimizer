@@ -4,16 +4,16 @@
 <title>HK Optimizer · Wynwood House</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // SUPABASE CONFIG - wh-panama-hk
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 const SUPABASE_URL  = 'https://bjyortmlnsjpjluoxyxr.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_VFoxdhvk9pG7WIKrBz1bTQ_voOoFr9m';
 const TENANT_ID     = 'panama';
 let _sb = null;
 function getSB(){ if(!_sb) _sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON); return _sb; }
 
-// Ã¢Â”Â€Ã¢Â”Â€ AUTH Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ AUTH â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbSignIn(email,password){
   const{data,error}=await getSB().auth.signInWithPassword({email,password});
   if(error)throw error; return data;
@@ -26,7 +26,7 @@ async function sbGetUser(){
   return data;
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ SAVE SCHEDULE Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ SAVE SCHEDULE â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbSaveSchedule(date, result, csvFilename, csvRows){
   const user = await sbGetUser();
   const{summary,byHK,unassigned}=result;
@@ -53,7 +53,7 @@ async function sbSaveSchedule(date, result, csvFilename, csvRows){
   return data;
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ SAVE AUDIT Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ SAVE AUDIT â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,reason}){
   const user=await sbGetUser();
   const{error}=await getSB().from('audit_log').insert({
@@ -66,7 +66,7 @@ async function sbLogChange({scheduleDate,action,unitName,beforeData,afterData,re
   if(error) console.error('Audit log error:', error);
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ SAVE MANUAL TASK Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ SAVE MANUAL TASK â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbSaveManualTask(task){
   const user=await sbGetUser();
   const{error}=await getSB().from('manual_tasks').insert({
@@ -82,7 +82,7 @@ async function sbSaveManualTask(task){
   if(error) console.error('Manual task save error:', error);
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ LOAD HISTORY Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ LOAD HISTORY â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbLoadHistory(limit=30){
   const{data,error}=await getSB().from('schedules')
     .select('id,date,version,total_tasks,hks_used,tasks_coci,coci_at_risk,generated_at,csv_filename')
@@ -95,7 +95,7 @@ async function sbLoadHistory(limit=30){
   return data.filter(r=>{if(seen.has(r.date))return false;seen.add(r.date);return true;});
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ SAVE PROPERTIES Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ SAVE PROPERTIES â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 async function sbSaveProperties(props){
   const payload=props.map(p=>({
     tenant_id:TENANT_ID, name:p.name, building:p.building||'',
@@ -109,7 +109,7 @@ async function sbSaveProperties(props){
   if(error) console.error('Properties save error:', error);
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ AUTH STATE LISTENER Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ AUTH STATE LISTENER â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 let currentUser = null;
 (async()=>{
   try{
@@ -128,7 +128,7 @@ let currentUser = null;
   }catch(e){console.log('Session check:',e.message);}
 })();
 
-// Ã¢Â”Â€Ã¢Â”Â€ HOOK: auto-save schedule after run Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ HOOK: auto-save schedule after run â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 const _origRun = window.run;
 window.run = async function(){
   _origRun && _origRun();
@@ -140,7 +140,7 @@ window.run = async function(){
   }
 };
 
-// Ã¢Â”Â€Ã¢Â”Â€ HOOK: auto-save audit on reassign Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ HOOK: auto-save audit on reassign â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 const _origConfirmChange = window.confirmChange;
 // Will be patched after main script loads
 
@@ -190,7 +190,7 @@ window.addEventListener('load', ()=>{
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: var(--fn); font-size: 13px; min-height: 100vh; display: flex; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ SIDEBAR Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ SIDEBAR â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .sidebar {
   width: var(--sidebar-w); min-height: 100vh; background: var(--surface);
   border-right: 1px solid var(--border); display: flex; flex-direction: column;
@@ -226,10 +226,10 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .sb-uname { font-size: 12px; font-weight: 600; }
 .sb-urole { font-size: 10px; color: var(--text3); }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ MAIN Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ MAIN â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ PAGE HEADER Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ PAGE HEADER â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .page-header {
   background: var(--surface); border-bottom: 1px solid var(--border);
   padding: 16px 28px 0; flex-shrink: 0;
@@ -255,7 +255,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .kpi-value.crit { color: #dc2626; }
 .kpi-value.blue { color: var(--accent); }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ PAGE TABS Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ PAGE TABS â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .page-tabs { display: flex; gap: 0; padding: 0; }
 .ptab {
   padding: 10px 18px; border-bottom: 2px solid transparent; font-size: 13px;
@@ -265,7 +265,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .ptab:hover { color: var(--text); }
 .ptab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ BUTTONS Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ BUTTONS â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .btn {
   padding: 7px 14px; border-radius: 7px; border: 1px solid var(--border2);
   background: var(--surface); color: var(--text); font-family: var(--fn);
@@ -281,7 +281,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--fn); font-s
 .btn.ghost { border-color: transparent; background: transparent; }
 .btn.ghost:hover { background: var(--bg); }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ TOOLBAR Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ TOOLBAR â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .toolbar { display: flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap; flex-shrink: 0; }
 .tb-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
 .inp { padding: 6px 10px; border: 1px solid var(--border2); border-radius: 7px; background: var(--surface); color: var(--text); font-family: var(--fn); font-size: 12px; }
@@ -291,15 +291,15 @@ select.inp { cursor: pointer; }
 .srch-wrap { position: relative; }
 .srch-wrap .si { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 13px; pointer-events: none; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ CONTENT AREA Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ CONTENT AREA â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .content { flex: 1; overflow: auto; padding: 20px 28px 40px; }
 .content.no-pad { padding: 0; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ PAGE VISIBILITY Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ PAGE VISIBILITY â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .page { display: none; flex: 1; flex-direction: column; overflow: hidden; }
 .page.active { display: flex; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ TASK TYPE LEGEND Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ TASK TYPE LEGEND â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .type-legend { display: flex; gap: 6px; flex-wrap: wrap; }
 .tlg {
   display: inline-flex; align-items: center; gap: 5px;
@@ -313,10 +313,10 @@ select.inp { cursor: pointer; }
 .tlg.urg  { background: var(--urg-bg);  color: var(--urg);  border-color: var(--urg-bd); }
 .tlg-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ SCHEDULE PAGE Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ SCHEDULE PAGE â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .sched-wrap { display: flex; flex: 1; overflow: hidden; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ TIMELINE Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ TIMELINE â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .tl-area { flex: 1; overflow: auto; background: var(--bg); }
 .tl-inner { min-width: 900px; }
 
@@ -423,7 +423,7 @@ select.inp { cursor: pointer; }
 .unasgn-task { padding: 3px 9px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 4px; font-size: 11px; color: #991b1b; cursor: pointer; font-weight: 500; }
 .unasgn-task:hover { background: #fecaca; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ ALERTS PANEL (right of timeline) Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ ALERTS PANEL (right of timeline) â�¬â�¬â�¬â�¬ */
 .alerts-panel { width: 260px; flex-shrink: 0; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
 .ap-hd { padding: 14px 16px 10px; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .ap-list { flex: 1; overflow-y: auto; }
@@ -441,7 +441,7 @@ select.inp { cursor: pointer; }
 .audit-who { color: var(--accent); font-weight: 500; }
 .audit-ts  { color: var(--text3); font-size: 10px; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ ADD TASK MODAL Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ ADD TASK MODAL â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .modal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .18s; }
 .modal-ov.open { opacity: 1; pointer-events: all; }
 .modal { background: var(--surface); border-radius: 12px; width: 520px; max-width: 95vw; max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.18); display: flex; flex-direction: column; }
@@ -486,7 +486,7 @@ select.inp { cursor: pointer; }
 
 .modal-ft { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ TASK EDIT PANEL Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ TASK EDIT PANEL â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .ep {
   position: fixed; right: 0; top: 0; bottom: 0; width: 320px;
   background: var(--surface); border-left: 1px solid var(--border);
@@ -514,7 +514,7 @@ select.inp { cursor: pointer; }
 .reason-inp::placeholder { color: var(--text3); }
 .ep-ft { padding: 12px 18px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ PROPERTIES PAGE Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ PROPERTIES PAGE â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .tbl-wrap { overflow: auto; flex: 1; }
 table { width: 100%; border-collapse: collapse; min-width: 800px; }
 thead th { padding: 9px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--text2); border-bottom: 2px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; background: var(--surface); position: sticky; top: 0; z-index: 2; }
@@ -557,14 +557,14 @@ tbody tr:hover .row-acts { opacity: 1; }
 .bulk-bar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; padding: 10px 16px; display: none; gap: 10px; align-items: center; z-index: 150; box-shadow: 0 4px 24px rgba(0,0,0,.15); }
 .bulk-bar.show { display: flex; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ MODAL (properties) Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ MODAL (properties) â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 .pmodal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 400; opacity: 0; pointer-events: none; transition: opacity .18s; }
 .pmodal-ov.open { opacity: 1; pointer-events: all; }
 .inact-block { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px; display: none; flex-direction: column; gap: 9px; }
 .inact-block.show { display: flex; }
 .inact-note { font-size: 11.5px; color: #92400e; line-height: 1.5; }
 
-/* Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ MISC Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€ */
+/* â�¬â�¬â�¬ MISC â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬ */
 #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111827; color: #fff; border-radius: 8px; padding: 10px 18px; font-size: 12.5px; z-index: 999; opacity: 0; transition: opacity .3s; max-width: 380px; text-align: center; pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
 
 /* scrollbar */
@@ -572,15 +572,15 @@ tbody tr:hover .row-acts { opacity: 1; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
 
-/* â”€â”€â”€ ZOOM CONTROLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ������ ZOOM CONTROLS ���������������������������������������������� */
 .tl-zoom { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
 .zoom-btn { background: var(--surface); border: 1px solid var(--border2); border-radius: 5px; width: 26px; height: 26px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text2); transition: background .1s; }
 .zoom-btn:hover { background: var(--accent-lt); color: var(--accent); }
 .zoom-lbl { font-size: 11px; color: var(--text3); font-weight: 500; min-width: 32px; text-align: center; }
-/* â”€â”€â”€ HK clickable label â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ������ HK clickable label �������������������������������������� */
 .hk-label { cursor: pointer; }
 .hk-label:hover .hk-name { color: var(--accent); text-decoration: underline; }
-/* â”€â”€â”€ HK Day Detail Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ������ HK Day Detail Modal ������������������������������������ */
 .hkd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 800; display: none; align-items: center; justify-content: center; }
 .hkd-overlay.open { display: flex; }
 .hkd-modal { background: var(--surface); border-radius: 12px; width: 520px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.2); overflow: hidden; }
@@ -632,8 +632,8 @@ tbody tr:hover .row-acts { opacity: 1; }
     </style></head>
 <body>
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â SIDEBAR Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
-<div id="login-screen" style="display: none; position: fixed; inset: 0px; background: rgb(245, 246, 248); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; gap: 24px;"><div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:40px;width:380px;box-shadow:0 4px 24px rgba(0,0,0,.08)"><div style="font-family:Plus Jakarta Sans,sans-serif;font-size:20px;font-weight:700;margin-bottom:4px">HK Optimizer</div><div style="font-size:12px;color:#6b7280;margin-bottom:28px">Wynwood House Panama</div><div style="display:flex;flex-direction:column;gap:12px"><input id="login-email" type="email" placeholder="Email" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:Inter,sans-serif"><input id="login-pass" type="password" placeholder="ContraseÃ±a" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:Inter,sans-serif"><button onclick="doLogin()" style="padding:11px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Ingresar</button><div id="login-err" style="font-size:12px;color:#dc2626;text-align:center;min-height:16px"></div></div></div></div><div id="app-screen" style="display: flex; flex-direction: column; min-height: 100vh; width: 100%;"><nav class="sidebar">
+<!-- â�"â�"â�" SIDEBAR â�"â�"â�" -->
+<div id="login-screen" style="display: none; position: fixed; inset: 0px; background: rgb(245, 246, 248); z-index: 9999; align-items: center; justify-content: center; flex-direction: column; gap: 24px;"><div style="background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:40px;width:380px;box-shadow:0 4px 24px rgba(0,0,0,.08)"><div style="font-family:Plus Jakarta Sans,sans-serif;font-size:20px;font-weight:700;margin-bottom:4px">HK Optimizer</div><div style="font-size:12px;color:#6b7280;margin-bottom:28px">Wynwood House Panama</div><div style="display:flex;flex-direction:column;gap:12px"><input id="login-email" type="email" placeholder="Email" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:Inter,sans-serif"><input id="login-pass" type="password" placeholder="Contraseña" style="padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:Inter,sans-serif"><button onclick="doLogin()" style="padding:11px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif">Ingresar</button><div id="login-err" style="font-size:12px;color:#dc2626;text-align:center;min-height:16px"></div></div></div></div><div id="app-screen" style="display: flex; flex-direction: column; min-height: 100vh; width: 100%;"><nav class="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-icon">WH</div>
     <div><div class="sb-logo-text">HK Optimizer</div><div class="sb-logo-sub">Wynwood House</div></div>
@@ -663,13 +663,13 @@ tbody tr:hover .row-acts { opacity: 1; }
       <div class="sb-avatar">JF</div>
       <div><div class="sb-uname" id="sb-user-name">Jorge Faroh</div><div class="sb-urole" id="sb-user-role">admin</div></div>
     </div>
-  <button class="sb-item" style="margin-top: 4px;"><span>ðŸšª</span> Cerrar sesiÃ³n</button></div>
+  <button class="sb-item" style="margin-top: 4px;"><span>�xa�</span> Cerrar sesión</button></div>
 </nav>
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â MAIN Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�" MAIN â�"â�"â�" -->
 <div class="main">
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â SCHEDULE PAGE Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�"â�"â�"â�"â�"â�" SCHEDULE PAGE â�"â�"â�"â�"â�"â�"â�"â�" -->
 <div class="page-section" id="page-schedule" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
   <div class="page-header">
     <div class="ph-top">
@@ -684,9 +684,9 @@ tbody tr:hover .row-acts { opacity: 1; }
       </div>
     </div>
     <div class="kpi-strip" id="kpi-strip">
-      <div class="kpi-card"><div class="kpi-label">Tareas del dÃ­a</div><div class="kpi-value blue" id="kpi-total">23</div><div class="kpi-sub" id="kpi-types">2 CO · 10 CO/CI · 11 EXP</div></div>
+      <div class="kpi-card"><div class="kpi-label">Tareas del día</div><div class="kpi-value blue" id="kpi-total">23</div><div class="kpi-sub" id="kpi-types">2 CO · 10 CO/CI · 11 EXP</div></div>
       <div class="kpi-card"><div class="kpi-label">CO/CI en riesgo</div><div class="kpi-value ok" id="kpi-risk">0</div><div class="kpi-sub" id="kpi-risk-sub">deben terminar antes 15:00</div></div>
-      <div class="kpi-card"><div class="kpi-label">Sin asignar</div><div class="kpi-value ok" id="kpi-unasgn">0</div><div class="kpi-sub">requieren acciÃ³n</div></div>
+      <div class="kpi-card"><div class="kpi-label">Sin asignar</div><div class="kpi-value ok" id="kpi-unasgn">0</div><div class="kpi-sub">requieren acción</div></div>
       <div class="kpi-card"><div class="kpi-label">HKs necesarias</div><div class="kpi-value blue" id="kpi-hks">6</div><div class="kpi-sub" id="kpi-hks-sub">de 17 disponibles</div></div>
       <div class="kpi-card"><div class="kpi-label">Tareas manuales</div><div class="kpi-value ok" id="kpi-manual">0</div><div class="kpi-sub">ocupadas + chequeos + urgencias</div></div>
     </div>
@@ -707,9 +707,9 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div>
     <div class="tb-sep"></div>
     <div style="display:flex;align-items:center;gap:4px">
-      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom">âˆ’</button>
+      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom">��</button>
       <span id="zoom-lbl" style="font-size:11px;color:var(--text3);font-weight:500;min-width:34px;text-align:center">100%</span>
-      <button class="zoom-btn" onclick="tlZoom(+1)" title="MÃ¡s zoom">+</button>
+      <button class="zoom-btn" onclick="tlZoom(+1)" title="Más zoom">+</button>
     </div>
     <div class="tb-sep"></div>
     <button class="btn pri" onclick="openAddTaskModal()">+ Agregar tarea</button>
@@ -726,199 +726,199 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Casa Mallet 1" ondragstart="onDS(event,'2026-03-31_Casa Mallet 1')" onclick="openPanel('2026-03-31_Casa Mallet 1')">
-          <div class="t-name">ðŸ”„ Casa Mallet 1</div>
-          <div class="t-time">11:00â€“12:30</div>
+          <div class="t-name">�x Casa Mallet 1</div>
+          <div class="t-time">11:00�12:30</div>
           <div class="t-meta">CO/CI · 2BR · A0</div>
         </div><div class="task-block exp narrow tiny" style="left:490px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Mallet 3" ondragstart="onDS(event,'2026-03-31_Casa Mallet 3')" onclick="openPanel('2026-03-31_Casa Mallet 3')">
           <div class="t-name"> Casa Mallet 3</div>
-          <div class="t-time">12:30â€“12:50</div>
+          <div class="t-time">12:30�12:50</div>
           <div class="t-meta">EXP · 1BR · A0</div>
         </div><div class="travel-blk" style="left:536.6666666666667px;width:17.666666666666668px"></div><div class="task-block coci" style="left:555.3333333333334px;width:208px" draggable="true" data-task-id="2026-03-31_Lesplanade 2A" ondragstart="onDS(event,'2026-03-31_Lesplanade 2A')" onclick="openPanel('2026-03-31_Lesplanade 2A')">
-          <div class="t-name">ðŸ”„ Lesplanade 2A</div>
-          <div class="t-time">12:58â€“14:28</div>
+          <div class="t-name">�x Lesplanade 2A</div>
+          <div class="t-time">12:58�14:28</div>
           <div class="t-meta">CO/CI · 2BR · A2</div>
         </div><div class="task-block exp narrow tiny" style="left:765.3333333333334px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Lesplanade 4A" ondragstart="onDS(event,'2026-03-31_Lesplanade 4A')" onclick="openPanel('2026-03-31_Lesplanade 4A')">
           <div class="t-name"> Lesplanade 4A</div>
-          <div class="t-time">14:28â€“14:48</div>
+          <div class="t-time">14:28�14:48</div>
           <div class="t-meta">EXP · 2BR · A2</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK02" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK02')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Ana GarcÃ­a</div>
+      <div class="hk-name">Ana García</div>
       <div class="hk-code">HK02</div>
       <div class="hk-meta">A2 · 230min</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_Lesplanade 4B" ondragstart="onDS(event,'2026-03-31_Lesplanade 4B')" onclick="openPanel('2026-03-31_Lesplanade 4B')">
-          <div class="t-name">ðŸ”„ Lesplanade 4B</div>
-          <div class="t-time">11:00â€“12:00</div>
+          <div class="t-name">�x Lesplanade 4B</div>
+          <div class="t-time">11:00�12:00</div>
           <div class="t-meta">CO/CI · 1BR · A2</div>
         </div><div class="task-block exp narrow tiny" style="left:420px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Lesplanade 1A" ondragstart="onDS(event,'2026-03-31_Lesplanade 1A')" onclick="openPanel('2026-03-31_Lesplanade 1A')">
           <div class="t-name"> Lesplanade 1A</div>
-          <div class="t-time">12:00â€“12:20</div>
+          <div class="t-time">12:00�12:20</div>
           <div class="t-meta">EXP · 2BR · A2</div>
         </div><div class="travel-blk" style="left:466.66666666666674px;width:17.666666666666668px"></div><div class="task-block coci" style="left:485.33333333333337px;width:138px" draggable="true" data-task-id="2026-03-31_Casa La Costa 1B" ondragstart="onDS(event,'2026-03-31_Casa La Costa 1B')" onclick="openPanel('2026-03-31_Casa La Costa 1B')">
-          <div class="t-name">ðŸ”„ Casa La Costa 1B</div>
-          <div class="t-time">12:28â€“13:28</div>
+          <div class="t-name">�x Casa La Costa 1B</div>
+          <div class="t-time">12:28�13:28</div>
           <div class="t-meta">CO/CI · 1BR · A2</div>
         </div><div class="task-block co" style="left:625.3333333333334px;width:208px" draggable="true" data-task-id="2026-03-31_Casa La Costa 3D" ondragstart="onDS(event,'2026-03-31_Casa La Costa 3D')" onclick="openPanel('2026-03-31_Casa La Costa 3D')">
-          <div class="t-name">ðŸ§¹ Casa La Costa 3D</div>
-          <div class="t-time">13:28â€“14:58</div>
+          <div class="t-name">�x�� Casa La Costa 3D</div>
+          <div class="t-time">13:28�14:58</div>
           <div class="t-meta">CO · 2BR · A2</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK03" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK03')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">MarÃ­a LÃ³pez</div>
+      <div class="hk-name">María López</div>
       <div class="hk-code">HK03</div>
       <div class="hk-meta">A2 · A1 · 230min</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block exp narrow tiny" style="left:42.0000000000001px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa La Costa 2A" ondragstart="onDS(event,'2026-03-31_Casa La Costa 2A')" onclick="openPanel('2026-03-31_Casa La Costa 2A')">
           <div class="t-name"> Casa La Costa 2A</div>
-          <div class="t-time">09:18â€“09:38</div>
+          <div class="t-time">09:18�09:38</div>
           <div class="t-meta">EXP · 1BR · A2</div>
         </div><div class="travel-blk" style="left:261.33333333333337px;width:17.666666666666668px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Casa Love 2B" ondragstart="onDS(event,'2026-03-31_Casa Love 2B')" onclick="openPanel('2026-03-31_Casa Love 2B')">
-          <div class="t-name">ðŸ”„ Casa Love 2B</div>
-          <div class="t-time">11:00â€“12:30</div>
+          <div class="t-name">�x Casa Love 2B</div>
+          <div class="t-time">11:00�12:30</div>
           <div class="t-meta">CO/CI · 2BR · A2</div>
         </div><div class="travel-blk" style="left:490px;width:17.666666666666668px"></div><div class="task-block coci" style="left:508.66666666666663px;width:138px" draggable="true" data-task-id="2026-03-31_La Manzana 05" ondragstart="onDS(event,'2026-03-31_La Manzana 05')" onclick="openPanel('2026-03-31_La Manzana 05')">
-          <div class="t-name">ðŸ”„ La Manzana 05</div>
-          <div class="t-time">12:38â€“13:38</div>
+          <div class="t-name">�x La Manzana 05</div>
+          <div class="t-time">12:38�13:38</div>
           <div class="t-meta">CO/CI · 1BR · A2</div>
         </div><div class="travel-blk" style="left:648.6666666666666px;width:17.666666666666668px"></div><div class="task-block coci" style="left:667.3333333333333px;width:138px" draggable="true" data-task-id="2026-03-31_Casa Lefevre 2A" ondragstart="onDS(event,'2026-03-31_Casa Lefevre 2A')" onclick="openPanel('2026-03-31_Casa Lefevre 2A')">
-          <div class="t-name">ðŸ”„ Casa Lefevre 2A</div>
-          <div class="t-time">13:46â€“14:46</div>
+          <div class="t-name">�x Casa Lefevre 2A</div>
+          <div class="t-time">13:46�14:46</div>
           <div class="t-meta">CO/CI · 1BR · A1</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK04" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK04')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Carmen RodrÃ­guez</div>
+      <div class="hk-name">Carmen Rodríguez</div>
       <div class="hk-code">HK04</div>
       <div class="hk-meta">A3 · A2 · A1 · 160min</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_La Moderna 01" ondragstart="onDS(event,'2026-03-31_La Moderna 01')" onclick="openPanel('2026-03-31_La Moderna 01')">
-          <div class="t-name">ðŸ”„ La Moderna 01</div>
-          <div class="t-time">11:00â€“12:00</div>
+          <div class="t-name">�x La Moderna 01</div>
+          <div class="t-time">11:00�12:00</div>
           <div class="t-meta">CO/CI · 1BR · A3</div>
         </div><div class="travel-blk" style="left:420px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:438.66666666666663px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Love 3B" ondragstart="onDS(event,'2026-03-31_Casa Love 3B')" onclick="openPanel('2026-03-31_Casa Love 3B')">
           <div class="t-name"> Casa Love 3B</div>
-          <div class="t-time">12:08â€“12:28</div>
+          <div class="t-time">12:08�12:28</div>
           <div class="t-meta">EXP · 2BR · A2</div>
         </div><div class="travel-blk" style="left:485.33333333333337px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:503.99999999999994px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_La Manzana 15" ondragstart="onDS(event,'2026-03-31_La Manzana 15')" onclick="openPanel('2026-03-31_La Manzana 15')">
           <div class="t-name"> La Manzana 15</div>
-          <div class="t-time">12:36â€“12:56</div>
+          <div class="t-time">12:36�12:56</div>
           <div class="t-meta">EXP · 1BR · A2</div>
         </div><div class="travel-blk" style="left:550.6666666666667px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:569.3333333333333px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Casa Lefevre 3B" ondragstart="onDS(event,'2026-03-31_Casa Lefevre 3B')" onclick="openPanel('2026-03-31_Casa Lefevre 3B')">
           <div class="t-name"> Casa Lefevre 3B</div>
-          <div class="t-time">13:04â€“13:24</div>
+          <div class="t-time">13:04�13:24</div>
           <div class="t-meta">EXP · 1BR · A1</div>
         </div><div class="travel-blk" style="left:616px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:634.6666666666666px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_La Moderna 04" ondragstart="onDS(event,'2026-03-31_La Moderna 04')" onclick="openPanel('2026-03-31_La Moderna 04')">
           <div class="t-name"> La Moderna 04</div>
-          <div class="t-time">13:32â€“13:52</div>
+          <div class="t-time">13:32�13:52</div>
           <div class="t-meta">EXP · 2BR · A3</div>
         </div><div class="travel-blk" style="left:681.3333333333334px;width:17.666666666666668px"></div><div class="task-block exp narrow tiny" style="left:700px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_CC4A" ondragstart="onDS(event,'2026-03-31_CC4A')" onclick="openPanel('2026-03-31_CC4A')">
           <div class="t-name"> CC4A</div>
-          <div class="t-time">14:00â€“14:20</div>
+          <div class="t-time">14:00�14:20</div>
           <div class="t-meta">EXP · 2BR · A1</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK05" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK05')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Luisa MartÃ­nez</div>
+      <div class="hk-name">Luisa Martínez</div>
       <div class="hk-code">HK05</div>
       <div class="hk-meta">D · B · 190min</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block coci" style="left:280px;width:208px" draggable="true" data-task-id="2026-03-31_Salomon 4B" ondragstart="onDS(event,'2026-03-31_Salomon 4B')" onclick="openPanel('2026-03-31_Salomon 4B')">
-          <div class="t-name">ðŸ”„ Salomon 4B</div>
-          <div class="t-time">11:00â€“12:30</div>
+          <div class="t-name">�x Salomon 4B</div>
+          <div class="t-time">11:00�12:30</div>
           <div class="t-meta">CO/CI · 2BR · D</div>
         </div><div class="task-block coci" style="left:501.66666666666674px;width:138px" draggable="true" data-task-id="2026-03-31_Living 73 19F" ondragstart="onDS(event,'2026-03-31_Living 73 19F')" onclick="openPanel('2026-03-31_Living 73 19F')">
-          <div class="t-name">ðŸ”„ Living 73 19F</div>
-          <div class="t-time">12:35â€“13:35</div>
+          <div class="t-name">�x Living 73 19F</div>
+          <div class="t-time">12:35�13:35</div>
           <div class="t-meta">CO/CI · 1BR · B</div>
         </div><div class="task-block exp narrow tiny" style="left:641.6666666666667px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Living 73 20A" ondragstart="onDS(event,'2026-03-31_Living 73 20A')" onclick="openPanel('2026-03-31_Living 73 20A')">
           <div class="t-name"> Living 73 20A</div>
-          <div class="t-time">13:35â€“13:55</div>
+          <div class="t-time">13:35�13:55</div>
           <div class="t-meta">EXP · 2BR · B</div>
         </div><div class="task-block exp narrow tiny" style="left:700.0000000000002px;width:44.666666666666664px" draggable="true" data-task-id="2026-03-31_Salomon 6A" ondragstart="onDS(event,'2026-03-31_Salomon 6A')" onclick="openPanel('2026-03-31_Salomon 6A')">
           <div class="t-name"> Salomon 6A</div>
-          <div class="t-time">14:00â€“14:20</div>
+          <div class="t-time">14:00�14:20</div>
           <div class="t-meta">EXP · 2BR · D</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK06" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK06')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Rosa HernÃ¡ndez</div>
+      <div class="hk-name">Rosa Hernández</div>
       <div class="hk-code">HK06</div>
       <div class="hk-meta">C · 60min</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
       <div class="limit-line" style="left:840px"></div><div class="task-block co" style="left:280px;width:138px" draggable="true" data-task-id="2026-03-31_Mini Design 14D" ondragstart="onDS(event,'2026-03-31_Mini Design 14D')" onclick="openPanel('2026-03-31_Mini Design 14D')">
-          <div class="t-name">ðŸ§¹ Mini Design 14D</div>
-          <div class="t-time">11:00â€“12:00</div>
+          <div class="t-name">�x�� Mini Design 14D</div>
+          <div class="t-time">11:00�12:00</div>
           <div class="t-meta">CO · 1BR · C</div>
         </div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK07" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK07')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Elena GonzÃ¡lez</div>
+      <div class="hk-name">Elena González</div>
       <div class="hk-code">HK07</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK08" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK08')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK08" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK08')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Patricia Flores</div>
       <div class="hk-code">HK08</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK09" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK09')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Teresa SÃ¡nchez</div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK09" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK09')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="hk-name">Teresa Sánchez</div>
       <div class="hk-code">HK09</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK10" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK10')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Gloria RamÃ­rez</div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK10" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK10')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="hk-name">Gloria Ramírez</div>
       <div class="hk-code">HK10</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK11" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK11')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK11" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK11')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Isabel Torres</div>
       <div class="hk-code">HK11</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK12" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK12')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK12" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK12')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Norma Castro</div>
       <div class="hk-code">HK12</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK13" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK13')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK13" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK13')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Sandra Vargas</div>
       <div class="hk-code">HK13</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK14" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK14')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK14" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK14')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Diana Moreno</div>
       <div class="hk-code">HK14</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK15" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK15')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Luz JimÃ©nez</div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK15" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK15')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="hk-name">Luz Jiménez</div>
       <div class="hk-code">HK15</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK16" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK16')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
-      <div class="hk-name">Marta RÃ­os</div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK16" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK16')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="hk-name">Marta Ríos</div>
       <div class="hk-code">HK16</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK17" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK17')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div><div class="hk-row" style="min-height:68px" data-hk="HK17" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK17')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Consuelo Mendoza</div>
       <div class="hk-code">HK17</div>
       <div class="hk-meta">Sin tareas hoy</div>
     </div><div class="hk-track" style="width:1120px;height:68px">
       <div class="track-grid"><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div><div class="track-col" style="width:140px"></div></div>
-      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignaciÃ³n</div></div></div></div>
+      <div class="limit-line" style="left:840px"></div><div class="idle-msg">Disponible para asignación</div></div></div></div>
     </div>
     <!-- Alerts panel -->
     <div class="alerts-panel" id="alerts-panel">
-      <div class="ap-hd">Alertas del dÃ­a</div>
-      <div class="ap-list" id="ap-list"><div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas crÃ­ticas hoy.</div></div>
+      <div class="ap-hd">Alertas del día</div>
+      <div class="ap-list" id="ap-list"><div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas críticas hoy.</div></div>
       <div class="ap-audit" id="ap-audit" style="display:none">
         <div class="ap-audit-hd">Cambios manuales</div>
         <div id="audit-list"></div>
@@ -927,7 +927,7 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
 </div><!-- /schedule page -->
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â PROPERTIES PAGE Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�"â�"â�"â�"â�"â�" PROPERTIES PAGE â�"â�"â�"â�"â�"â�"â�"â�" -->
 <div class="page-section" id="page-properties" style="display:none;flex-direction:column;flex:1;overflow:hidden">
   <div class="page-header">
     <div class="ph-top">
@@ -941,11 +941,11 @@ tbody tr:hover .row-acts { opacity: 1; }
       </div>
     </div>
     <div class="kpi-strip" id="prop-kpi-strip">
-      <div class="kpi-card"><div class="kpi-label">Propiedades activas</div><div class="kpi-value blue" id="pk-active">216</div><div class="kpi-sub">en operaciÃ³n</div></div>
+      <div class="kpi-card"><div class="kpi-label">Propiedades activas</div><div class="kpi-value blue" id="pk-active">216</div><div class="kpi-sub">en operación</div></div>
       <div class="kpi-card"><div class="kpi-label">Inactivas</div><div class="kpi-value ok" id="pk-inactive">0</div><div class="kpi-sub">fuera de schedule</div></div>
-      <div class="kpi-card"><div class="kpi-label">Casco Antiguo</div><div class="kpi-value" id="pk-casco">109</div><div class="kpi-sub">zonas A0â€“A3</div></div>
+      <div class="kpi-card"><div class="kpi-label">Casco Antiguo</div><div class="kpi-value" id="pk-casco">109</div><div class="kpi-sub">zonas A0�A3</div></div>
       <div class="kpi-card"><div class="kpi-label">Zonas externas</div><div class="kpi-value" id="pk-ext">107</div><div class="kpi-sub">B · C · D · E · F</div></div>
-      <div class="kpi-card"><div class="kpi-label">Con notas operativas</div><div class="kpi-value" id="pk-notes">0</div><div class="kpi-sub">requieren atenciÃ³n especial</div></div>
+      <div class="kpi-card"><div class="kpi-label">Con notas operativas</div><div class="kpi-value" id="pk-notes">0</div><div class="kpi-sub">requieren atención especial</div></div>
     </div>
     <div class="page-tabs" style="border-bottom:none;padding-bottom:0">
       <div style="padding:10px 0"></div>
@@ -953,7 +953,7 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
   <div class="toolbar">
     <div class="srch-wrap">
-      <span class="si">ðŸ”</span>
+      <span class="si">�x�</span>
       <input type="text" class="inp srch" id="p-search" placeholder="Buscar unidad, edificio, zona..." oninput="renderProps()" style="width:220px">
     </div>
     <select class="inp" id="p-zone" onchange="renderProps()">
@@ -962,7 +962,7 @@ tbody tr:hover .row-acts { opacity: 1; }
       <option value="A2">A2 · Casco Centro</option><option value="A3">A3 · Casco Sur</option>
       <option value="B">B · San Francisco</option><option value="C">C · Obarrio</option>
       <option value="D">D · Bella Vista</option><option value="E">E · Costa del Este</option>
-      <option value="F">F · PanamÃ¡ PacÃ­fico</option>
+      <option value="F">F · Panamá Pacífico</option>
     </select>
     <select class="inp" id="p-br" onchange="renderProps()">
       <option value="">Todos los BR</option>
@@ -985,7 +985,7 @@ tbody tr:hover .row-acts { opacity: 1; }
           <th onclick="pSort('zone')">Zona</th>
           <th>BR</th>
           <th onclick="pSort('active')">Estado</th>
-          <th>ReactivaciÃ³n</th>
+          <th>Reactivación</th>
           <th>Notas</th>
           <th style="width:80px"></th>
         </tr>
@@ -5108,7 +5108,7 @@ tbody tr:hover .row-acts { opacity: 1; }
 
 </div><!-- /main -->
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â ADD TASK MODAL Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�" ADD TASK MODAL â�"â�"â�" -->
 <div class="modal-ov" id="add-task-ov" onclick="closeAddTask(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-hd">
@@ -5116,7 +5116,7 @@ tbody tr:hover .row-acts { opacity: 1; }
         <div class="modal-title">Agregar tarea manual</div>
         <div class="modal-sub">Ocupadas, chequeos, urgencias y tareas last-minute no capturadas en Guesty</div>
       </div>
-      <button class="modal-x" onclick="closeAddTask()">Ã—</button>
+      <button class="modal-x" onclick="closeAddTask()">�</button>
     </div>
     <div class="modal-bd">
       <!-- Step 1: Type -->
@@ -5124,19 +5124,19 @@ tbody tr:hover .row-acts { opacity: 1; }
         <label>Tipo de tarea</label>
         <div class="type-grid" id="type-grid">
           <div class="type-opt" data-type="CO" data-mins="60" onclick="selType(this)">
-            <div class="to-name">CO</div><div class="to-min">Checkout · 60â€“120 min</div>
+            <div class="to-name">CO</div><div class="to-min">Checkout · 60�120 min</div>
           </div>
           <div class="type-opt" data-type="CO/CI" data-mins="60" onclick="selType(this)">
-            <div class="to-name">CO/CI</div><div class="to-min">Back-to-back · 60â€“120 min</div>
+            <div class="to-name">CO/CI</div><div class="to-min">Back-to-back · 60�120 min</div>
           </div>
           <div class="type-opt" data-type="EXP" data-mins="20" onclick="selType(this)">
             <div class="to-name">Express</div><div class="to-min">Check-in prep · 20 min</div>
           </div>
           <div class="type-opt" data-type="OC" data-mins="45" onclick="selType(this)">
-            <div class="to-icon"></div><div class="to-name">Ocupada</div><div class="to-min">HuÃ©sped en estadÃ­a · 45 min</div>
+            <div class="to-icon"></div><div class="to-name">Ocupada</div><div class="to-min">Huésped en estadía · 45 min</div>
           </div>
           <div class="type-opt" data-type="CHQ" data-mins="10" onclick="selType(this)">
-            <div class="to-name">Chequeo</div><div class="to-min">InspecciÃ³n rÃ¡pida · 10 min</div>
+            <div class="to-name">Chequeo</div><div class="to-min">Inspección rápida · 10 min</div>
           </div>
           <div class="type-opt" data-type="URG" data-mins="30" onclick="selType(this)">
             <div class="to-name">Urgencia</div><div class="to-min">Caso especial · 30 min</div>
@@ -5152,7 +5152,7 @@ tbody tr:hover .row-acts { opacity: 1; }
           <datalist id="unit-list"></datalist>
         </div>
         <div class="fg">
-          <label>DuraciÃ³n (min)</label>
+          <label>Duración (min)</label>
           <input type="number" class="inp" id="at-mins" value="30" min="5" max="240" step="5" oninput="updateImpact()">
         </div>
       </div>
@@ -5164,7 +5164,7 @@ tbody tr:hover .row-acts { opacity: 1; }
         <div class="fg">
           <label>HK sugerida (opcional)</label>
           <select class="inp" id="at-hk">
-            <option value="">Sistema asigna automÃ¡ticamente</option>
+            <option value="">Sistema asigna automáticamente</option>
           </select>
         </div>
       </div>
@@ -5173,7 +5173,7 @@ tbody tr:hover .row-acts { opacity: 1; }
           <label>Solicitado por</label>
           <select class="inp" id="at-req">
             <option value="coordinador">Coordinador HK</option>
-            <option value="huesped">HuÃ©sped</option>
+            <option value="huesped">Huésped</option>
             <option value="management">Management</option>
             <option value="mantenimiento">Mantenimiento</option>
           </select>
@@ -5183,19 +5183,19 @@ tbody tr:hover .row-acts { opacity: 1; }
           <select class="inp" id="at-pri">
             <option value="normal">Normal</option>
             <option value="alta">Alta</option>
-            <option value="critica">CrÃ­tica - lo antes posible</option>
+            <option value="critica">Crítica - lo antes posible</option>
           </select>
         </div>
       </div>
       <div class="fg">
         <label>Notas / motivo</label>
-        <textarea class="inp" id="at-notes" placeholder="ej: HuÃ©sped solicita cambio de ropa de cama, derrame en habitaciÃ³n, revisiÃ³n de AC, etc."></textarea>
+        <textarea class="inp" id="at-notes" placeholder="ej: Huésped solicita cambio de ropa de cama, derrame en habitación, revisión de AC, etc."></textarea>
       </div>
 
       <!-- Impact preview -->
       <div class="impact-box" id="impact-box">
-        <div class="impact-hd">ðŸ“Š Impacto en el schedule</div>
-        <div id="impact-content" style="color:var(--text3);font-size:12px">SeleccionÃ¡ tipo y unidad para ver el impacto.</div>
+        <div class="impact-hd">�x` Impacto en el schedule</div>
+        <div id="impact-content" style="color:var(--text3);font-size:12px">Seleccioná tipo y unidad para ver el impacto.</div>
       </div>
     </div>
     <div class="modal-ft">
@@ -5205,18 +5205,18 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
 </div>
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â TASK EDIT PANEL Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�" TASK EDIT PANEL â�"â�"â�" -->
 <div class="ep" id="ep">
   <div class="ep-hd">
     <div><div class="ep-title" id="ep-title">Tarea</div><div class="ep-sub" id="ep-sub"></div></div>
-    <button class="ep-x" onclick="closePanel()">Ã—</button>
+    <button class="ep-x" onclick="closePanel()">�</button>
   </div>
   <div class="ep-body">
     <div class="ep-field"><div class="el">Unidad</div><div class="ev" id="ep-unit"></div></div>
     <div class="ep-field"><div class="el">Tipo · BR · Zona</div><div class="ev" id="ep-meta"></div></div>
     <div class="ep-field"><div class="el">Horario actual</div><div class="ev" id="ep-time"></div></div>
     <div class="ep-field"><div class="el">Reasignar HK</div><div class="hk-opts" id="ep-hkopts"></div></div>
-    <div class="ep-field"><div class="el">Motivo del cambio</div><textarea class="reason-inp" id="ep-reason" placeholder="ej: HK sobrecargada, llegÃ³ tarde..."></textarea></div>
+    <div class="ep-field"><div class="el">Motivo del cambio</div><textarea class="reason-inp" id="ep-reason" placeholder="ej: HK sobrecargada, llegó tarde..."></textarea></div>
   </div>
   <div class="ep-ft">
     <button class="btn" onclick="closePanel()" style="flex:1">Cancelar</button>
@@ -5224,12 +5224,12 @@ tbody tr:hover .row-acts { opacity: 1; }
   </div>
 </div>
 
-<!-- Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â PROPERTY EDIT MODAL Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â -->
+<!-- â�"â�"â�" PROPERTY EDIT MODAL â�"â�"â�" -->
 <div class="pmodal-ov" id="pmodal-ov" onclick="closePModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <div class="modal-hd">
       <div><div class="modal-title" id="pm-title">Propiedad</div><div class="modal-sub" id="pm-sub"></div></div>
-      <button class="modal-x" onclick="closePModal()">Ã—</button>
+      <button class="modal-x" onclick="closePModal()">�</button>
     </div>
     <div class="modal-bd">
       <input type="hidden" id="pm-id">
@@ -5244,7 +5244,7 @@ tbody tr:hover .row-acts { opacity: 1; }
             <option value="A2">A2 · Costa, Love, Manzana, Lesplanade</option><option value="A3">A3 · Moderna, Donovan</option>
             <option value="B">B · San Francisco</option><option value="C">C · Obarrio</option>
             <option value="D">D · Bella Vista / La Cresta</option><option value="E">E · Costa del Este</option>
-            <option value="F">F · PanamÃ¡ PacÃ­fico</option>
+            <option value="F">F · Panamá Pacífico</option>
           </select>
         </div>
         <div class="fg"><label>BR</label>
@@ -5258,10 +5258,10 @@ tbody tr:hover .row-acts { opacity: 1; }
         </div>
       </div>
       <div class="inact-block" id="inact-blk">
-        <div class="inact-note">Esta unidad no recibirÃ¡ tareas de limpieza mientras estÃ© inactiva.</div>
-        <div class="fg"><label>Fecha de reactivaciÃ³n (opcional)</label><input type="date" class="inp" id="pm-react"></div>
+        <div class="inact-note">Esta unidad no recibirá tareas de limpieza mientras esté inactiva.</div>
+        <div class="fg"><label>Fecha de reactivación (opcional)</label><input type="date" class="inp" id="pm-react"></div>
       </div>
-      <div class="fg"><label>Notas operativas</label><textarea class="inp" id="pm-notes" rows="3" placeholder="Acceso especial, remodelaciÃ³n, equipamiento particular..."></textarea></div>
+      <div class="fg"><label>Notas operativas</label><textarea class="inp" id="pm-notes" rows="3" placeholder="Acceso especial, remodelación, equipamiento particular..."></textarea></div>
     </div>
     <div class="modal-ft">
       <button class="btn" onclick="closePModal()">Cancelar</button>
@@ -5273,17 +5273,17 @@ tbody tr:hover .row-acts { opacity: 1; }
 <div id="toast"></div></div>
 
 <script>
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // ENGINE
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 const TT={CO:'CO',COCI:'CO/CI',EXP:'EXP',OC:'OC',CHQ:'CHQ',URG:'URG',MANUAL:'MANUAL'};
 const TYPE_META={
-  CO: {label:'CO',   cssClass:'co',  icon:'ðŸ§¹', minTime:60,  maxEnd:16.5, minStart:11, desc:'Checkout'},
-  'CO/CI':{label:'CO/CI',cssClass:'coci',icon:'ðŸ”„',minTime:60, maxEnd:15,  minStart:11, desc:'Back-to-back'},
+  CO: {label:'CO',   cssClass:'co',  icon:'�x��', minTime:60,  maxEnd:16.5, minStart:11, desc:'Checkout'},
+  'CO/CI':{label:'CO/CI',cssClass:'coci',icon:'�x',minTime:60, maxEnd:15,  minStart:11, desc:'Back-to-back'},
   EXP:{label:'EXP',  cssClass:'exp', icon:'', minTime:20,  maxEnd:15,   minStart:9,  desc:'Express'},
-  OC: {label:'OC',   cssClass:'ocu', icon:'ðŸ›ŽÂ', minTime:45,  maxEnd:18,   minStart:9,  desc:'Ocupada'},
-  CHQ:{label:'CHQ',  cssClass:'chq', icon:'ðŸ”', minTime:10,  maxEnd:18,   minStart:9,  desc:'Chequeo'},
-  URG:{label:'URG',  cssClass:'urg', icon:'ðŸš¨', minTime:30,  maxEnd:18,   minStart:9,  desc:'Urgencia'},
+  OC: {label:'OC',   cssClass:'ocu', icon:'�x:}', minTime:45,  maxEnd:18,   minStart:9,  desc:'Ocupada'},
+  CHQ:{label:'CHQ',  cssClass:'chq', icon:'�x�', minTime:10,  maxEnd:18,   minStart:9,  desc:'Chequeo'},
+  URG:{label:'URG',  cssClass:'urg', icon:'�xa�', minTime:30,  maxEnd:18,   minStart:9,  desc:'Urgencia'},
 };
 const CT={'CO':{studio:60,'1br':60,'2br':90,'3br':120}};
 CT['CO/CI']=CT.CO; CT.EXP={studio:20,'1br':20,'2br':20,'3br':20};
@@ -5467,20 +5467,20 @@ function runSchedule_engine(tasks,hkPool){
 function genAlerts(r,date){
   const{summary:s}=r;const al=[];
   const dow=new Date(date+'T12:00:00').getDay();
-  const DW={0:'Domingo - dÃ­a pico en Casco. Verificar cobertura A2.',1:'Lunes - pico secundario. Pueden llegar reservas last-minute.',3:'MiÃ©rcoles - HK01 libra. Verificar MALLET con pool.',5:'Viernes - pico zonas externas. Verificar B y D.'};
+  const DW={0:'Domingo - día pico en Casco. Verificar cobertura A2.',1:'Lunes - pico secundario. Pueden llegar reservas last-minute.',3:'Miércoles - HK01 libra. Verificar MALLET con pool.',5:'Viernes - pico zonas externas. Verificar B y D.'};
   if(DW[dow])al.push({lv:'info',msg:DW[dow]});
   if(s.unassigned>0)al.push({lv:'crit',msg:`${s.unassigned} tarea(s) sin asignar - riesgo check-in a tiempo`});
   const riskTotal=(s.cociAtRisk||0)+(s.expAtRisk||0);
-  if(riskTotal>0)al.push({lv:'crit',msg:`${riskTotal} CO/CI o Express termina despuÃ©s de 15:00 - revisar urgente`});
+  if(riskTotal>0)al.push({lv:'crit',msg:`${riskTotal} CO/CI o Express termina después de 15:00 - revisar urgente`});
   if(s.hksUsed>=s.hksAvail)al.push({lv:'warn',msg:`Capacidad completa: ${s.hksUsed}/${s.hksAvail} HKs. Considerar eventual.`});
   if(s.manualCount>0)al.push({lv:'info',msg:`${s.manualCount} tarea(s) manual(es) en el schedule (ocupadas, chequeos, urgencias).`});
-  if(s.urg>0)al.push({lv:'warn',msg:`${s.urg} urgencia(s) activa(s) - verificar que estÃ¡n correctamente asignadas.`});
+  if(s.urg>0)al.push({lv:'warn',msg:`${s.urg} urgencia(s) activa(s) - verificar que están correctamente asignadas.`});
   return al;
 }
 
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // UI STATE
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 let reservations=[];
 let currentDate=null;
 let currentResult=null;
@@ -5512,7 +5512,7 @@ const HK_POOL=[
 {id:'HK17',name:'Yanizel Morris',available:true}
 ];
 
-// Ã¢Â”Â€Ã¢Â”Â€ TIMELINE RENDER Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ TIMELINE RENDER â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 const TL_S=9,TL_E=17,TL_H=8;
 
 function setScale(v){HOUR_W=parseInt(v);if(currentResult)renderTimeline()}
@@ -5540,7 +5540,7 @@ function renderTimeline(){
       ondragover="onDO(event,this)" ondrop="onDrp(event,'${hk.id}')"
       ondragleave="this.classList.remove('drag-over')">`;
     rows+=`<div class="hk-label" style="${hasRisk?'border-left:3px solid #dc2626;padding-left:11px':''}" onclick="${isIdle?'':`hkdOpen('${hk.id}')`}">
-      <div class="hk-name">${hk.name}${hasRisk?' <span style="color:#dc2626;font-size:10px;font-weight:700">Ã¢ÂšÂ </span>':''}</div>
+      <div class="hk-name">${hk.name}${hasRisk?' <span style="color:#dc2626;font-size:10px;font-weight:700">â�a </span>':''}</div>
       <div class="hk-code${isDed?' ded':''}">${hk.id}${isDed?' · DEDICADA':''}</div>
       <div class="hk-meta">${isIdle?'Sin tareas hoy':zones+(totalMin?` · ${totalMin}min`:'')}</div>
     </div>`;
@@ -5548,7 +5548,7 @@ function renderTimeline(){
       <div class="track-grid">${Array.from({length:TL_H},(_,i)=>`<div class="track-col" style="width:${HOUR_W}px"></div>`).join('')}</div>
       <div class="limit-line" style="left:${limitL}px"></div>`;
 
-    if(isIdle){rows+=`<div class="idle-msg">Disponible para asignaciÃ³n</div>`}
+    if(isIdle){rows+=`<div class="idle-msg">Disponible para asignación</div>`}
     else{
       for(const t of sched.tasks){
         const left=((t.startTime-TL_S)/TL_H)*TW;
@@ -5571,7 +5571,7 @@ function renderTimeline(){
           draggable="true" data-task-id="${t.id}"
           ondragstart="onDS(event,'${t.id}')" onclick="openPanel('${t.id}')">
           <div class="t-name">${tm.icon} ${t.unitName}</div>
-          <div class="t-time">${h2t(t.startTime)}â€“${h2t(t.endTime)}${atRisk?' Ã¢ÂšÂ ':''}</div>
+          <div class="t-time">${h2t(t.startTime)}�${h2t(t.endTime)}${atRisk?' â�a ':''}</div>
           <div class="t-meta">${t.type} · ${t.br.toUpperCase()}${t.zone?' · '+t.zone:''}</div>
         </div>`;
       }
@@ -5607,7 +5607,7 @@ function renderKPIs(){
 function renderAlerts(){
   const al=genAlerts(currentResult,currentDate||'');
   const list=document.getElementById('ap-list');
-  if(!al.length){list.innerHTML=`<div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas crÃ­ticas hoy.</div>`;return}
+  if(!al.length){list.innerHTML=`<div style="padding:14px;color:var(--text3);font-size:12px">Sin alertas críticas hoy.</div>`;return}
   list.innerHTML=al.map(a=>`<div class="ap-item">
     <div class="ap-dot ${a.lv}"></div>
     <div class="ap-msg">${a.msg}</div>
@@ -5624,7 +5624,7 @@ function renderAuditLog(){
     </div>`).join('');
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ CSV & RUN Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ CSV & RUN â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 document.getElementById('csv-input').addEventListener('change',e=>{
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
@@ -5655,7 +5655,7 @@ function run(){
   renderTimeline();renderKPIs();renderAlerts();
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ DRAG & DROP Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ DRAG & DROP â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 window.onDS=(e,id)=>{dragTaskId=id;e.dataTransfer.effectAllowed='move';document.querySelector(`[data-task-id="${id}"]`)?.classList.add('dragging')};
 window.onDO=(e,row)=>{e.preventDefault();row.classList.add('drag-over')};
 window.onDrp=(e,hkId)=>{
@@ -5665,7 +5665,7 @@ window.onDrp=(e,hkId)=>{
   openPanel(dragTaskId,hkId);dragTaskId=null;
 };
 
-// Ã¢Â”Â€Ã¢Â”Â€ EDIT PANEL Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ EDIT PANEL â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 window.openPanel=(taskId,preHK=null)=>{
   const t=findTask(taskId);if(!t)return;
   selectedTask=t;pendingHKId=preHK??t.assignedHK;
@@ -5674,7 +5674,7 @@ window.openPanel=(taskId,preHK=null)=>{
   document.getElementById('ep-sub').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'}`;
   document.getElementById('ep-unit').textContent=t.unitName+(t.notes?` - ${t.notes}`:'');
   document.getElementById('ep-meta').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'} · ${t.cleanMins} min${t.isManual?' · MANUAL':''}`;
-  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)} â†’ ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
+  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)} �  ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
   document.getElementById('ep-reason').value='';
   const{byHK}=currentResult;
   document.getElementById('ep-hkopts').innerHTML=HK_POOL.map(hk=>{
@@ -5706,7 +5706,7 @@ function confirmChange(task){
   byHK[newId].tasks.push(task);byHK[newId].tasks.sort((a,b)=>a.startTime-b.startTime);
   byHK[newId].tasks.forEach((t,i)=>t.order=i+1);byHK[newId].zones=[...new Set(byHK[newId].tasks.map(t=>t.zone))];
   const oldHK=task.assignedHK||'-';
-  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK} â†’ ${newId}`,reason:reason||'-'});
+  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK} �  ${newId}`,reason:reason||'-'});
   closePanel();renderTimeline();renderKPIs();renderAlerts();renderAuditLog();
   toast(`${task.unitName} reasignada a ${hk?.name??newId}`);
 }
@@ -5717,14 +5717,14 @@ function findTask(id){
   return currentResult?.unassigned?.find(t=>t.id===id);
 }
 
-// Ã¢Â”Â€Ã¢Â”Â€ ADD TASK MODAL Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€Ã¢Â”Â€
+// â�¬â�¬ ADD TASK MODAL â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬â�¬
 function openAddTaskModal(){
   // Populate unit datalist
   const dl=document.getElementById('unit-list');
   dl.innerHTML=properties.filter(p=>p.active).map(p=>`<option value="${p.name}">`).join('');
   // Populate HK selector
   const hkSel=document.getElementById('at-hk');
-  hkSel.innerHTML=`<option value="">Sistema asigna automÃ¡ticamente</option>`+
+  hkSel.innerHTML=`<option value="">Sistema asigna automáticamente</option>`+
     HK_POOL.map(h=>`<option value="${h.id}">${h.id} · ${h.name}</option>`).join('');
   selectedType=null;
   document.querySelectorAll('.type-opt').forEach(o=>o.classList.remove('sel'));
@@ -5733,7 +5733,7 @@ function openAddTaskModal(){
   document.getElementById('at-time').value='11:00';
   document.getElementById('at-req').value='coordinador';
   document.getElementById('at-pri').value='normal';
-  document.getElementById('impact-content').innerHTML='<span style="color:var(--text3);font-size:12px">SeleccionÃ¡ tipo y unidad para ver el impacto.</span>';
+  document.getElementById('impact-content').innerHTML='<span style="color:var(--text3);font-size:12px">Seleccioná tipo y unidad para ver el impacto.</span>';
   document.getElementById('add-task-ov').classList.add('open');
 }
 window.closeAddTask=(e)=>{
@@ -5751,7 +5751,7 @@ window.selType=(el)=>{
 
 function updateImpact(){
   if(!selectedType||!currentResult){
-    document.getElementById('impact-content').innerHTML='<span style="color:var(--text3);font-size:12px">GenerÃ¡ el schedule primero para ver el impacto.</span>';
+    document.getElementById('impact-content').innerHTML='<span style="color:var(--text3);font-size:12px">Generá el schedule primero para ver el impacto.</span>';
     return;
   }
   const unit=document.getElementById('at-unit').value.trim();
@@ -5784,18 +5784,18 @@ function updateImpact(){
 
   document.getElementById('impact-content').innerHTML=`
     <div class="impact-row"><span class="impact-lbl">Tipo de tarea</span><span class="impact-val">${m.icon} ${m.desc} · ${mins} min</span></div>
-    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)} â†’ ${h2t(endTime)}</span></div>
+    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)} �  ${h2t(endTime)}</span></div>
     <div class="impact-row"><span class="impact-lbl">HK sugerida</span><span class="impact-val">${targetHK?`${targetHK.id} · ${targetHK.name}`:'Sin HK disponible'}</span></div>
-    <div class="impact-row"><span class="impact-lbl">Carga HK despuÃ©s</span><span class="impact-val ${utilizationAfter>90?'warn':''}">${newLoad} min (${utilizationAfter}%)</span></div>
-    ${overLimit?`<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">Ã¢ÂšÂ  Advertencia</span><span class="impact-val crit">Termina despuÃ©s del lÃ­mite (${h2t(m.maxEnd)})</span></div>`:''}
-    ${s.hksUsed>=s.hksAvail?`<div class="impact-row"><span class="impact-lbl" style="color:#d97706">Ã¢ÂšÂ  Capacidad</span><span class="impact-val warn">Todas las HKs ya tienen tareas</span></div>`:''}
+    <div class="impact-row"><span class="impact-lbl">Carga HK después</span><span class="impact-val ${utilizationAfter>90?'warn':''}">${newLoad} min (${utilizationAfter}%)</span></div>
+    ${overLimit?`<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">â�a  Advertencia</span><span class="impact-val crit">Termina después del límite (${h2t(m.maxEnd)})</span></div>`:''}
+    ${s.hksUsed>=s.hksAvail?`<div class="impact-row"><span class="impact-lbl" style="color:#d97706">â�a  Capacidad</span><span class="impact-val warn">Todas las HKs ya tienen tareas</span></div>`:''}
   `;
 }
 
 function confirmAddTask(){
-  if(!selectedType){toast('SeleccionÃ¡ un tipo de tarea');return}
+  if(!selectedType){toast('Seleccioná un tipo de tarea');return}
   const unit=document.getElementById('at-unit').value.trim();
-  if(!unit){toast('IngresÃ¡ la unidad');return}
+  if(!unit){toast('Ingresá la unidad');return}
   const mins=parseInt(document.getElementById('at-mins').value)||30;
   const timeStr=document.getElementById('at-time').value;
   const requestedH=timeStr?t2h(timeStr):null;
@@ -5822,9 +5822,9 @@ function confirmAddTask(){
   if(currentResult)run(); // re-run schedule with new task
 }
 
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // PROPERTIES
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 const PROPS_KEY='wh_props_v3';
 let properties=[];
 let propMaster={};
@@ -5946,7 +5946,7 @@ async function qTog(id){
 function bulkAct(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&!p.active){p.active=true;p.reactivation=null;n++}}save();clearSel();renderProps();toast(`${n} unidades activadas`)}
 function bulkDeact(){let n=0;for(const id of selIds){const p=properties.find(x=>x.id===id);if(p&&p.active){p.active=false;n++}}save();clearSel();renderProps();toast(`${n} unidades desactivadas`)}
 function exportProps(){
-  const hdr=['ID','Nombre','Edificio','Zona','BR','Activa','ReactivaciÃ³n','Notas'];
+  const hdr=['ID','Nombre','Edificio','Zona','BR','Activa','Reactivación','Notas'];
   const rows=properties.map(p=>[p.id,p.name,p.building,p.zone,p.br,p.active,p.reactivation||'',p.notes||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([[hdr.join(','),...rows].join('\n')],{type:'text/csv'}));
   a.download=`wh_props_${new Date().toISOString().split('T')[0]}.csv`;a.click();toast('CSV exportado');
@@ -6001,9 +6001,9 @@ async function saveProp(){
   } catch(e){toast('Error: '+e.message);}
 }
 
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // PAGE NAV
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 function showPage(name,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('active'));
@@ -6012,14 +6012,14 @@ function showPage(name,btn){
   if(name==='properties')renderProps();
 }
 
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // UTILS
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(()=>el.style.opacity='0',2800)}
 
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // DEMO DATA
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 function getDemoData(){
   const d='2026-03-31',p='2026-03-29',f='2026-04-04';
   return[
@@ -6050,9 +6050,9 @@ function getDemoData(){
 }
 
 const PROPERTIES_DEFAULT=[{"id":"casa_mallet_1","name":"Casa Mallet 1","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_2","name":"Casa Mallet 2","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_3","name":"Casa Mallet 3","zone":"A0","br":1,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_4","name":"Casa Mallet 4","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_5","name":"Casa Mallet 5","zone":"A0","br":3,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"casa_mallet_6","name":"Casa Mallet 6","zone":"A0","br":2,"building":"Casa Mallet","active":true,"reactivation":null,"notes":""},{"id":"cc1a","name":"CC1A","zone":"A1","br":2,"building":"CC1A","active":true,"reactivation":null,"notes":""},{"id":"cc1b","name":"CC1B","zone":"A1","br":2,"building":"CC1B","active":true,"reactivation":null,"notes":""},{"id":"cc2a","name":"CC2A","zone":"A1","br":2,"building":"CC2A","active":true,"reactivation":null,"notes":""},{"id":"cc2b","name":"CC2B","zone":"A1","br":2,"building":"CC2B","active":true,"reactivation":null,"notes":""},{"id":"cc3a","name":"CC3A","zone":"A1","br":2,"building":"CC3A","active":true,"reactivation":null,"notes":""},{"id":"cc3b","name":"CC3B","zone":"A1","br":2,"building":"CC3B","active":true,"reactivation":null,"notes":""},{"id":"cc4a","name":"CC4A","zone":"A1","br":2,"building":"CC4A","active":true,"reactivation":null,"notes":""},{"id":"cc4b","name":"CC4B","zone":"A1","br":1,"building":"CC4B","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_1a","name":"Casa Lefevre 1A","zone":"A1","br":2,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_1b","name":"Casa Lefevre 1B","zone":"A1","br":2,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2a","name":"Casa Lefevre 2A","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2b","name":"Casa Lefevre 2B","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_2c","name":"Casa Lefevre 2C","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_3b","name":"Casa Lefevre 3B","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"casa_lefevre_3c","name":"Casa Lefevre 3C","zone":"A1","br":1,"building":"Casa Lefevre","active":true,"reactivation":null,"notes":""},{"id":"portal_de_caldas_02","name":"Portal De Caldas 02","zone":"A1","br":1,"building":"Portal De Caldas","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1b","name":"Casa La Costa 1B","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1c","name":"Casa La Costa 1C","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_1d","name":"Casa La Costa 1D","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2a","name":"Casa La Costa 2A","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2c","name":"Casa La Costa 2C","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_2d","name":"Casa La Costa 2D","zone":"A2","br":1,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3a","name":"Casa La Costa 3A","zone":"A2","br":3,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3b","name":"Casa La Costa 3B","zone":"A2","br":3,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3c","name":"Casa La Costa 3C","zone":"A2","br":2,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_la_costa_3d","name":"Casa La Costa 3D","zone":"A2","br":2,"building":"Casa La Costa","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1a","name":"Casa Love 1A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1b","name":"Casa Love 1B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1c","name":"Casa Love 1C","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_1d","name":"Casa Love 1D","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2a","name":"Casa Love 2A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2b","name":"Casa Love 2B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2c","name":"Casa Love 2C","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_2d","name":"Casa Love 2D","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_3a","name":"Casa Love 3A","zone":"A2","br":1,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"casa_love_3b","name":"Casa Love 3B","zone":"A2","br":2,"building":"Casa Love","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1c","name":"La Cuadra 1C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1d","name":"La Cuadra 1D","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1f","name":"La Cuadra 1F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1h","name":"La Cuadra 1H","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_1j","name":"La Cuadra 1J","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2c","name":"La Cuadra 2C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2f","name":"La Cuadra 2F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2g","name":"La Cuadra 2G","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_2i","name":"La Cuadra 2i","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3a","name":"La Cuadra 3A","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3c","name":"La Cuadra 3C","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3g","name":"La Cuadra 3G","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3i","name":"La Cuadra 3I","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_3k","name":"La Cuadra 3K","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4d","name":"La Cuadra 4D","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4f","name":"La Cuadra 4F","zone":"A2","br":1,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_cuadra_4j","name":"La Cuadra 4J","zone":"A2","br":2,"building":"La Cuadra","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_01","name":"La Manzana 01","zone":"A2","br":2,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_05","name":"La Manzana 05","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_06","name":"La Manzana 06","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_07","name":"La Manzana 07","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_09","name":"La Manzana 09","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_11","name":"La Manzana 11","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_15","name":"La Manzana 15","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_16","name":"La Manzana 16","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_17","name":"La Manzana 17","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_20","name":"La Manzana 20","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_21","name":"La Manzana 21","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"la_manzana_24","name":"La Manzana 24","zone":"A2","br":1,"building":"La Manzana","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_1a","name":"Lesplanade 1A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_1b","name":"Lesplanade 1B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2a","name":"Lesplanade 2A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2b","name":"Lesplanade 2B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_2c","name":"Lesplanade 2C","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3a","name":"Lesplanade 3A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3b","name":"Lesplanade 3B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_3d","name":"Lesplanade 3D","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_4a","name":"Lesplanade 4A","zone":"A2","br":2,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"lesplanade_4b","name":"Lesplanade 4B","zone":"A2","br":1,"building":"Lesplanade","active":true,"reactivation":null,"notes":""},{"id":"donovan_1a","name":"Donovan 1A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_1b","name":"Donovan 1B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_1c","name":"Donovan 1C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2a","name":"Donovan 2A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2b","name":"Donovan 2B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_2c","name":"Donovan 2C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3a","name":"Donovan 3A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3b","name":"Donovan 3B","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_3c","name":"Donovan 3C","zone":"A3","br":2,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_4a","name":"Donovan 4A","zone":"A3","br":1,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"donovan_4b","name":"Donovan 4B","zone":"A3","br":3,"building":"Donovan","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_01","name":"La Moderna 01","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_02","name":"La Moderna 02","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_03","name":"La Moderna 03","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_04","name":"La Moderna 04","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_05","name":"La Moderna 05","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_06","name":"La Moderna 06","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_07","name":"La Moderna 07","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_08","name":"La Moderna 08","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_09","name":"La Moderna 09","zone":"A3","br":2,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_10","name":"La Moderna 10","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_11","name":"La Moderna 11","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"la_moderna_12","name":"La Moderna 12","zone":"A3","br":1,"building":"La Moderna","active":true,"reactivation":null,"notes":""},{"id":"living_73_08c","name":"Living 73 08C","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_08d","name":"Living 73 08D","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_08e","name":"Living 73 08E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_10a","name":"Living 73 10A","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_10d","name":"Living 73 10D","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11b","name":"Living 73 11B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11f","name":"Living 73 11F","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_11i","name":"Living 73 11I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_12b","name":"Living 73 12B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_13e","name":"Living 73 13E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_13g","name":"Living 73 13G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_14c","name":"Living 73 14C","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_14i","name":"Living 73 14I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_15b","name":"Living 73 15B","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_15e","name":"Living 73 15E","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_16g","name":"Living 73 16G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_16k","name":"Living 73 16K","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17h","name":"Living 73 17H","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17i","name":"Living 73 17I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_17l","name":"Living 73 17L","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_18h","name":"Living 73 18H","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19f","name":"Living 73 19F","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19i","name":"Living 73 19I","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_19k","name":"Living 73 19K","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"living_73_20g","name":"Living 73 20G","zone":"B","br":1,"building":"Living 73","active":true,"reactivation":null,"notes":""},{"id":"quartier_del_mar_19a","name":"Quartier del Mar 19A","zone":"B","br":2,"building":"Quartier del Mar","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05b","name":"Mini Design 05B","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05c","name":"Mini Design 05C","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_05e","name":"Mini Design 05E","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_07b","name":"Mini Design 07B","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_11f","name":"Mini Design 11F","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_14d","name":"Mini Design 14D","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_14j","name":"Mini Design 14J","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"mini_design_15e","name":"Mini Design 15E","zone":"C","br":1,"building":"Mini Design","active":true,"reactivation":null,"notes":""},{"id":"salomon_1b","name":"Salomon 1B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_1c","name":"Salomon 1C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_1d","name":"Salomon 1D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2a","name":"Salomon 2A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2b","name":"Salomon 2B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2c","name":"Salomon 2C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_2d","name":"Salomon 2D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3a","name":"Salomon 3A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3b","name":"Salomon 3B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3c","name":"Salomon 3C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_3d","name":"Salomon 3D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4a","name":"Salomon 4A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4b","name":"Salomon 4B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4c","name":"Salomon 4C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_4d","name":"Salomon 4D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5a","name":"Salomon 5A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5b","name":"Salomon 5B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5c","name":"Salomon 5C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_5d","name":"Salomon 5D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6a","name":"Salomon 6A","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6b","name":"Salomon 6B","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6c","name":"Salomon 6C","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"salomon_6d","name":"Salomon 6D","zone":"D","br":2,"building":"Salomon","active":true,"reactivation":null,"notes":""},{"id":"the_gray_10c","name":"The Gray 10C","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_11g","name":"The Gray 11G","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_17c","name":"The Gray 17C","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_19d","name":"The Gray 19D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_20d","name":"The Gray 20D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_22e","name":"The Gray 22E","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_24d","name":"The Gray 24D","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_gray_9j","name":"The Gray 9J","zone":"D","br":1,"building":"The Gray","active":true,"reactivation":null,"notes":""},{"id":"the_sands_2403","name":"The Sands 2403","zone":"D","br":1,"building":"The Sands","active":true,"reactivation":null,"notes":""},{"id":"the_sands_3216","name":"The Sands 3216","zone":"D","br":1,"building":"The Sands","active":true,"reactivation":null,"notes":""},{"id":"yoo_12i","name":"YOO 12i","zone":"D","br":2,"building":"YOO","active":true,"reactivation":null,"notes":""},{"id":"yoo_40k","name":"YOO 40K","zone":"D","br":1,"building":"YOO","active":true,"reactivation":null,"notes":""},{"id":"centriqo_b_504","name":"Centriqo B 504","zone":"F","br":1,"building":"Centriqo B","active":true,"reactivation":null,"notes":""},{"id":"parterre_t1__201_","name":"Parterre T1 (201)","zone":"F","br":1,"building":"Parterre T1 (201)","active":true,"reactivation":null,"notes":""},{"id":"ghost_panama_11","name":"Ghost Panama 11","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_5","name":"Ghost Panama 5","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_6","name":"Ghost Panama 6","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"},{"id":"ghost_panama_8","name":"Ghost Panama 8","zone":"GHOST","br":1,"building":"Ghost Panama","active":false,"reactivation":null,"notes":"Ghost Panama \u2014 excluida"}];
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // INIT
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 loadProps();
 setTimeout(()=>{
   reservations=getDemoData();currentDate='2026-03-31';
@@ -6203,7 +6203,7 @@ setTimeout(()=>{
         <div id="wk-kv-total-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">confirmadas</div>
       </div>
       <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">DÃ­a mÃ¡s cargado</div>
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Día más cargado</div>
         <div id="wk-kv-peak" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#d97706">-</div>
         <div id="wk-kv-peak-sub" style="font-size:11px;color:#9ca3af;margin-top:2px">-</div>
       </div>
@@ -6213,12 +6213,12 @@ setTimeout(()=>{
         <div style="font-size:11px;color:#9ca3af;margin-top:2px">back-to-back</div>
       </div>
       <div style="flex:1;padding:12px 20px;border-right:1px solid #e5e7eb">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">DÃ­as con dÃ©ficit</div>
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Días con déficit</div>
         <div id="wk-kv-deficit" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700">-</div>
         <div style="font-size:11px;color:#9ca3af;margin-top:2px">necesitan eventual</div>
       </div>
       <div style="flex:1;padding:12px 20px">
-        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">PrÃ³xima semana</div>
+        <div style="font-size:11px;color:#6b7280;font-weight:500;margin-bottom:4px">Próxima semana</div>
         <div id="wk-kv-next" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:700;color:#2563eb">-</div>
         <div style="font-size:11px;color:#9ca3af;margin-top:2px">tareas proyectadas</div>
       </div>
@@ -6290,14 +6290,14 @@ async function loadHistory() {
       .select('date,version,total_tasks,hks_used,tasks_coci,tasks_co,tasks_exp,coci_at_risk,generated_at')
       .eq('tenant_id','panama').order('date',{ascending:false}).order('version',{ascending:false}).limit(60);
     if(!res.data||!res.data.length){
-      list.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:32px;text-align:center">No hay schedules guardados aÃºn. Genera el schedule del dÃ­a para empezar el historial.</div>';
+      list.innerHTML='<div style="color:#9ca3af;font-size:13px;padding:32px;text-align:center">No hay schedules guardados aún. Genera el schedule del día para empezar el historial.</div>';
       return;
     }
     var seen=new Set();
     var rows=res.data.filter(function(r){if(seen.has(r.date))return false;seen.add(r.date);return true;});
     list.innerHTML=rows.map(function(s){
       var d=new Date(s.date+'T12:00:00');
-      var dow=['Dom','Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b'][d.getDay()];
+      var dow=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][d.getDay()];
       var risk=s.coci_at_risk>0;
       var dateStr=d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
       var genTime=s.generated_at?new Date(s.generated_at).toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}):'';
@@ -6309,7 +6309,7 @@ async function loadHistory() {
         '<div><div style="font-size:22px;font-weight:700;color:#2563eb;line-height:1">'+s.tasks_co+'</div><div style="font-size:10px;color:#6b7280;margin-top:2px">CO</div></div>' +
         '<div><div style="font-size:22px;font-weight:700;color:#7c3aed;line-height:1">'+s.tasks_exp+'</div><div style="font-size:10px;color:#6b7280;margin-top:2px">EXP</div></div>' +
         '<div><div style="font-size:22px;font-weight:700;line-height:1">'+s.hks_used+'</div><div style="font-size:10px;color:#6b7280;margin-top:2px">HKs</div></div>' +
-        (risk?'<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600;color:#dc2626">Ã¢ÂšÂ  '+s.coci_at_risk+' en riesgo</span></div>':'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600;color:#16a34a">&#10003; Sin riesgos</span></div>')+
+        (risk?'<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600;color:#dc2626">â�a  '+s.coci_at_risk+' en riesgo</span></div>':'<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:4px"><span style="font-size:11px;font-weight:600;color:#16a34a">&#10003; Sin riesgos</span></div>')+
         '</div></div>';
     }).join('');
   } catch(e){list.innerHTML='<div style="color:#dc2626;font-size:13px">Error: '+e.message+'</div>';}
@@ -6331,7 +6331,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 <script>
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 // TEAM MODULE
 var TM_hks = [
 {id:'HK01',name:'Marlenis Duarte',type:'dedicada',zones:['A0'],defaultOff:'3',notes:'Casa Mallet exclusiva',color:'#d97706'},
@@ -6682,11 +6682,11 @@ function tmGoToday(){TM_weekStart=tmGetMonday(new Date());tmRender();}
 function initTeamModule(){TM_weekStart=tmGetMonday(new Date());tmLoadData();tmRender();}
 
 // WEEKLY MODULE
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"â�"
 var WK_weekStart = null;
 var WK_today = new Date().toISOString().split('T')[0];
 var BW_MULTS = [{d:[0,2],m:1.00},{d:[3,7],m:1.78},{d:[8,15],m:2.70},{d:[16,30],m:4.22},{d:[31,999],m:8.32}];
-var WK_DOW = ['Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b','Dom'];
+var WK_DOW = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 var WK_MIN_HKS = {0:10,1:8,2:7,3:8,4:9,5:11,6:11};
 
 function wkGetMonday(d){var dt=new Date(d);dt.setHours(12,0,0,0);var day=dt.getDay();dt.setDate(dt.getDate()-(day===0?6:day-1));return dt;}
@@ -6778,7 +6778,7 @@ function wkRender(){
     var isPast=ds<today,isToday=ds===today;
     var status=isPast?'past':deficit>2?'crit':deficit>0?'warn':'ok';
     var barColor=status==='crit'?'#dc2626':status==='warn'?'#d97706':status==='past'?'#d1d5db':'#16a34a';
-    var alertMsg=isPast?'DÃ­a pasado':deficit>2?'Necesita +'+deficit+' eventual'+(deficit>1?'es':''):deficit>0?'Considera +'+deficit+' eventual':avail+' HKs disponibles';
+    var alertMsg=isPast?'Día pasado':deficit>2?'Necesita +'+deficit+' eventual'+(deficit>1?'es':''):deficit>0?'Considera +'+deficit+' eventual':avail+' HKs disponibles';
     var alertColor=status==='crit'?'#dc2626':status==='warn'?'#d97706':'#16a34a';
     var alertBg=status==='crit'?'#fef2f2':status==='warn'?'#fffbeb':'#f0fdf4';
 
@@ -6807,7 +6807,7 @@ function wkRender(){
     cards+='</div>';
     // Alert
     cards+='<div style="margin:6px 10px 8px;padding:5px 8px;border-radius:6px;background:'+alertBg+';font-size:10.5px;font-weight:600;color:'+alertColor+'">'+
-      (status==='crit'?'Ã¢ÂšÂ  ':status==='warn'?' ':'&#10003; ')+alertMsg+'</div>';
+      (status==='crit'?'â�a  ':status==='warn'?' ':'&#10003; ')+alertMsg+'</div>';
     cards+='</div>';
   });
   document.getElementById('wk-grid').innerHTML=cards;
@@ -6830,7 +6830,7 @@ function initWeeklyModule(){
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
     <div>
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Panel de usuarios</div>
-      <div style="font-size:12px;color:#6b7280;margin-top:2px">GestiÃ³n de acceso · Wynwood House Panama</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:2px">Gestión de acceso · Wynwood House Panama</div>
     </div>
     <button class="btn pri" onclick="usersInviteOpen()">+ Invitar usuario</button>
   </div>
@@ -6858,7 +6858,7 @@ function initWeeklyModule(){
   <div style="background:#fff;border-radius:12px;width:440px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
     <div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700">Invitar usuario</div>
-      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">Ã—</button>
+      <button onclick="usersInviteClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">�</button>
     </div>
     <div style="padding:18px 20px;display:flex;flex-direction:column;gap:14px">
       <div>
@@ -6878,7 +6878,7 @@ function initWeeklyModule(){
         </select>
       </div>
       <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:10px 12px;font-size:12px;color:#92400e">
-        Ã¢ÂšÂ Ã¯Â¸Â El usuario deberÃ¡ crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizarÃ¡ automÃ¡ticamente.
+        â�a ï¸ El usuario deberá crear su cuenta en <strong>thunderous-starburst-bcd311.netlify.app</strong> con ese email. Luego su rol se actualizará automáticamente.
       </div>
       <div id="invite-result" style="font-size:12px;min-height:16px"></div>
     </div>
@@ -6890,7 +6890,7 @@ function initWeeklyModule(){
 </div>
 
 <script>
-// Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â USERS MODULE Ã¢Â•ÂÃ¢Â•ÂÃ¢Â•Â
+// â�"â�"â�" USERS MODULE â�"â�"â�"
 async function loadUsers() {
   var list = document.getElementById('users-list');
   if(!list) return;
@@ -6910,7 +6910,7 @@ async function loadUsers() {
       return '<div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:14px">' +
         '<div style="width:40px;height:40px;border-radius:50%;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0">'+initials+'</div>' +
         '<div style="flex:1">' +
-          '<div style="font-size:14px;font-weight:600">'+u.full_name+(isMe?' <span style="font-size:11px;color:#9ca3af">(tÃº)</span>':'')+'</div>' +
+          '<div style="font-size:14px;font-weight:600">'+u.full_name+(isMe?' <span style="font-size:11px;color:#9ca3af">(tú)</span>':'')+'</div>' +
           '<div style="font-size:12px;color:#6b7280;margin-top:1px">'+u.email+'</div>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:8px">' +
@@ -6962,7 +6962,7 @@ async function usersCreate() {
       res.style.color='#16a34a';res.textContent='&#10003; Usuario '+email+' actualizado con rol '+role;
     } else {
       res.style.color='#d97706';
-      res.textContent='El usuario debe registrarse primero en el sistema con ese email. Luego su rol quedarÃ¡ como '+role+'.';
+      res.textContent='El usuario debe registrarse primero en el sistema con ese email. Luego su rol quedará como '+role+'.';
       // Store pending role assignment
       localStorage.setItem('pending_role_'+email, JSON.stringify({role,name,tenant:'panama'}));
     }
@@ -6996,7 +6996,7 @@ async function doLogin(){
     document.getElementById('app-screen').style.display='flex';
     setTimeout(()=>{if(typeof run==='function')run();if(typeof loadProps==='function')loadProps();},300);
   }catch(e){
-    err.textContent=e.message==='Invalid login credentials'?'Email o contraseÃ±a incorrectos':'Error: '+e.message;
+    err.textContent=e.message==='Invalid login credentials'?'Email o contraseña incorrectos':'Error: '+e.message;
     if(btn){btn.textContent='Ingresar';btn.disabled=false;}
   }
 }
@@ -7140,7 +7140,7 @@ async function usersCreate() {
       // Fix close buttons and calendar icons
   document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
-      // Fix modal close buttons showing ï¿½
+      // Fix modal close buttons showing �
       document.querySelectorAll(".modal-x").forEach(function(b) {
         if (b.textContent.trim() !== "\u00d7" && b.innerHTML.indexOf("times") < 0) {
           b.innerHTML = "\u00d7";
@@ -7151,7 +7151,7 @@ async function usersCreate() {
         th.innerHTML = th.innerHTML.replace(/[\u00c3][\u00a2][\u00c3][\u0082][\u00c3][\u0082]/g, "");
         th.innerHTML = th.innerHTML.replace(/[\u00c3][\u00a2][^\u0020]{0,5}/g, "");
       });
-      // Fix lone ï¿½ chars in text nodes
+      // Fix lone � chars in text nodes
       document.querySelectorAll("div,span,button").forEach(function(el) {
         if (el.children.length === 0 && el.textContent === "\u00e2") el.textContent = "";
         if (el.children.length === 0 && el.textContent === "\u00c3") el.textContent = "\u00d7";
@@ -7178,7 +7178,7 @@ function tlZoom(dir){
   if(lbl)lbl.textContent=pct+'%';
   setScale(Math.round(140*pct/100));
 }
-function hkdOpen(hkId){var overlay=document.getElementById('hkd-overlay');if(!overlay)return;var sc=currentResult&&currentResult.byHK?currentResult.byHK[hkId]:null;var hkName=(sc&&sc.hkName)||hkId;var tasks=(sc&&sc.tasks)||[];var totalMins=tasks.reduce(function(s,t){return s+(t.cleanMins||0);},0);var tmHK=typeof TM_hks!=='undefined'?TM_hks.find(function(h){return h.id===hkId;}):null;var hkType=tmHK?tmHK.type:'fija';var hkZones=tmHK?(tmHK.zones||[]).join(', '):'-';var hkNotes=tmHK?tmHK.notes||'':'';;var el=function(id){return document.getElementById(id);};if(el('hkd-name'))el('hkd-name').textContent=hkName;if(el('hkd-code'))el('hkd-code').textContent=hkId+' · '+(hkType==='dedicada'?'DEDICADA':hkType==='eventual'?'EVENTUAL':'FIJA');if(el('hkd-tasks'))el('hkd-tasks').textContent=tasks.length+' tareas';if(el('hkd-mins'))el('hkd-mins').textContent=totalMins+' min';if(el('hkd-zones'))el('hkd-zones').textContent=hkZones;if(el('hkd-notes'))el('hkd-notes').textContent=hkNotes||'-';var list=el('hkd-task-list');if(list){list.innerHTML='';tasks.slice().sort(function(a,b){return (a.startTime||0)-(b.startTime||0);}).forEach(function(t){var div=document.createElement('div');div.style.cssText='padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:12px;display:flex;gap:8px;align-items:center';var hh=Math.floor(t.startTime||0),mm=Math.round(((t.startTime||0)%1)*60);var time=t.startTime!=null?(hh+':'+(mm<10?'0':'')+mm):'--:--';var col=t.type==='CO/CI'?'#f59e0b':t.type==='CO'?'#3b82f6':'#8b5cf6';div.innerHTML='<span style="font-size:10px;font-weight:700;color:'+col+';min-width:36px">'+t.type+'</span>'              +'<span style="flex:1">'+t.unitName+'</span>'              +'<span style="color:#9ca3af;white-space:nowrap">'+time+' ('+t.cleanMins+'min)</span>';list.appendChild(div);});}overlay.style.display='flex';}
+function hkdOpen(hkId){var overlay=document.getElementById('hkd-overlay');if(!overlay)return;var sc=currentResult&&currentResult.byHK?currentResult.byHK[hkId]:null;var hkName=(sc&&sc.hkName)||hkId;var tasks=(sc&&sc.tasks)||[];var totalMins=tasks.reduce(function(s,t){return s+(t.cleanMins||0);},0);var tmHK=typeof TM_hks!=='undefined'?TM_hks.find(function(h){return h.id===hkId;}):null;var hkType=tmHK?tmHK.type:'fija';var hkZones=tmHK?(tmHK.zones||[]).join(', '):'-';var hkNotes=tmHK?tmHK.notes||'':'';;var el=function(id){return document.getElementById(id);};if(el('hkd-name'))el('hkd-name').textContent=hkName;if(el('hkd-code'))el('hkd-code').textContent=hkId+' � '+(hkType==='dedicada'?'DEDICADA':hkType==='eventual'?'EVENTUAL':'FIJA');if(el('hkd-tasks'))el('hkd-tasks').textContent=tasks.length+' tareas';if(el('hkd-mins'))el('hkd-mins').textContent=totalMins+' min';if(el('hkd-zones'))el('hkd-zones').textContent=hkZones;if(el('hkd-notes'))el('hkd-notes').textContent=hkNotes||'-';var list=el('hkd-task-list');if(list){list.innerHTML='';tasks.slice().sort(function(a,b){return (a.startTime||0)-(b.startTime||0);}).forEach(function(t){var div=document.createElement('div');div.style.cssText='padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:12px;display:flex;gap:8px;align-items:center';var hh=Math.floor(t.startTime||0),mm=Math.round(((t.startTime||0)%1)*60);var time=t.startTime!=null?(hh+':'+(mm<10?'0':'')+mm):'--:--';var col=t.type==='CO/CI'?'#f59e0b':t.type==='CO'?'#3b82f6':'#8b5cf6';div.innerHTML='<span style="font-size:10px;font-weight:700;color:'+col+';min-width:36px">'+t.type+'</span>'              +'<span style="flex:1">'+t.unitName+'</span>'              +'<span style="color:#9ca3af;white-space:nowrap">'+time+' ('+t.cleanMins+'min)</span>';list.appendChild(div);});}overlay.style.display='flex';}
 function hkdClose(){document.getElementById('hkd-overlay').classList.remove('open');}
 
 var getHKStatusForDate=function(dateStr){
