@@ -571,6 +571,42 @@ tbody tr:hover .row-acts { opacity: 1; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+/* ─── ZOOM CONTROLS ─────────────────────── */
+.tl-zoom { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+.zoom-btn { background: var(--surface); border: 1px solid var(--border2); border-radius: 5px; width: 26px; height: 26px; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text2); transition: background .1s; }
+.zoom-btn:hover { background: var(--accent-lt); color: var(--accent); }
+.zoom-lbl { font-size: 11px; color: var(--text3); font-weight: 500; min-width: 32px; text-align: center; }
+/* ─── HK clickable label ─────────────────── */
+.hk-label { cursor: pointer; }
+.hk-label:hover .hk-name { color: var(--accent); text-decoration: underline; }
+/* ─── HK Day Detail Modal ────────────────── */
+.hkd-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 800; display: none; align-items: center; justify-content: center; }
+.hkd-overlay.open { display: flex; }
+.hkd-modal { background: var(--surface); border-radius: 12px; width: 520px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,.2); overflow: hidden; }
+.hkd-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; }
+.hkd-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.hkd-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
+.hkd-body { padding: 16px 20px; overflow-y: auto; flex: 1; }
+.hkd-kpis { display: flex; gap: 12px; margin-bottom: 16px; }
+.hkd-kpi { flex: 1; background: var(--bg); border-radius: 8px; padding: 10px 14px; }
+.hkd-kpi-val { font-size: 22px; font-weight: 700; color: var(--text); }
+.hkd-kpi-lbl { font-size: 10px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: .05em; }
+.hkd-task-list { display: flex; flex-direction: column; gap: 8px; }
+.hkd-task { border-radius: 8px; padding: 10px 14px; border-left: 3px solid; display: flex; align-items: center; gap: 12px; }
+.hkd-task.co   { background: var(--co-bg);   border-color: var(--co); }
+.hkd-task.coci { background: var(--coci-bg); border-color: var(--coci); }
+.hkd-task.exp  { background: var(--exp-bg);  border-color: var(--exp); }
+.hkd-task.ocu  { background: var(--ocu-bg);  border-color: var(--ocu); }
+.hkd-task-icon { font-size: 18px; flex-shrink: 0; }
+.hkd-task-info { flex: 1; }
+.hkd-task-name { font-size: 12px; font-weight: 600; color: var(--text); }
+.hkd-task-meta { font-size: 10px; color: var(--text3); margin-top: 2px; }
+.hkd-task-time { font-size: 11px; font-weight: 600; color: var(--text2); flex-shrink: 0; text-align: right; }
+.hkd-travel { display: flex; align-items: center; gap: 8px; padding: 4px 14px; }
+.hkd-travel-line { flex: 1; border-top: 1px dashed #d1d5db; }
+.hkd-travel-txt { font-size: 9.5px; color: var(--text3); white-space: nowrap; }
+
 </style>
 <style id="claude-agent-animation-styles">
       @keyframes claude-pulse {
@@ -681,7 +717,13 @@ tbody tr:hover .row-acts { opacity: 1; }
 
   <!-- Schedule body -->
   <div class="sched-wrap">
-    <div class="tl-area" id="tl-area">
+    <div class="tl-zoom">
+  <button class="zoom-btn" onclick="tlZoom(-1)" title="Reducir">−</button>
+  <span class="zoom-lbl" id="zoom-lbl">100%</span>
+  <button class="zoom-btn" onclick="tlZoom(+1)" title="Ampliar">+</button>
+  <span style="font-size:10px;color:var(--text3);margin-left:6px">← scroll horizontal →</span>
+</div>
+<div class="tl-area" id="tl-area">
       <div class="tl-inner" id="tl-inner"><div class="ruler"><div class="rhour" style="width:140px">09:00</div><div class="rhour" style="width:140px">10:00</div><div class="rhour" style="width:140px">11:00</div><div class="rhour" style="width:140px">12:00</div><div class="rhour" style="width:140px">13:00</div><div class="rhour" style="width:140px">14:00</div><div class="rhour h15" style="width:140px">15:00</div><div class="rhour" style="width:140px">16:00</div></div><div class="hk-row" style="min-height:68px" data-hk="HK01" ondragover="onDO(event,this)" ondrop="onDrp(event,'HK01')" ondragleave="this.classList.remove('drag-over')"><div class="hk-label" style="">
       <div class="hk-name">Marlenis Duarte</div>
       <div class="hk-code ded">HK01 · DEDICADA</div>
@@ -5492,7 +5534,7 @@ function renderTimeline(){
     rows+=`<div class="hk-row${hasRisk?' has-risk':''}" style="min-height:68px" data-hk="${hk.id}"
       ondragover="onDO(event,this)" ondrop="onDrp(event,'${hk.id}')"
       ondragleave="this.classList.remove('drag-over')">`;
-    rows+=`<div class="hk-label" style="${hasRisk?'border-left:3px solid #dc2626;padding-left:11px':''}">
+    rows+=`<div class="hk-label" style="${hasRisk?'border-left:3px solid #dc2626;padding-left:11px':''}" onclick="${isIdle?'':`hkdOpen('${hk.id}')`}">
       <div class="hk-name">${hk.name}${hasRisk?' <span style="color:#dc2626;font-size:10px;font-weight:700">â </span>':''}</div>
       <div class="hk-code${isDed?' ded':''}">${hk.id}${isDed?' · DEDICADA':''}</div>
       <div class="hk-meta">${isIdle?'Sin tareas hoy':zones+(totalMin?` · ${totalMin}min`:'')}</div>
@@ -5628,7 +5670,7 @@ window.openPanel=(taskId,preHK=null)=>{
   document.getElementById('ep-sub').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'}`;
   document.getElementById('ep-unit').textContent=t.unitName+(t.notes?` - ${t.notes}`:'');
   document.getElementById('ep-meta').textContent=`${t.type} · ${t.br.toUpperCase()} · Zona ${t.zone||'?'} · ${t.cleanMins} min${t.isManual?' · MANUAL':''}`;
-  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)} â ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
+  document.getElementById('ep-time').textContent=t.startTime!=null?`${h2t(t.startTime)} → ${h2t(t.endTime)}  (${t.cleanMins}min)`:'Sin asignar';
   document.getElementById('ep-reason').value='';
   const{byHK}=currentResult;
   document.getElementById('ep-hkopts').innerHTML=HK_POOL.map(hk=>{
@@ -5660,7 +5702,7 @@ function confirmChange(task){
   byHK[newId].tasks.push(task);byHK[newId].tasks.sort((a,b)=>a.startTime-b.startTime);
   byHK[newId].tasks.forEach((t,i)=>t.order=i+1);byHK[newId].zones=[...new Set(byHK[newId].tasks.map(t=>t.zone))];
   const oldHK=task.assignedHK||'-';
-  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK} â ${newId}`,reason:reason||'-'});
+  auditLog.unshift({ts:new Date().toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'}),who:'Coordinador',what:`${task.unitName}: ${oldHK} → ${newId}`,reason:reason||'-'});
   closePanel();renderTimeline();renderKPIs();renderAlerts();renderAuditLog();
   toast(`${task.unitName} reasignada a ${hk?.name??newId}`);
 }
@@ -5738,7 +5780,7 @@ function updateImpact(){
 
   document.getElementById('impact-content').innerHTML=`
     <div class="impact-row"><span class="impact-lbl">Tipo de tarea</span><span class="impact-val">${m.icon} ${m.desc} · ${mins} min</span></div>
-    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)} â ${h2t(endTime)}</span></div>
+    <div class="impact-row"><span class="impact-lbl">Hora de inicio</span><span class="impact-val ${overLimit?'warn':''}">${h2t(requestedH)} → ${h2t(endTime)}</span></div>
     <div class="impact-row"><span class="impact-lbl">HK sugerida</span><span class="impact-val">${targetHK?`${targetHK.id} · ${targetHK.name}`:'Sin HK disponible'}</span></div>
     <div class="impact-row"><span class="impact-lbl">Carga HK después</span><span class="impact-val ${utilizationAfter>90?'warn':''}">${newLoad} min (${utilizationAfter}%)</span></div>
     ${overLimit?`<div class="impact-row"><span class="impact-lbl" style="color:#dc2626">â  Advertencia</span><span class="impact-val crit">Termina después del límite (${h2t(m.maxEnd)})</span></div>`:''}
@@ -6924,4 +6966,67 @@ async function usersCreate() {
   });
 })();
 </script>
-</b
+
+<script>
+// ─── ZOOM ───────────────────────────────────
+const ZOOM_LEVELS = [60, 80, 100, 120, 150, 200];
+let zoomIdx = 2;
+function tlZoom(dir) {
+  zoomIdx = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, zoomIdx + dir));
+  const pct = ZOOM_LEVELS[zoomIdx];
+  document.getElementById('zoom-lbl').textContent = pct + '%';
+  setScale(Math.round(140 * pct / 100));
+}
+
+// ─── HK DAY DETAIL MODAL ────────────────────
+function hkdOpen(hkId) {
+  if (!currentResult) return;
+  const { byHK } = currentResult;
+  const sched = byHK[hkId];
+  if (!sched || !sched.tasks.length) return;
+  const hk = sched.hk;
+  const tasks = sched.tasks;
+  const totalMin = tasks.reduce((s, t) => s + t.cleanMins, 0);
+
+  document.getElementById('hkd-title').textContent = hk.name;
+  document.getElementById('hkd-sub').textContent =
+    hk.id + ' · ' + tasks.length + ' tarea' + (tasks.length !== 1 ? 's' : '') + ' · ' + totalMin + ' min';
+
+  const zones = [...new Set(tasks.map(t => t.zone).filter(Boolean))].join(', ') || '—';
+  const co   = tasks.filter(t => t.type === 'CO').length;
+  const coci = tasks.filter(t => t.type === 'CO/CI').length;
+  const exp  = tasks.filter(t => t.type === 'EXP').length;
+
+  document.getElementById('hkd-kpis').innerHTML =
+    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + tasks.length + '</div><div class="hkd-kpi-lbl">Tareas</div></div>' +
+    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + totalMin + 'm</div><div class="hkd-kpi-lbl">Limpieza</div></div>' +
+    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + zones + '</div><div class="hkd-kpi-lbl">Zonas</div></div>';
+
+  var html = '';
+  tasks.forEach(function(t, idx) {
+    var tm = TYPE_META[t.type] || TYPE_META.CO;
+    if (idx > 0 && t.travelBefore > 0) {
+      html += '<div class="hkd-travel"><div class="hkd-travel-line"></div>' +
+              '<div class="hkd-travel-txt">🚶 ' + t.travelBefore + ' min traslado</div>' +
+              '<div class="hkd-travel-line"></div></div>';
+    }
+    var timeStr = t.startTime != null ? h2t(t.startTime) + ' → ' + h2t(t.endTime) : 'Sin hora';
+    html += '<div class="hkd-task ' + tm.cssClass + '" onclick="hkdClose();openPanel('' + t.id + '')">' +
+            '<div class="hkd-task-icon">' + tm.icon + '</div>' +
+            '<div class="hkd-task-info">' +
+              '<div class="hkd-task-name">' + t.unitName + '</div>' +
+              '<div class="hkd-task-meta">' + t.type + ' · ' + (t.br || '').toUpperCase() + ' · Zona ' + (t.zone || '?') + '</div>' +
+            '</div>' +
+            '<div class="hkd-task-time">' + timeStr + '<br><span style="font-weight:400;opacity:.7">' + t.cleanMins + 'min</span></div>' +
+            '</div>';
+  });
+  document.getElementById('hkd-task-list').innerHTML = html;
+  document.getElementById('hkd-overlay').classList.add('open');
+}
+
+function hkdClose() {
+  document.getElementById('hkd-overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>
