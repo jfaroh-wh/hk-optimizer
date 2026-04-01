@@ -6962,67 +6962,6 @@ async function usersCreate() {
 </script>
 
 <script>
-// ─── ZOOM ───────────────────────────────────
-const ZOOM_LEVELS = [60, 80, 100, 120, 150, 200];
-let zoomIdx = 2;
-function tlZoom(dir) {
-  zoomIdx = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, zoomIdx + dir));
-  const pct = ZOOM_LEVELS[zoomIdx];
-  document.getElementById('zoom-lbl').textContent = pct + '%';
-  setScale(Math.round(140 * pct / 100));
-}
-
-// ─── HK DAY DETAIL MODAL ────────────────────
-function hkdOpen(hkId) {
-  if (!currentResult) return;
-  const { byHK } = currentResult;
-  const sched = byHK[hkId];
-  if (!sched || !sched.tasks.length) return;
-  const hk = sched.hk;
-  const tasks = sched.tasks;
-  const totalMin = tasks.reduce((s, t) => s + t.cleanMins, 0);
-
-  document.getElementById('hkd-title').textContent = hk.name;
-  document.getElementById('hkd-sub').textContent =
-    hk.id + ' · ' + tasks.length + ' tarea' + (tasks.length !== 1 ? 's' : '') + ' · ' + totalMin + ' min';
-
-  const zones = [...new Set(tasks.map(t => t.zone).filter(Boolean))].join(', ') || '—';
-  const co   = tasks.filter(t => t.type === 'CO').length;
-  const coci = tasks.filter(t => t.type === 'CO/CI').length;
-  const exp  = tasks.filter(t => t.type === 'EXP').length;
-
-  document.getElementById('hkd-kpis').innerHTML =
-    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + tasks.length + '</div><div class="hkd-kpi-lbl">Tareas</div></div>' +
-    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + totalMin + 'm</div><div class="hkd-kpi-lbl">Limpieza</div></div>' +
-    '<div class="hkd-kpi"><div class="hkd-kpi-val">' + zones + '</div><div class="hkd-kpi-lbl">Zonas</div></div>';
-
-  var html = '';
-  tasks.forEach(function(t, idx) {
-    var tm = TYPE_META[t.type] || TYPE_META.CO;
-    if (idx > 0 && t.travelBefore > 0) {
-      html += '<div class="hkd-travel"><div class="hkd-travel-line"></div>' +
-              '<div class="hkd-travel-txt">🚶 ' + t.travelBefore + ' min traslado</div>' +
-              '<div class="hkd-travel-line"></div></div>';
-    }
-    var timeStr = t.startTime != null ? h2t(t.startTime) + ' → ' + h2t(t.endTime) : 'Sin hora';
-    html += '<div class="hkd-task ' + tm.cssClass + '" onclick="hkdClose();openPanel('' + t.id + '')">' +
-            '<div class="hkd-task-icon">' + tm.icon + '</div>' +
-            '<div class="hkd-task-info">' +
-              '<div class="hkd-task-name">' + t.unitName + '</div>' +
-              '<div class="hkd-task-meta">' + t.type + ' · ' + (t.br || '').toUpperCase() + ' · Zona ' + (t.zone || '?') + '</div>' +
-            '</div>' +
-            '<div class="hkd-task-time">' + timeStr + '<br><span style="font-weight:400;opacity:.7">' + t.cleanMins + 'min</span></div>' +
-            '</div>';
-  });
-  document.getElementById('hkd-task-list').innerHTML = html;
-  document.getElementById('hkd-overlay').classList.add('open');
-}
-
-function hkdClose() {
-  document.getElementById('hkd-overlay').classList.remove('open');
-}
-
-// ZOOM
 var ZOOM_LEVELS=[60,80,100,120,150,200];
 var zoomIdx=2;
 function tlZoom(dir){
@@ -7046,14 +6985,12 @@ function hkdOpen(hkId){
     '<div class="hkd-kpi"><div class="hkd-kpi-val">'+totalMin+'m</div><div class="hkd-kpi-lbl">Limpieza</div></div>'+
     '<div class="hkd-kpi"><div class="hkd-kpi-val">'+zones+'</div><div class="hkd-kpi-lbl">Zonas</div></div>';
   var html='';
-  tasks.forEach(function(t,idx){
+  tasks.forEach(function(t,i){
     var tm=TYPE_META[t.type]||TYPE_META.CO;
-    if(idx>0&&t.travelBefore>0){
+    if(i>0&&t.travelBefore>0)
       html+='<div class="hkd-travel"><div class="hkd-travel-line"></div><div class="hkd-travel-txt">'+t.travelBefore+' min traslado</div><div class="hkd-travel-line"></div></div>';
-    }
     var ts=t.startTime!=null?h2t(t.startTime)+' - '+h2t(t.endTime):'Sin hora';
-    var tid=t.id.replace(/\/g,'\\\\').replace(/"/g,'\\"');
-    html+='<div class="hkd-task '+tm.cssClass+'" onclick="hkdClose();openPanel(\"'+tid+'\")" style="cursor:pointer">'+
+    html+='<div class="hkd-task '+tm.cssClass+'" onclick="hkdClose();openPanel(this.dataset.id)" data-id="'+t.id.replace(/"/g,'&quot;')+'" style="cursor:pointer">'+
       '<div class="hkd-task-icon">'+tm.icon+'</div>'+
       '<div class="hkd-task-info"><div class="hkd-task-name">'+t.unitName+'</div>'+
       '<div class="hkd-task-meta">'+t.type+' - '+(t.br||'').toUpperCase()+' - Zona '+(t.zone||'?')+'</div></div>'+
@@ -7062,9 +6999,6 @@ function hkdOpen(hkId){
   document.getElementById('hkd-task-list').innerHTML=html;
   document.getElementById('hkd-overlay').classList.add('open');
 }
-function hkdClose(){
-  document.getElementById('hkd-overlay').classList.remove('open');
-}
+function hkdClose(){document.getElementById('hkd-overlay').classList.remove('open');}
 </script>
-</body>
 </html>
