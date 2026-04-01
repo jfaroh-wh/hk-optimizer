@@ -7689,6 +7689,10 @@ window.run = async function() {
     }
   }
   // Llamar al run original
+  // Sync HK_POOL names from TM_hks (Supabase) before generating
+  if(typeof HK_POOL!=='undefined'&&typeof TM_hks!=='undefined'){
+    TM_hks.forEach(function(tm){var p=HK_POOL.find(function(h){return h.id===tm.id;});if(p){p.name=tm.name;p.type=tm.type;p.zones=tm.zones;}});
+  }
   if(typeof _origRun === 'function') _origRun.apply(this, arguments);
 };
 
