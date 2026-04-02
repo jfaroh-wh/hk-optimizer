@@ -707,9 +707,9 @@ tbody tr:hover .row-acts { opacity: 1; }
     </div>
     <div class="tb-sep"></div>
     <div style="display:flex;align-items:center;gap:4px">
-      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom"></button>
+      <button class="zoom-btn" onclick="tlZoom(-1)" title="Menos zoom">-</button>
       <span id="zoom-lbl" style="font-size:11px;color:var(--text3);font-weight:500;min-width:34px;text-align:center">100%</span>
-      <button class="zoom-btn" onclick="tlZoom(+1)" title="Ms zoom">+</button>
+      <button class="zoom-btn" onclick="tlZoom(+1)" title="Mas zoom">+</button>
     </div>
     <div class="tb-sep"></div>
     <button class="btn pri" onclick="openAddTaskModal()">+ Agregar tarea</button>
@@ -7172,6 +7172,7 @@ async function usersCreate() {
 var ZOOM_LEVELS=[60,80,100,120,150,200];
 var zoomIdx=2;
 function tlZoom(dir){
+  if(!currentResult||!currentResult.tasks||!currentResult.tasks.length) return;
   zoomIdx=Math.max(0,Math.min(ZOOM_LEVELS.length-1,zoomIdx+dir));
   var pct=ZOOM_LEVELS[zoomIdx];
   var lbl=document.getElementById('zoom-lbl');
@@ -7720,6 +7721,51 @@ if(_csvInp && !_csvInp._sbHooked) {
   });
 }
 </script>
-</html><div id="hkd-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:center;justify-content:center" onclick="if(event.target===this)hkdClose()"><div style="background:#fff;border-radius:12px;width:520px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden"><div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:flex-start;justify-content:space-between"><div><div id="hkd-title" style="font-size:15px;font-weight:700"></div><div id="hkd-sub" style="font-size:11px;color:#6b7280;margin-top:3px"></div></div><button onclick="hkdClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button></div><div style="padding:16px 20px;overflow-y:auto;flex:1"><div id="hkd-kpis" style="display:flex;gap:12px;margin-bottom:16px"></div><div id="hkd-task-list" style="display:flex;flex-direction:column;gap:8px"></div></div></div></div>
+</html><div id="hkd-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:800;align-items:center;justify-content:center" onclick="if(event.target===this)hkdClose()"><div style="background:#fff;border-radius:12px;width:520px;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden"><div style="padding:18px 20px 14px;border-bottom:1px solid #e5e7eb;display:flex;align-items:flex-start;justify-content:space-between"><div><div id="hkd-name" style="font-size:15px;font-weight:700"></div><div id="hkd-code" style="font-size:11px;color:#6b7280;margin-top:3px"></div></div><button onclick="hkdClose()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#9ca3af">&times;</button></div><div style="padding:16px 20px;overflow-y:auto;flex:1"><div id="hkd-kpis" style="display:flex;gap:12px;margin-bottom:16px"></div><div id="hkd-task-list" style="display:flex;flex-direction:column;gap:8px"></div></div></div></div>
 <style>.hkd-kpi{flex:1;background:#f9fafb;border-radius:8px;padding:10px 14px}.hkd-kpi-val{font-size:22px;font-weight:700;color:#111827}.hkd-kpi-lbl{font-size:10px;color:#6b7280;margin-top:2px;text-transform:uppercase;letter-spacing:.05em}.hkd-task{border-radius:8px;padding:10px 14px;border-left:3px solid;display:flex;align-items:center;gap:12px;cursor:pointer}.hkd-task.co{background:#eff6ff;border-color:#3b82f6}.hkd-task.coci{background:#fffbeb;border-color:#f59e0b}.hkd-task.exp{background:#f5f3ff;border-color:#8b5cf6}.hkd-kpi,.hkd-task-name,.hkd-task-meta,.hkd-task-time,.hkd-task-icon{display:block}.hkd-task-icon{font-size:18px;flex-shrink:0}.hkd-task-info{flex:1}.hkd-task-name{font-size:12px;font-weight:600;color:#111827}.hkd-task-meta{font-size:10px;color:#6b7280;margin-top:2px}.hkd-task-time{font-size:11px;font-weight:600;color:#374151;flex-shrink:0;text-align:right}</style>
+<script>
+(function(){
+// FIX: Modal HK - agregar elementos al hkd-kpis
+var kp=document.getElementById("hkd-kpis");
+if(kp&&!document.getElementById("hkd-tasks")){
+  kp.innerHTML="<div style='font-size:11px;color:#6b7280;margin:4px 0'><span id='hkd-tasks' style='font-weight:600;color:#1d4ed8'></span> - <span id='hkd-mins'></span></div><div style='font-size:11px;color:#6b7280;margin:2px 0'><b>Zonas: </b><span id='hkd-zones'></span></div><div id='hkd-notes' style='font-size:11px;color:#9ca3af;font-style:italic;margin-top:2px'></div>";
+}
+// FIX: Historial - extender showSection
+var _origSS=window.showSection;
+window.showSection=function(sec){_origSS(sec);if(sec==="history")setTimeout(function(){window.loadHistoryFromSB&&window.loadHistoryFromSB();},200);};
+// Render historial desde Supabase
+window.loadHistoryFromSB=function(){
+  var histSec=document.getElementById("history");
+  if(!histSec)return;
+  var cont=histSec.querySelector(".hist-cards")||histSec.querySelector(".content-area")||histSec;
+  if(cont===histSec){
+    var inner=histSec.querySelector("div");
+    if(inner)cont=inner;
+  }
+  cont.innerHTML="<div style='padding:24px;text-align:center;color:#9ca3af'>Cargando historial...</div>";
+  sbLoadHistory().then(function(data){
+    if(!data||!data.length){cont.innerHTML="<div style='padding:40px;text-align:center;color:#9ca3af'>No hay schedules guardados aun</div>";return;}
+    var h="<div style='padding:16px 24px'>";
+    h+="<h3 style='font-size:15px;font-weight:700;color:#111;margin-bottom:16px'>Schedules guardados ("+data.length+")</h3>";
+    h+="<div style='display:flex;flex-direction:column;gap:10px'>";
+    data.forEach(function(s){
+      var d=s.date||"";
+      var dObj=d?new Date(d+"T12:00:00"):null;
+      var dStr=dObj?dObj.toLocaleDateString("es-PA",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):d;
+      var gAt=s.generated_at?new Date(s.generated_at).toLocaleString("es-PA",{hour:"2-digit",minute:"2-digit",day:"numeric",month:"short"}):"";
+      h+="<div style='background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center'>";
+      h+="<div><div style='font-weight:700;font-size:14px;color:#111;margin-bottom:3px'>"+dStr+"</div><div style='font-size:12px;color:#6b7280'>Generado: "+gAt+"</div></div>";
+      h+="<div style='display:flex;gap:16px;text-align:center'>";
+      h+="<div><div style='font-size:20px;font-weight:800;color:#2563eb'>"+(s.total_tasks||0)+"</div><div style='font-size:10px;color:#9ca3af'>tareas</div></div>";
+      h+="<div><div style='font-size:20px;font-weight:800;color:#f59e0b'>"+(s.tasks_coci||0)+"</div><div style='font-size:10px;color:#9ca3af'>CO/CI</div></div>";
+      h+="<div><div style='font-size:20px;font-weight:800;color:#10b981'>"+(s.hks_used||0)+"</div><div style='font-size:10px;color:#9ca3af'>HKs</div></div>";
+      if(s.coci_at_risk>0)h+="<div><div style='font-size:20px;font-weight:800;color:#ef4444'>"+s.coci_at_risk+"</div><div style='font-size:10px;color:#9ca3af'>riesgo</div></div>";
+      h+="</div></div>";
+    });
+    h+="</div></div>";
+    cont.innerHTML=h;
+  }).catch(function(e){cont.innerHTML="<div style='padding:24px;color:#ef4444'>Error: "+e.message+"</div>";});
+};
+})()
+</script>
 
