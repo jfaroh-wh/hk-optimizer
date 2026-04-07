@@ -657,6 +657,9 @@ tbody tr:hover .row-acts { opacity: 1; }
   <button class="sb-item" id="nav-users" onclick="showSection('users',this)">
     Usuarios
   </button>
+  <button class="sb-item" id="nav-config" onclick="showSection('config',this)">
+    Configuracion
+  </button>
   
   <div class="sb-footer">
     <div class="sb-user">
@@ -6825,6 +6828,147 @@ function initWeeklyModule(){
 
 </script>
 
+
+<!-- CONFIG PAGE -->
+<div class="page-section" id="page-config" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;background:#f5f6f8;z-index:10;padding:24px 28px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700">Configuracion del scheduler</div>
+      <div style="font-size:12px;color:#6b7280;margin-top:2px">Parametros operativos que usa el motor para generar los schedules</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#6b7280;background:#f9fafb;border:1px solid #e5e7eb;border-radius:7px;padding:5px 10px">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="8" rx="2" fill="#6b7280" opacity=".5"/><path d="M5 7V5a3 3 0 016 0v2" stroke="#6b7280" stroke-width="1.5" fill="none"/></svg>
+      Solo acceso admin
+    </div>
+  </div>
+
+  <!-- CLEANING TIMES CARD -->
+  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Tiempos de limpieza (minutos)</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:16px">El scheduler usa estos valores para calcular la duracion de cada tarea al generar el schedule</div>
+    <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+      <div style="display:grid;grid-template-columns:130px 1fr 1fr 1fr;background:#f9fafb;border-bottom:1px solid #e5e7eb">
+        <div style="padding:8px 12px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em">Tipo</div>
+        <div style="padding:8px 12px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;border-left:1px solid #e5e7eb">Studio / 1 BR</div>
+        <div style="padding:8px 12px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;border-left:1px solid #e5e7eb">2 BR</div>
+        <div style="padding:8px 12px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;border-left:1px solid #e5e7eb">3 BR</div>
+      </div>
+      <div id="cfg-ct-rows"></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:12px">
+      <button class="btn" onclick="cfgResetCT()">Restablecer</button>
+      <button class="btn pri" onclick="cfgSaveCT()">Guardar tiempos</button>
+    </div>
+  </div>
+
+  <!-- TIME WINDOWS + BASE HOURS row -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+
+    <!-- VENTANAS -->
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px">
+      <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Ventanas de tiempo</div>
+      <div style="font-size:12px;color:#6b7280;margin-bottom:14px">Horario minimo de inicio y maximo de fin por tipo</div>
+      <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:90px 1fr 1fr;background:#f9fafb;border-bottom:1px solid #e5e7eb">
+          <div style="padding:7px 10px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase">Tipo</div>
+          <div style="padding:7px 10px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;border-left:1px solid #e5e7eb">Inicio min.</div>
+          <div style="padding:7px 10px;font-size:10px;font-weight:600;color:#6b7280;text-transform:uppercase;border-left:1px solid #e5e7eb">Fin max.</div>
+        </div>
+        <div id="cfg-tw-rows"></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:12px">
+        <button class="btn pri" onclick="cfgSaveTW()">Guardar ventanas</button>
+      </div>
+    </div>
+
+    <!-- HORARIOS BASE -->
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px">
+      <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Horarios base</div>
+      <div style="font-size:12px;color:#6b7280;margin-bottom:14px">Punto de partida diario de todas las HKs</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:#6b7280;margin-bottom:5px">Salida desde PH Salomon</div>
+          <input id="cfg-departure" type="time" class="inp" style="width:100%" value="08:30">
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:#6b7280;margin-bottom:5px">Primera limpieza inicia (minimo)</div>
+          <input id="cfg-firsttask" type="time" class="inp" style="width:100%" value="09:00">
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:#6b7280;margin-bottom:5px">Fin de jornada</div>
+          <input id="cfg-endshift" type="time" class="inp" style="width:100%" value="16:30">
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:12px">
+        <button class="btn pri" onclick="cfgSaveBase()">Guardar horarios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPACITY PER DAY -->
+  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Capacidad minima de HKs por dia</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:16px">El sistema genera alertas cuando la disponibilidad cae por debajo de estos valores</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px" id="cfg-cap-grid"></div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:12px">
+      <button class="btn pri" onclick="cfgSaveCap()">Guardar capacidad</button>
+    </div>
+  </div>
+
+  <!-- TRAVEL TIMES -->
+  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Tiempos de traslado entre zonas (minutos)</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:16px">Tiempo estimado que tarda una HK en desplazarse al cambiar de zona durante el dia. Se suma automaticamente entre tareas.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="cfg-travel-grid"></div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:12px">
+      <button class="btn pri" onclick="cfgSaveTravel()">Guardar traslados</button>
+    </div>
+  </div>
+
+  <!-- ZONE COMPAT (read-only info) -->
+  <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:600;color:#111827;margin-bottom:3px">Reglas de compatibilidad de zonas</div>
+    <div style="font-size:12px;color:#6b7280;margin-bottom:16px">Una HK no puede mezclar zonas incompatibles en el mismo dia. Zonas Casco (A0-A3) son exclusivas entre si.</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px">
+        <div style="font-size:12px;font-weight:600;color:#111827;margin-bottom:8px">Casco Antiguo</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa">A0</span>
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe">A1</span>
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe">A2</span>
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0">A3</span>
+        </div>
+        <div style="font-size:10px;color:#9ca3af;margin-top:6px">Se pueden mezclar entre si. NO con otras zonas.</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px">
+        <div style="font-size:12px;font-weight:600;color:#111827;margin-bottom:8px">Zonas externas compatibles</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca">B</span>
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe">D</span>
+        </div>
+        <div style="font-size:10px;color:#9ca3af">B y D se pueden combinar en el mismo dia.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;margin-bottom:6px">
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#fff7ed;color:#ea580c;border:1px solid #fed7aa">C</span>
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe">D</span>
+        </div>
+        <div style="font-size:10px;color:#9ca3af">C y D se pueden combinar en el mismo dia.</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px">
+        <div style="font-size:12px;font-weight:600;color:#111827;margin-bottom:8px">Zonas exclusivas</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#fdf4ff;color:#9333ea;border:1px solid #e9d5ff">E</span>
+        </div>
+        <div style="font-size:10px;color:#9ca3af;margin-bottom:8px">E (Costa del Este) trabaja sola. No se mezcla.</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+          <span style="padding:2px 7px;border-radius:4px;font-size:10px;background:#fefce8;color:#ca8a04;border:1px solid #fef08a">F</span>
+        </div>
+        <div style="font-size:10px;color:#9ca3af">F (Panama Pacifico) trabaja sola. No se mezcla.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- USERS PAGE -->
 <div class="page-section" id="page-users" style="display:none;position:fixed;left:220px;top:0;right:0;bottom:0;flex-direction:column;overflow:auto;background:#f5f6f8;z-index:10;padding:24px 28px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -7031,6 +7175,7 @@ function showSection(name, btn) {
   if (btn) btn.classList.add("active");
   if (name === "history") loadHistory();
   if (name === "users") loadUsers();
+  if (name === "config") { if(!window._cfgInited){window._cfgInited=true;setTimeout(function(){if(typeof initConfigModule==="function")initConfigModule();},100);}else{setTimeout(function(){if(typeof cfgRenderCT==="function"){cfgRenderCT();cfgRenderTW();cfgRenderBase();cfgRenderCap();cfgRenderTravel();}},50);} }
   if (name === "team") {
     if (!window._tmInited) { window._tmInited = true; setTimeout(function() { if(typeof initTeamModule==="function") initTeamModule(); }, 100); }
     else { if(typeof tmRender==="function") tmRender(); }
@@ -7767,5 +7912,154 @@ window.loadHistoryFromSB=function(){
   }).catch(function(e){cont.innerHTML="<div style='padding:24px;color:#ef4444'>Error: "+e.message+"</div>";});
 };
 })()
+
+// ============================================================
+// CONFIG MODULE - HK Optimizer
+// ============================================================
+var CFG_KEY = 'wh_config_v1';
+var CFG_DEFAULTS = {
+  cleanTimes: {
+    CO:   {studio:60,'1br':60,'2br':90,'3br':120},
+    'CO/CI':{studio:60,'1br':60,'2br':90,'3br':120},
+    EXP:  {studio:20,'1br':20,'2br':20,'3br':20},
+    OC:   {studio:45,'1br':45,'2br':60,'3br':75},
+    CHQ:  {studio:10,'1br':10,'2br':10,'3br':10},
+    URG:  {studio:30,'1br':30,'2br':45,'3br':60}
+  },
+  timeWindows: {
+    CO:      {minStart:11,maxEnd:16.5},
+    'CO/CI': {minStart:11,maxEnd:15},
+    EXP:     {minStart:9, maxEnd:15},
+    OC:      {minStart:9, maxEnd:18},
+    CHQ:     {minStart:9, maxEnd:18},
+    URG:     {minStart:9, maxEnd:18}
+  },
+  baseHours: {departure:'08:30',firstTask:'09:00',endShift:'16:30'},
+  minHKS: {0:10,1:8,2:7,3:8,4:9,5:11,6:11},
+  travel:  {A0:18,A1:18,A2:18,A3:18,B:20,C:18,D:5,E:35,F:30}
+};
+var appConfig = JSON.parse(JSON.stringify(CFG_DEFAULTS));
+function cfgLoad(){
+  try{var s=localStorage.getItem(CFG_KEY);if(s)appConfig=JSON.parse(s);}catch(e){}
+  cfgApplyToEngine();
+}
+function cfgSave(partial){
+  Object.assign(appConfig,partial);
+  try{localStorage.setItem(CFG_KEY,JSON.stringify(appConfig));}catch(e){}
+  cfgApplyToEngine();
+  if(typeof toast==='function')toast('Configuracion guardada. Regenera el schedule para aplicar los cambios.');
+}
+function cfgApplyToEngine(){
+  if(typeof CT!=='undefined'&&appConfig.cleanTimes)Object.keys(appConfig.cleanTimes).forEach(function(t){CT[t]=appConfig.cleanTimes[t];});
+  if(typeof BASE_TRAVEL!=='undefined'&&appConfig.travel)Object.keys(appConfig.travel).forEach(function(z){BASE_TRAVEL[z]=appConfig.travel[z];});
+  if(typeof TYPE_META!=='undefined'&&appConfig.timeWindows)Object.keys(appConfig.timeWindows).forEach(function(t){if(TYPE_META[t]){TYPE_META[t].minStart=appConfig.timeWindows[t].minStart;TYPE_META[t].maxEnd=appConfig.timeWindows[t].maxEnd;}});
+  if(typeof MIN_HKS!=='undefined'&&appConfig.minHKS)Object.keys(appConfig.minHKS).forEach(function(d){MIN_HKS[parseInt(d)]=appConfig.minHKS[d];});
+}
+var CFG_TYPE_META={CO:{label:'CO',color:'#1d4ed8',bg:'#eff6ff'},'CO/CI':{label:'CO/CI',color:'#92400e',bg:'#fffbeb'},EXP:{label:'Express',color:'#5b21b6',bg:'#f5f3ff'},OC:{label:'Ocupada',color:'#065f46',bg:'#ecfdf5'},CHQ:{label:'Chequeo',color:'#164e63',bg:'#ecfeff'},URG:{label:'Urgencia',color:'#991b1b',bg:'#fef2f2'}};
+var CFG_TW_TYPES=['CO','CO/CI','EXP'];
+var CFG_ZONES=[{key:'A0',label:'A0 - Casa Mallet'},{key:'A1',label:'A1 - Casco Norte'},{key:'A2',label:'A2 - Casco Centro'},{key:'A3',label:'A3 - Casco Sur'},{key:'B',label:'B - San Francisco'},{key:'C',label:'C - Obarrio'},{key:'D',label:'D - Bella Vista'},{key:'E',label:'E - Costa del Este'},{key:'F',label:'F - Panama Pacifico'}];
+var CFG_CAP_DAYS=['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+
+function cfgRenderCT(){
+  var el=document.getElementById('cfg-ct-rows');if(!el)return;
+  var types=['CO','CO/CI','EXP','OC','CHQ','URG'];
+  var ct=appConfig.cleanTimes;
+  el.innerHTML=types.map(function(type,i){
+    var lbl=CFG_TYPE_META[type];
+    var vals=ct[type]||{studio:60,'1br':60,'2br':90,'3br':120};
+    var bdr=i<types.length-1?'border-bottom:1px solid #f3f4f6;':'';
+    return '<div style="display:grid;grid-template-columns:130px 1fr 1fr 1fr;'+bdr+'">'+
+      '<div style="padding:10px 12px;display:flex;align-items:center"><span style="padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;background:'+lbl.bg+';color:'+lbl.color+'">'+lbl.label+'</span></div>'+
+      '<div style="padding:8px 12px;display:flex;align-items:center;gap:6px;border-left:1px solid #f3f4f6"><input type="number" id="ct-'+type+'-1br" value="'+(vals['1br']||60)+'" min="5" max="300" step="5" style="width:60px;text-align:center;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px"> min</div>'+
+      '<div style="padding:8px 12px;display:flex;align-items:center;gap:6px;border-left:1px solid #f3f4f6"><input type="number" id="ct-'+type+'-2br" value="'+(vals['2br']||90)+'" min="5" max="300" step="5" style="width:60px;text-align:center;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px"> min</div>'+
+      '<div style="padding:8px 12px;display:flex;align-items:center;gap:6px;border-left:1px solid #f3f4f6"><input type="number" id="ct-'+type+'-3br" value="'+(vals['3br']||120)+'" min="5" max="300" step="5" style="width:60px;text-align:center;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px"> min</div>'+
+    '</div>';
+  }).join('');
+}
+function cfgSaveCT(){
+  var types=['CO','CO/CI','EXP','OC','CHQ','URG'];var ct={};
+  types.forEach(function(type){
+    var v1=parseInt(document.getElementById('ct-'+type+'-1br').value)||60;
+    var v2=parseInt(document.getElementById('ct-'+type+'-2br').value)||90;
+    var v3=parseInt(document.getElementById('ct-'+type+'-3br').value)||120;
+    ct[type]={studio:v1,'1br':v1,'2br':v2,'3br':v3};
+  });
+  cfgSave({cleanTimes:ct});
+}
+function cfgResetCT(){
+  appConfig.cleanTimes=JSON.parse(JSON.stringify(CFG_DEFAULTS.cleanTimes));
+  cfgRenderCT();cfgApplyToEngine();
+  if(typeof toast==='function')toast('Tiempos restablecidos a valores por defecto');
+}
+function cfgRenderTW(){
+  var el=document.getElementById('cfg-tw-rows');if(!el)return;
+  var tw=appConfig.timeWindows;
+  el.innerHTML=CFG_TW_TYPES.map(function(type,i){
+    var lbl=CFG_TYPE_META[type];var w=tw[type]||{minStart:9,maxEnd:15};
+    var hS=Math.floor(w.minStart),hE=Math.floor(w.maxEnd),mE=Math.round((w.maxEnd-hE)*60);
+    var bdr=i<CFG_TW_TYPES.length-1?'border-bottom:1px solid #f3f4f6;':'';
+    return '<div style="display:grid;grid-template-columns:90px 1fr 1fr;'+bdr+'">'+
+      '<div style="padding:9px 10px;display:flex;align-items:center"><span style="padding:2px 7px;border-radius:10px;font-size:11px;font-weight:500;background:'+lbl.bg+';color:'+lbl.color+'">'+lbl.label+'</span></div>'+
+      '<div style="padding:7px 10px;border-left:1px solid #f3f4f6"><input type="time" id="tw-'+type+'-start" value="'+String(hS).padStart(2,'0')+':00" style="padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;width:90px"></div>'+
+      '<div style="padding:7px 10px;border-left:1px solid #f3f4f6"><input type="time" id="tw-'+type+'-end" value="'+String(hE).padStart(2,'0')+':'+String(mE).padStart(2,'0')+'" style="padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:12px;width:90px"></div>'+
+    '</div>';
+  }).join('');
+}
+function cfgSaveTW(){
+  var tw=JSON.parse(JSON.stringify(appConfig.timeWindows));
+  CFG_TW_TYPES.forEach(function(type){
+    var s=document.getElementById('tw-'+type+'-start');var e=document.getElementById('tw-'+type+'-end');
+    if(!s||!e)return;
+    var sp=s.value.split(':');var ep=e.value.split(':');
+    tw[type].minStart=parseInt(sp[0])+parseInt(sp[1])/60;
+    tw[type].maxEnd=parseInt(ep[0])+parseInt(ep[1])/60;
+  });
+  cfgSave({timeWindows:tw});
+}
+function cfgRenderBase(){
+  var b=appConfig.baseHours;
+  var d=document.getElementById('cfg-departure');var f=document.getElementById('cfg-firsttask');var e=document.getElementById('cfg-endshift');
+  if(d)d.value=b.departure||'08:30';if(f)f.value=b.firstTask||'09:00';if(e)e.value=b.endShift||'16:30';
+}
+function cfgSaveBase(){
+  cfgSave({baseHours:{departure:document.getElementById('cfg-departure').value,firstTask:document.getElementById('cfg-firsttask').value,endShift:document.getElementById('cfg-endshift').value}});
+}
+function cfgRenderCap(){
+  var el=document.getElementById('cfg-cap-grid');if(!el)return;
+  var cap=appConfig.minHKS;
+  el.innerHTML=CFG_CAP_DAYS.map(function(day,i){
+    var idx=i===6?0:i+1;var val=cap[idx]!==undefined?cap[idx]:8;
+    return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px">'+
+      '<div style="font-size:10px;font-weight:600;color:#6b7280">'+day+'</div>'+
+      '<input type="number" id="cap-'+idx+'" value="'+val+'" min="1" max="30" style="font-size:20px;font-weight:600;width:100%;text-align:center;padding:6px;border:1px solid #d1d5db;border-radius:6px">'+
+      '<div style="font-size:9px;color:#9ca3af">HKs minimo</div>'+
+    '</div>';
+  }).join('');
+}
+function cfgSaveCap(){
+  var cap={};for(var i=0;i<=6;i++){var el=document.getElementById('cap-'+i);if(el)cap[i]=parseInt(el.value)||8;}
+  cfgSave({minHKS:cap});
+}
+function cfgRenderTravel(){
+  var el=document.getElementById('cfg-travel-grid');if(!el)return;
+  var tr=appConfig.travel;
+  el.innerHTML=CFG_ZONES.map(function(z){
+    var val=tr[z.key]!==undefined?tr[z.key]:18;
+    return '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px">'+
+      '<div style="font-size:11px;font-weight:600;color:#111827;margin-bottom:8px">'+z.label+'</div>'+
+      '<div style="display:flex;align-items:center;gap:6px"><input type="number" id="tr-'+z.key+'" value="'+val+'" min="1" max="120" style="width:56px;text-align:center;padding:5px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:13px"> <span style="font-size:11px;color:#6b7280">min</span></div>'+
+    '</div>';
+  }).join('');
+}
+function cfgSaveTravel(){
+  var tr={};CFG_ZONES.forEach(function(z){var el=document.getElementById('tr-'+z.key);if(el)tr[z.key]=parseInt(el.value)||18;});
+  cfgSave({travel:tr});
+}
+function initConfigModule(){
+  cfgLoad();
+  setTimeout(function(){cfgRenderCT();cfgRenderTW();cfgRenderBase();cfgRenderCap();cfgRenderTravel();},80);
+}
+setTimeout(cfgLoad,400);
+
 </script>
 
