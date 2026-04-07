@@ -6248,7 +6248,7 @@ function showSection(name, btn) {
   var overlay = document.getElementById('section-overlay');
   
   // Hide all overlays
-  ['page-team','page-weekly','page-history'].forEach(function(id){
+  ['page-team','page-weekly','page-history','page-config'].forEach(function(id){
     var el = document.getElementById(id);
     if(el) el.style.display='none';
   });
@@ -7154,7 +7154,7 @@ document.addEventListener('keydown',e=>{
 // NAV + EXTRA MODULES (no template literals)
 function showSection(name, btn) {
   var main = document.querySelector(".main");
-  var overlayIds = ["page-team","page-weekly","page-history","page-users"];
+  var overlayIds = ["page-team","page-weekly","page-history","page-users","page-config"];
   overlayIds.forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.style.display = "none";
@@ -7876,8 +7876,15 @@ if(kp&&!document.getElementById("hkd-tasks")){
   kp.innerHTML="<div style='font-size:11px;color:#6b7280;margin:4px 0'><span id='hkd-tasks' style='font-weight:600;color:#1d4ed8'></span> - <span id='hkd-mins'></span></div><div style='font-size:11px;color:#6b7280;margin:2px 0'><b>Zonas: </b><span id='hkd-zones'></span></div><div id='hkd-notes' style='font-size:11px;color:#9ca3af;font-style:italic;margin-top:2px'></div>";
 }
 // FIX: Historial - extender showSection
-var _origSS=window.showSection;
-window.showSection=function(sec){_origSS(sec);if(sec==="history")setTimeout(function(){window.loadHistoryFromSB&&window.loadHistoryFromSB();},200);};
+
+window.addEventListener("load", function() {
+  var _ssOrig = window.showSection;
+  window.showSection = function(sec, btn) {
+    _ssOrig(sec, btn);
+    if (sec === "history") setTimeout(function() { window.loadHistoryFromSB && window.loadHistoryFromSB(); }, 200);
+    if (sec === "config") { if (!window._cfgInited) { window._cfgInited = true; setTimeout(function() { if (typeof initConfigModule === "function") initConfigModule(); }, 100); } else { setTimeout(function() { if (typeof cfgRenderCT === "function") { cfgRenderCT(); cfgRenderTW(); cfgRenderBase(); cfgRenderCap(); cfgRenderTravel(); } }, 50); } }
+  };
+});
 // Render historial desde Supabase
 window.loadHistoryFromSB=function(){
   var histSec=document.getElementById("history");
